@@ -16,7 +16,7 @@ public class CScriptTakeElement : MonoBehaviour
 	// Update is called once per frame
 	void Update () 
 	{
-		if(CApoilInput.DropObject)
+		if(CApoilInput.InputPlayer1.DropObject)
 		{
 			m_Game.getLevel().getPlayer().DropElement();
 		}
@@ -28,7 +28,7 @@ public class CScriptTakeElement : MonoBehaviour
 	void OnTriggerStay(Collider other)
 	{	
 		// ramasser un objet
-		if(other.gameObject == m_Game.getLevel().getPlayer().getGameObject() && CApoilInput.PickUpObject)	
+		if(other.gameObject == m_Game.getLevel().getPlayer().getGameObject() && CApoilInput.InputPlayer1.PickUpObject)	
 		{
 			m_Game.getLevel().getPlayer().PickUpObject(m_TakeElement);
 		}
