@@ -125,16 +125,44 @@ public class CLevel
 		Vector2 posInit = new Vector2(0.0f, 0.0f);
 		int nNbPlayer = m_Game.m_nNbPlayer;
 		for(int i = 0 ; i < m_Game.m_nNbPlayer ; ++i)
-			m_Players[i] = new CPlayer(posInit, CPlayer.EIdPlayer.e_IdPlayer_Player1);
+		{
+			CPlayer.EIdPlayer eIdPlayer = SetIdPlayer(i);
+			m_Players[i] = new CPlayer(posInit, eIdPlayer);
+			posInit[1] += 150.0f;
+		}
 		
 	}
 	
 	//-------------------------------------------------------------------------------
 	///
 	//-------------------------------------------------------------------------------
-	public CPlayer getPlayer()
+	CPlayer.EIdPlayer SetIdPlayer(int nId)
 	{
-		return m_Players[0];
+		CPlayer.EIdPlayer eId = CPlayer.EIdPlayer.e_IdPlayer_Player1;
+		switch(nId)
+		{
+			case 0:
+				eId = CPlayer.EIdPlayer.e_IdPlayer_Player1;
+				break;
+			case 1:
+				eId = CPlayer.EIdPlayer.e_IdPlayer_Player2;
+				break;
+			case 2:
+				eId = CPlayer.EIdPlayer.e_IdPlayer_Player3;
+				break;
+			case 3:
+				eId = CPlayer.EIdPlayer.e_IdPlayer_Player4;
+				break;
+		}
+		return eId;
+	}
+	
+	//-------------------------------------------------------------------------------
+	///
+	//-------------------------------------------------------------------------------
+	public CPlayer getPlayer(int i)
+	{
+		return m_Players[i];
 	}
 	
 	//-------------------------------------------------------------------------------

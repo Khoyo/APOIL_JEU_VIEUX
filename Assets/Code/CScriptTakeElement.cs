@@ -18,7 +18,19 @@ public class CScriptTakeElement : MonoBehaviour
 	{
 		if(CApoilInput.InputPlayer1.DropObject)
 		{
-			m_Game.getLevel().getPlayer().DropElement();
+			m_Game.getLevel().getPlayer(0).DropElement();
+		}
+		if(CApoilInput.InputPlayer2.DropObject)
+		{
+			m_Game.getLevel().getPlayer(1).DropElement();
+		}
+		if(CApoilInput.InputPlayer3.DropObject)
+		{
+			m_Game.getLevel().getPlayer(2).DropElement();
+		}
+		if(CApoilInput.InputPlayer4.DropObject)
+		{
+			m_Game.getLevel().getPlayer(3).DropElement();
 		}
 	}
 	
@@ -28,11 +40,23 @@ public class CScriptTakeElement : MonoBehaviour
 	void OnTriggerStay(Collider other)
 	{	
 		// ramasser un objet
-		if(other.gameObject == m_Game.getLevel().getPlayer().getGameObject() && CApoilInput.InputPlayer1.PickUpObject)	
+		if(m_Game.m_nNbPlayer > 0 && other.gameObject == m_Game.getLevel().getPlayer(0).getGameObject() && CApoilInput.InputPlayer1.PickUpObject)	
 		{
-			m_Game.getLevel().getPlayer().PickUpObject(m_TakeElement);
+			m_Game.getLevel().getPlayer(0).PickUpObject(m_TakeElement);
 		}
-		
+		if(m_Game.m_nNbPlayer > 1 && other.gameObject == m_Game.getLevel().getPlayer(1).getGameObject() && CApoilInput.InputPlayer2.PickUpObject)	
+		{
+			m_Game.getLevel().getPlayer(1).PickUpObject(m_TakeElement);
+		}
+		if(m_Game.m_nNbPlayer > 2 && other.gameObject == m_Game.getLevel().getPlayer(2).getGameObject() && CApoilInput.InputPlayer3.PickUpObject)	
+		{
+			m_Game.getLevel().getPlayer(2).PickUpObject(m_TakeElement);
+		}
+		if(m_Game.m_nNbPlayer > 3 && other.gameObject == m_Game.getLevel().getPlayer(3).getGameObject() && CApoilInput.InputPlayer4.PickUpObject)	
+		{
+			m_Game.getLevel().getPlayer(3).PickUpObject(m_TakeElement);
+		}
+
 	}
 	
 	public CTakeElement GetTakeElement()
