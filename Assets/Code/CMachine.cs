@@ -32,6 +32,13 @@ public class CMachine : CElement
 		m_SpriteSheet.Init();
 		m_SpriteSheet.SetAnimation(m_ScriptMachine.GetAnimation());
 		
+		Component[] components = m_GameObject.GetComponents<Component>();
+		foreach(Component component in components){
+			IMachineAction action = component as IMachineAction;
+			if(action != null)
+				action.Init();
+		}
+		
 	}
 
 	//-------------------------------------------------------------------------------
@@ -48,6 +55,13 @@ public class CMachine : CElement
 	public override void Process(float fDeltatime)
 	{
 		base.Process(fDeltatime);
+		
+		Component[] components = m_GameObject.GetComponents<Component>();
+		foreach(Component component in components){
+			IMachineAction action = component as IMachineAction;
+			if(action != null)
+				action.Process();
+		}
 	}
 	
 	public void Activate(CPlayer player){
