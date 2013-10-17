@@ -32,6 +32,7 @@ public class CMachine : CElement
 		m_SpriteSheet.Init();
 		m_SpriteSheet.SetAnimation(m_ScriptMachine.GetAnimation());
 		
+		Component[] components = m_GameObject.GetComponents<Component>();
 		foreach(Component component in components){
 			IMachineAction action = component as IMachineAction;
 			if(action != null)
@@ -55,6 +56,7 @@ public class CMachine : CElement
 	{
 		base.Process(fDeltatime);
 		
+		Component[] components = m_GameObject.GetComponents<Component>();
 		foreach(Component component in components){
 			IMachineAction action = component as IMachineAction;
 			if(action != null)

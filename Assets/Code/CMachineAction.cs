@@ -4,6 +4,6 @@ using System.Collections;
 public interface IMachineAction
 {
 	void Init();
-	void Update();
+	void Process();
 	void Activate(CPlayer player);
 }
