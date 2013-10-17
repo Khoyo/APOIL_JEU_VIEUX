@@ -19,31 +19,37 @@ public struct SPlayerInput
 public class CApoilInput
 {
 	public static SPlayerInput InputPlayer1;
+	public static SPlayerInput InputPlayer2;
+	public static SPlayerInput InputPlayer3;
+	public static SPlayerInput InputPlayer4;
 
 	public static Vector2 MousePosition;
 	
 	static CGame m_Game = GameObject.Find("_Game").GetComponent<CGame>();
-		
+
+	//-------------------------------------------------------------------------------
+	///
+	//-------------------------------------------------------------------------------
 	public static void Process(float fDeltatime) 
 	{
 		if(m_Game.IsPadXBoxMod())
 		{	
 			float fTolerance = 0.05f;
-			InputPlayer1.MoveUp = (Input.GetAxis("moveVertical")) < -fTolerance;
-			InputPlayer1.MoveDown = (Input.GetAxis("moveVertical")) > fTolerance;
-			InputPlayer1.MoveLeft = (Input.GetAxis("moveHorizontal")) < -fTolerance;
-			InputPlayer1.MoveRight = (Input.GetAxis("moveHorizontal")) > fTolerance;
-			InputPlayer1.WalkFast = Input.GetKey(KeyCode.JoystickButton5); //RB
-			InputPlayer1.WalkSlow = Input.GetKey(KeyCode.JoystickButton4); //LB
+			InputPlayer1.MoveUp = (Input.GetAxis("player1_MoveVertical")) < -fTolerance;
+			InputPlayer1.MoveDown = (Input.GetAxis("player1_MoveVertical")) > fTolerance;
+			InputPlayer1.MoveLeft = (Input.GetAxis("player1_MoveHorizontal")) < -fTolerance;
+			InputPlayer1.MoveRight = (Input.GetAxis("player1_MoveHorizontal")) > fTolerance;
+			InputPlayer1.WalkFast = Input.GetKey(KeyCode.Joystick1Button5); //RB
+			InputPlayer1.WalkSlow = Input.GetKey(KeyCode.Joystick1Button4); //LB
 			
-			InputPlayer1.PickUpObject = Input.GetKey(KeyCode.JoystickButton0); //A
-			InputPlayer1.DropObject = Input.GetKey(KeyCode.JoystickButton2); //X
-			InputPlayer1.ActivateMachine = Input.GetKey(KeyCode.JoystickButton0); //A
+			InputPlayer1.PickUpObject = Input.GetKey(KeyCode.Joystick1Button0); //A
+			InputPlayer1.DropObject = Input.GetKey(KeyCode.Joystick1Button2); //X
+			InputPlayer1.ActivateMachine = Input.GetKey(KeyCode.Joystick1Button0); //A
 				
 			MousePosition = new Vector2(0.0f, 0.0f);
 			
-			InputPlayer1.DirectionHorizontal = Input.GetAxis("lightHorizontal");
-			InputPlayer1.DirectionVertical = Input.GetAxis("lightVertical");
+			InputPlayer1.DirectionHorizontal = Input.GetAxis("player1_DirectionHorizontal");
+			InputPlayer1.DirectionVertical = Input.GetAxis("player1_DirectionlightVertical");
 		}
 		else
 		{
@@ -65,6 +71,17 @@ public class CApoilInput
 		}
 	}
 	
+	//-------------------------------------------------------------------------------
+	///
+	//-------------------------------------------------------------------------------
+	void ProcessPlayer(string playerName, float fTolerance)
+	{
+		
+	}
+	
+	//-------------------------------------------------------------------------------
+	///
+	//-------------------------------------------------------------------------------	
 	public static Vector2 CalculateMousePosition()
 	{
 		Vector3 posMouseTmp = Vector3.zero;

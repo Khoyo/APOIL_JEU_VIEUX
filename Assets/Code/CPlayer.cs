@@ -26,6 +26,7 @@ public class CPlayer : CCharacter {
 	
 	CCercleDiscretion m_CercleDiscretion;
 	CTakeElement m_YounesSuceDesBites;
+	SPlayerInput m_PlayerInput;
 	
 	public enum EMoveModState // mode de deplacement
 	{
@@ -48,7 +49,7 @@ public class CPlayer : CCharacter {
 		e_state_nbState
 	}
 	
-	public enum EIdPlayer
+	public enum EIdPlayer // commentaire
 	{
 		e_IdPlayer_Player1,
 		e_IdPlayer_Player2,
@@ -84,6 +85,9 @@ public class CPlayer : CCharacter {
 		
 		m_eMoveModState = EMoveModState.e_MoveModState_marche;
 		m_eIdPlayer = eIdPlayer;
+		
+		
+		
 		m_YounesSuceDesBites = null;
 		m_bHaveObject = false;
 		
@@ -351,6 +355,26 @@ public class CPlayer : CCharacter {
 		
 		
 		m_Torche.transform.RotateAround(new Vector3(0,0,1),  m_fAngleCone - fAngleOld);
+	}
+	
+	void SetPlayerInput()
+	{
+		switch(m_eIdPlayer)
+		{
+			case EIdPlayer.e_IdPlayer_Player1:
+				m_PlayerInput = CApoilInput.InputPlayer1;
+				break;
+			case EIdPlayer.e_IdPlayer_Player2:
+				m_PlayerInput = CApoilInput.InputPlayer2;
+				break;
+			case EIdPlayer.e_IdPlayer_Player3:
+				m_PlayerInput = CApoilInput.InputPlayer3;
+				break;
+			case EIdPlayer.e_IdPlayer_Player4:
+				m_PlayerInput = CApoilInput.InputPlayer4;
+				break;
+		}
+			
 	}
 	
 	//-------------------------------------------------------------------------------
