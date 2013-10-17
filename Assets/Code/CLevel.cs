@@ -22,8 +22,7 @@ public class CLevel
 		
 		m_Players = new CPlayer[m_Game.m_nNbPlayer];
 		CreatePlayers();
-		//m_Player2 =  new CPlayer();
-		//m_Player3 =  new CPlayer();
+
 		m_Monster = new CMonster(posInitM);
 		m_bTimerLightSwitch = 0;
 		
@@ -67,6 +66,8 @@ public class CLevel
 		for(int i = 0 ; i < m_Game.m_nNbPlayer ; ++i)
 			m_Players[i].Process(fDeltatime);
 		m_Monster.Process(fDeltatime);
+		
+		SetCameraPosition();
 		
 		if(Input.GetKey(KeyCode.L) && m_bTimerLightSwitch <= 0){
 			m_Game.m_bLightIsOn = !m_Game.m_bLightIsOn;
@@ -174,6 +175,18 @@ public class CLevel
 				break;
 		}
 		return eId;
+	}
+	
+	public void SetCameraPosition()
+	{
+		Vector2 posPlayer1 = new Vector2(m_Players[0].getGameObject().transform.position.x, m_Players[0].getGameObject().transform.position.y);
+		Vector2 posPlayer2 = new Vector2(m_Players[1].getGameObject().transform.position.x, m_Players[1].getGameObject().transform.position.y);
+		Vector2 posCenter = (posPlayer2 + posPlayer1)/2;
+		m_Game.getCamera().SetPosition(posCenter);
+		
+		//Debug
+	//	Debug.DrawLine (m_Players[0].getGameObject().transform.position, m_Players[1].getGameObject().transform.position);
+		Debug.DrawLine(m_Players[0].getGameObject().transform.position, new Vector3(posCenter.x, posCenter.y, 0));
 	}
 	
 	//-------------------------------------------------------------------------------

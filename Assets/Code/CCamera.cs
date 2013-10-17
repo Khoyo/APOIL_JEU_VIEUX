@@ -38,8 +38,27 @@ public class CCamera
 	//-------------------------------------------------------------------------------	
 	public void Process(float fDeltatime)
 	{
-		SetPositionFromRoom();
+		//SetPositionFromRoom();
 		//SetPositionFromObj(GameObject.Find("_Game").GetComponent<CGame>().getLevel().getPlayer().getGameObject());
+	}
+	
+	//-------------------------------------------------------------------------------
+	///
+	//-------------------------------------------------------------------------------
+	public void SetPosition(Vector2 pos)
+	{
+		Vector3 NewPos = m_GameObject.transform.position;
+		NewPos.x =  pos.x;
+		NewPos.y =  pos.y;
+		m_GameObject.transform.position = NewPos;
+	}
+	
+	//-------------------------------------------------------------------------------
+	///
+	//-------------------------------------------------------------------------------
+	public void SetFactorScale(float fCoeff)
+	{
+		
 	}
 	
 	//-------------------------------------------------------------------------------
