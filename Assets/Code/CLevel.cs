@@ -124,10 +124,29 @@ public class CLevel
 	{
 		Vector2 posInit = new Vector2(0.0f, 0.0f);
 		int nNbPlayer = m_Game.m_nNbPlayer;
+		
+		SAnimationPlayer[] AnimPlayer = new SAnimationPlayer[4];
+		
+		AnimPlayer[0].AnimRepos = new CAnimation(m_Game.m_materialPlayer1Repos, 1, 1, 1.0f);
+		AnimPlayer[0].AnimHorizontal = new CAnimation(m_Game.m_materialPlayer1Horizontal, 7, 4, 0.5f);
+		AnimPlayer[0].AnimVertical = new CAnimation(m_Game.m_materialPlayer1Vertical, 6, 1, 2.0f);
+		
+		AnimPlayer[1].AnimRepos = new CAnimation(m_Game.m_materialPlayer2Repos, 1, 1, 1.0f);
+		AnimPlayer[1].AnimHorizontal = new CAnimation(m_Game.m_materialPlayer2Horizontal, 7, 4, 0.5f);
+		AnimPlayer[1].AnimVertical = new CAnimation(m_Game.m_materialPlayer2Vertical, 6, 1, 2.0f);
+		
+		AnimPlayer[2].AnimRepos = new CAnimation(m_Game.m_materialPlayer1Repos, 1, 1, 1.0f);
+		AnimPlayer[2].AnimHorizontal = new CAnimation(m_Game.m_materialPlayer1Horizontal, 7, 4, 0.5f);
+		AnimPlayer[2].AnimVertical = new CAnimation(m_Game.m_materialPlayer1Vertical, 6, 1, 2.0f);
+		
+		AnimPlayer[3].AnimRepos = new CAnimation(m_Game.m_materialPlayer1Repos, 1, 1, 1.0f);
+		AnimPlayer[3].AnimHorizontal = new CAnimation(m_Game.m_materialPlayer1Horizontal, 7, 4, 0.5f);
+		AnimPlayer[3].AnimVertical = new CAnimation(m_Game.m_materialPlayer1Vertical, 6, 1, 2.0f);
+		
 		for(int i = 0 ; i < m_Game.m_nNbPlayer ; ++i)
 		{
 			CPlayer.EIdPlayer eIdPlayer = SetIdPlayer(i);
-			m_Players[i] = new CPlayer(posInit, eIdPlayer);
+			m_Players[i] = new CPlayer(posInit, eIdPlayer, AnimPlayer[i]);
 			posInit[1] += 150.0f;
 		}
 		

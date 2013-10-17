@@ -1,6 +1,13 @@
 using UnityEngine;
 using System.Collections;
 
+public struct SAnimationPlayer
+{
+	public CAnimation AnimRepos;
+	public CAnimation AnimHorizontal;
+	public CAnimation AnimVertical;
+}
+
 public class CPlayer : CCharacter {
 	
 	// a foutre dans le constructeur si on veut pouvoir le faire indifferement des jouerus
@@ -12,9 +19,7 @@ public class CPlayer : CCharacter {
 	float m_fSpeed;
 	float m_fAngleCone;
 	CSpriteSheet m_spriteSheet;
-	CAnimation m_AnimRepos;
-	CAnimation m_AnimHorizontal;
-	CAnimation m_AnimVertical;
+	SAnimationPlayer m_AnimPlayer;
 	CConeVision m_ConeVision;
 	GameObject m_Torche;
 	
@@ -64,7 +69,7 @@ public class CPlayer : CCharacter {
 	//-------------------------------------------------------------------------------
 	///
 	//-------------------------------------------------------------------------------
-	public CPlayer(Vector2 posInit, EIdPlayer eIdPlayer)
+	public CPlayer(Vector2 posInit, EIdPlayer eIdPlayer, SAnimationPlayer AnimPlayer)
 	{
 		game = GameObject.Find("_Game").GetComponent<CGame>();
 		GameObject prefab = game.prefabPlayer;
@@ -76,12 +81,8 @@ public class CPlayer : CCharacter {
 		
 		m_fSpeed = game.m_fSpeedPlayer;
 		m_spriteSheet = new CSpriteSheet(m_GameObject); //m_GameObject.GetComponent<CSpriteSheet>();	
-		
-		m_AnimRepos = new CAnimation(game.m_materialPlayerRepos, 1, 1, 1.0f);
-		
-		m_AnimHorizontal = new CAnimation(game.m_materialPlayerHorizontal, 7, 4, 0.5f);
-	
-		m_AnimVertical = new CAnimation(game.m_materialPlayerVertical, 6, 1, 2.0f);
+				
+		m_AnimPlayer = AnimPlayer;
 		
 		m_eMoveModState = EMoveModState.e_MoveModState_marche;
 		m_eIdPlayer = eIdPlayer;
@@ -260,21 +261,21 @@ public class CPlayer : CCharacter {
 			if (m_PlayerInput.MoveUp) 
 			{ 
 				velocity += new Vector3(0,1,0); 
-				m_spriteSheet.SetAnimation(m_AnimVertical);
+				m_spriteSheet.SetAnimation(m_AnimPlayer.AnimVertical);
 				m_spriteSheet.AnimationStart();
 				m_eMoveModState = EMoveModState.e_MoveModState_marche;
 			}
 			if (m_PlayerInput.MoveDown) 
 			{ 
 				velocity += new Vector3(0,-1,0); 
-				m_spriteSheet.SetAnimation(m_AnimVertical);
+				m_spriteSheet.SetAnimation(m_AnimPlayer.AnimVertical);
 				m_spriteSheet.AnimationStart();
 				m_eMoveModState = EMoveModState.e_MoveModState_marche;
 			}
 			if (m_PlayerInput.MoveLeft) 
 			{
 				velocity += new Vector3(-1,0,0); 
-				m_spriteSheet.SetAnimation(m_AnimHorizontal);
+				m_spriteSheet.SetAnimation(m_AnimPlayer.AnimHorizontal);
 				m_spriteSheet.AnimationStart();
 				flipLeft();
 				m_eMoveModState = EMoveModState.e_MoveModState_marche;
@@ -283,14 +284,14 @@ public class CPlayer : CCharacter {
 			if (m_PlayerInput.MoveRight) 
 			{ 
 				velocity += new Vector3(1,0,0); 
-				m_spriteSheet.SetAnimation(m_AnimHorizontal);
+				m_spriteSheet.SetAnimation(m_AnimPlayer.AnimHorizontal);
 				m_spriteSheet.AnimationStart();
 				flipRight();
 				m_eMoveModState = EMoveModState.e_MoveModState_marche;
 			}
 			if(!m_PlayerInput.MoveUp && !m_PlayerInput.MoveDown && !m_PlayerInput.MoveLeft && !m_PlayerInput.MoveRight) 
 			{
-				m_spriteSheet.SetAnimation(m_AnimRepos);
+				m_spriteSheet.SetAnimation(m_AnimPlayer.AnimRepos);
 				m_spriteSheet.AnimationStop();
 				m_eMoveModState = EMoveModState.e_MoveModState_attente;
 				m_GameObject.rigidbody.velocity = Vector3.zero;

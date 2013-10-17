@@ -11,9 +11,12 @@ public class CGame : MonoBehaviour
 	public GameObject m_renderScreen;	
 	
 	// materials
-	public Material m_materialPlayerRepos;
-	public Material m_materialPlayerHorizontal;
-	public Material m_materialPlayerVertical;
+	public Material m_materialPlayer1Repos;
+	public Material m_materialPlayer1Horizontal;
+	public Material m_materialPlayer1Vertical;
+	public Material m_materialPlayer2Repos;
+	public Material m_materialPlayer2Horizontal;
+	public Material m_materialPlayer2Vertical;
 	
 	// variables de LD
 	public bool m_bPadXBox = false;
