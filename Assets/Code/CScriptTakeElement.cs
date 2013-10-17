@@ -35,6 +35,12 @@ public class CScriptTakeElement : MonoBehaviour
 		
 	}
 	
+	public CTakeElement GetTakeElement()
+	{
+		return m_TakeElement;
+	}
+
+	
 	//-------------------------------------------------------------------------------
 	///
 	//-------------------------------------------------------------------------------
