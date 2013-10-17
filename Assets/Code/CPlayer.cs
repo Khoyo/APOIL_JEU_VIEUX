@@ -86,7 +86,7 @@ public class CPlayer : CCharacter {
 		m_eMoveModState = EMoveModState.e_MoveModState_marche;
 		m_eIdPlayer = eIdPlayer;
 		
-		
+		SetPlayerInput();
 		
 		m_YounesSuceDesBites = null;
 		m_bHaveObject = false;

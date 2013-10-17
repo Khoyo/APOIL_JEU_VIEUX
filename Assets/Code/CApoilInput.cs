@@ -35,21 +35,13 @@ public class CApoilInput
 		if(m_Game.IsPadXBoxMod())
 		{	
 			float fTolerance = 0.05f;
-			InputPlayer1.MoveUp = (Input.GetAxis("player1_MoveVertical")) < -fTolerance;
-			InputPlayer1.MoveDown = (Input.GetAxis("player1_MoveVertical")) > fTolerance;
-			InputPlayer1.MoveLeft = (Input.GetAxis("player1_MoveHorizontal")) < -fTolerance;
-			InputPlayer1.MoveRight = (Input.GetAxis("player1_MoveHorizontal")) > fTolerance;
-			InputPlayer1.WalkFast = Input.GetKey(KeyCode.Joystick1Button5); //RB
-			InputPlayer1.WalkSlow = Input.GetKey(KeyCode.Joystick1Button4); //LB
 			
-			InputPlayer1.PickUpObject = Input.GetKey(KeyCode.Joystick1Button0); //A
-			InputPlayer1.DropObject = Input.GetKey(KeyCode.Joystick1Button2); //X
-			InputPlayer1.ActivateMachine = Input.GetKey(KeyCode.Joystick1Button0); //A
-				
+			ProcessPlayer("player1", ref CApoilInput.InputPlayer1, fTolerance);
+			ProcessPlayer("player2", ref CApoilInput.InputPlayer2, fTolerance);
+			//ProcessPlayer("player3", ref CApoilInput.InputPlayer3, fTolerance);
+			//ProcessPlayer("player4", ref CApoilInput.InputPlayer4, fTolerance);
+			
 			MousePosition = new Vector2(0.0f, 0.0f);
-			
-			InputPlayer1.DirectionHorizontal = Input.GetAxis("player1_DirectionHorizontal");
-			InputPlayer1.DirectionVertical = Input.GetAxis("player1_DirectionlightVertical");
 		}
 		else
 		{
@@ -74,8 +66,55 @@ public class CApoilInput
 	//-------------------------------------------------------------------------------
 	///
 	//-------------------------------------------------------------------------------
-	void ProcessPlayer(string playerName, float fTolerance)
+	static void ProcessPlayer(string playerName, ref SPlayerInput InputPlayer,float fTolerance)
 	{
+		InputPlayer.MoveUp = (Input.GetAxis(playerName+"_MoveVertical")) < -fTolerance;
+		InputPlayer.MoveDown = (Input.GetAxis(playerName+"_MoveVertical")) > fTolerance;
+		InputPlayer.MoveLeft = (Input.GetAxis(playerName+"_MoveHorizontal")) < -fTolerance;
+		InputPlayer.MoveRight = (Input.GetAxis(playerName+"_MoveHorizontal")) > fTolerance;
+		
+		InputPlayer.DirectionHorizontal = Input.GetAxis(playerName+"_DirectionHorizontal");
+		InputPlayer.DirectionVertical = Input.GetAxis(playerName+"_DirectionVertical");
+		
+		switch(playerName)
+		{
+			case "player1":
+			{
+				InputPlayer.WalkFast = Input.GetKey(KeyCode.Joystick1Button5); //RB
+				InputPlayer.WalkSlow = Input.GetKey(KeyCode.Joystick1Button4); //LB			
+				InputPlayer.PickUpObject = Input.GetKey(KeyCode.Joystick1Button0); //A
+				InputPlayer.DropObject = Input.GetKey(KeyCode.Joystick1Button2); //X
+				InputPlayer.ActivateMachine = Input.GetKey(KeyCode.Joystick1Button0); //A
+				break;
+			}
+			case "player2":
+			{
+				InputPlayer.WalkFast = Input.GetKey(KeyCode.Joystick2Button5); //RB
+				InputPlayer.WalkSlow = Input.GetKey(KeyCode.Joystick2Button4); //LB			
+				InputPlayer.PickUpObject = Input.GetKey(KeyCode.Joystick2Button0); //A
+				InputPlayer.DropObject = Input.GetKey(KeyCode.Joystick2Button2); //X
+				InputPlayer.ActivateMachine = Input.GetKey(KeyCode.Joystick2Button0); //A
+				break;
+			}
+			case "player3":
+			{
+				InputPlayer.WalkFast = Input.GetKey(KeyCode.Joystick3Button5); //RB
+				InputPlayer.WalkSlow = Input.GetKey(KeyCode.Joystick3Button4); //LB			
+				InputPlayer.PickUpObject = Input.GetKey(KeyCode.Joystick3Button0); //A
+				InputPlayer.DropObject = Input.GetKey(KeyCode.Joystick3Button2); //X
+				InputPlayer.ActivateMachine = Input.GetKey(KeyCode.Joystick3Button0); //A
+				break;
+			}
+			case "player4":
+			{
+				InputPlayer.WalkFast = Input.GetKey(KeyCode.Joystick4Button5); //RB
+				InputPlayer.WalkSlow = Input.GetKey(KeyCode.Joystick4Button4); //LB			
+				InputPlayer.PickUpObject = Input.GetKey(KeyCode.Joystick4Button0); //A
+				InputPlayer.DropObject = Input.GetKey(KeyCode.Joystick4Button2); //X
+				InputPlayer.ActivateMachine = Input.GetKey(KeyCode.Joystick4Button0); //A
+				break;
+			}
+		}
 		
 	}
 	
