@@ -45,6 +45,7 @@ public class CGame : MonoBehaviour
 	public string soundbankName = "Jeu_apoil.bnk";
 	public bool m_bLightIsOn = true;
 	
+	public int m_nNbPlayer = 1;
 	
 	// variables
 	bool m_bInGame;

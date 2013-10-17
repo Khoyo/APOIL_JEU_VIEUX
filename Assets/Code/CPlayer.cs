@@ -48,14 +48,22 @@ public class CPlayer : CCharacter {
 		e_state_nbState
 	}
 	
+	public enum EIdPlayer
+	{
+		e_IdPlayer_Player1,
+		e_IdPlayer_Player2,
+		e_IdPlayer_Player3,
+		e_IdPlayer_Player4,
+	}
+	
 	EMoveModState m_eMoveModState;
 	EState m_eState;
-	
+	EIdPlayer m_eIdPlayer;
 	
 	//-------------------------------------------------------------------------------
 	///
 	//-------------------------------------------------------------------------------
-	public CPlayer(Vector2 posInit, bool bIsMainCharacter = false)
+	public CPlayer(Vector2 posInit, EIdPlayer eIdPlayer)
 	{
 		game = GameObject.Find("_Game").GetComponent<CGame>();
 		GameObject prefab = game.prefabPlayer;
@@ -75,7 +83,7 @@ public class CPlayer : CCharacter {
 		m_AnimVertical = new CAnimation(game.m_materialPlayerVertical, 6, 1, 2.0f);
 		
 		m_eMoveModState = EMoveModState.e_MoveModState_marche;
-		m_bMainCharacter = bIsMainCharacter;
+		m_eIdPlayer = eIdPlayer;
 		m_YounesSuceDesBites = null;
 		m_bHaveObject = false;
 		
@@ -244,21 +252,21 @@ public class CPlayer : CCharacter {
 		if (m_GameObject.rigidbody != null)
 		{			
 			Vector3 velocity = Vector3.zero;
-			if (CApoilInput.MoveUp) 
+			if (CApoilInput.InputPlayer1.MoveUp) 
 			{ 
 				velocity += new Vector3(0,1,0); 
 				m_spriteSheet.SetAnimation(m_AnimVertical);
 				m_spriteSheet.AnimationStart();
 				m_eMoveModState = EMoveModState.e_MoveModState_marche;
 			}
-			if (CApoilInput.MoveDown) 
+			if (CApoilInput.InputPlayer1.MoveDown) 
 			{ 
 				velocity += new Vector3(0,-1,0); 
 				m_spriteSheet.SetAnimation(m_AnimVertical);
 				m_spriteSheet.AnimationStart();
 				m_eMoveModState = EMoveModState.e_MoveModState_marche;
 			}
-			if (CApoilInput.MoveLeft) 
+			if (CApoilInput.InputPlayer1.MoveLeft) 
 			{
 				velocity += new Vector3(-1,0,0); 
 				m_spriteSheet.SetAnimation(m_AnimHorizontal);
@@ -267,7 +275,7 @@ public class CPlayer : CCharacter {
 				m_eMoveModState = EMoveModState.e_MoveModState_marche;
 				
 			}
-			if (CApoilInput.MoveRight) 
+			if (CApoilInput.InputPlayer1.MoveRight) 
 			{ 
 				velocity += new Vector3(1,0,0); 
 				m_spriteSheet.SetAnimation(m_AnimHorizontal);
@@ -275,7 +283,7 @@ public class CPlayer : CCharacter {
 				flipRight();
 				m_eMoveModState = EMoveModState.e_MoveModState_marche;
 			}
-			if(!CApoilInput.MoveUp && !CApoilInput.MoveDown && !CApoilInput.MoveLeft && !CApoilInput.MoveRight) 
+			if(!CApoilInput.InputPlayer1.MoveUp && !CApoilInput.InputPlayer1.MoveDown && !CApoilInput.InputPlayer1.MoveLeft && !CApoilInput.InputPlayer1.MoveRight) 
 			{
 				m_spriteSheet.SetAnimation(m_AnimRepos);
 				m_spriteSheet.AnimationStop();
@@ -286,11 +294,11 @@ public class CPlayer : CCharacter {
 			velocity.Normalize();
 			m_DirectionDeplacement = velocity;
 			
-			if(CApoilInput.WalkFast)
+			if(CApoilInput.InputPlayer1.WalkFast)
 			{
 				m_eMoveModState = EMoveModState.e_MoveModState_cours;
 			}	
-			if(CApoilInput.WalkSlow)
+			if(CApoilInput.InputPlayer1.WalkSlow)
 			{
 				m_eMoveModState = EMoveModState.e_MoveModState_discret;	
 			}
@@ -314,8 +322,8 @@ public class CPlayer : CCharacter {
 		
 		if(game.IsPadXBoxMod())
 		{
-			float fPadY = CApoilInput.PadLightHorizontal;
-			float fPadX = CApoilInput.PadLightVertical;
+			float fPadY = CApoilInput.InputPlayer1.DirectionHorizontal;
+			float fPadX = CApoilInput.InputPlayer1.DirectionVertical;
 			float fTolerance = 0.05f;
 			if(Mathf.Abs(fPadX) > fTolerance || Mathf.Abs(fPadY) > fTolerance)
 				m_DirectionRegard = (new Vector2(fPadX, -fPadY)).normalized;

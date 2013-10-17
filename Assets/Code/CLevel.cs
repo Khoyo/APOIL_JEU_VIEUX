@@ -4,10 +4,8 @@ using System.Collections.Generic;
 
 public class CLevel
 {
-	CGame game;
-	CPlayer m_Player;
-	CPlayer m_Player2;
-	CPlayer m_Player3;
+	CGame m_Game;
+	CPlayer[] m_Players;
 	CMonster m_Monster;
 	float m_bTimerLightSwitch;
 	
@@ -18,10 +16,12 @@ public class CLevel
 	//-------------------------------------------------------------------------------
 	public CLevel()
 	{
-		game = GameObject.Find("_Game").GetComponent<CGame>();
-		Vector2 posInit = new Vector2(0.0f, 0.0f);
+		m_Game = GameObject.Find("_Game").GetComponent<CGame>();
+		
 		Vector2 posInitM = new Vector2(100.0f, 0.0f);
-		m_Player = new CPlayer(posInit, true);
+		
+		m_Players = new CPlayer[m_Game.m_nNbPlayer];
+		CreatePlayers();
 		//m_Player2 =  new CPlayer();
 		//m_Player3 =  new CPlayer();
 		m_Monster = new CMonster(posInitM);
@@ -36,7 +36,9 @@ public class CLevel
 	//-------------------------------------------------------------------------------
 	public void Init()
 	{	
-		m_Player.Init();
+		for(int i = 0 ; i < m_Game.m_nNbPlayer ; ++i)
+			m_Players[i].Init();
+		
 		m_Monster.Init();
 		
 		foreach(CElement elem in m_pElement)
@@ -49,7 +51,8 @@ public class CLevel
 	//-------------------------------------------------------------------------------
 	public void Reset()
 	{
-		m_Player.Reset();
+		for(int i = 0 ; i < m_Game.m_nNbPlayer ; ++i)
+			m_Players[i].Reset();
 		m_Monster.Reset();
 		
 		foreach(CElement elem in m_pElement)
@@ -61,15 +64,16 @@ public class CLevel
 	//-------------------------------------------------------------------------------
 	public void Process(float fDeltatime)
 	{
-		m_Player.Process(fDeltatime);
+		for(int i = 0 ; i < m_Game.m_nNbPlayer ; ++i)
+			m_Players[i].Process(fDeltatime);
 		m_Monster.Process(fDeltatime);
 		
 		if(Input.GetKey(KeyCode.L) && m_bTimerLightSwitch <= 0){
-			game.m_bLightIsOn = !game.m_bLightIsOn;
+			m_Game.m_bLightIsOn = !m_Game.m_bLightIsOn;
 			m_bTimerLightSwitch = 10f;
 		}
 		m_bTimerLightSwitch -= 0.5f;
-		if(game.m_bLightIsOn == false)
+		if(m_Game.m_bLightIsOn == false)
 			TurnLight(false);
 		else
 			TurnLight(true);
@@ -116,9 +120,21 @@ public class CLevel
 	//-------------------------------------------------------------------------------
 	///
 	//-------------------------------------------------------------------------------
+	public void CreatePlayers()
+	{
+		Vector2 posInit = new Vector2(0.0f, 0.0f);
+		int nNbPlayer = m_Game.m_nNbPlayer;
+		for(int i = 0 ; i < m_Game.m_nNbPlayer ; ++i)
+			m_Players[i] = new CPlayer(posInit, CPlayer.EIdPlayer.e_IdPlayer_Player1);
+		
+	}
+	
+	//-------------------------------------------------------------------------------
+	///
+	//-------------------------------------------------------------------------------
 	public CPlayer getPlayer()
 	{
-		return m_Player;
+		return m_Players[0];
 	}
 	
 	//-------------------------------------------------------------------------------
