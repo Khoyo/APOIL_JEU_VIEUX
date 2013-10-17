@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class CMachine : CElement 
 {
@@ -50,11 +51,16 @@ public class CMachine : CElement
 	}
 	
 	public void Activate(CPlayer player){
-		CMachineAction[] actions = m_GameObject.GetComponents<CMachineAction>();
-		foreach(CMachineAction action in actions){
-			action.Activate(player);
+		Component[] components = m_GameObject.GetComponents<Component>();
+		
+		foreach(Component component in components){
+			IMachineAction action = component as IMachineAction;
+			if(action != null)
+				action.Activate(player);
 		}
 	}
+	
+
 	
 }
 

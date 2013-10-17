@@ -1,11 +1,7 @@
 using UnityEngine;
 using System.Collections;
 
-public class CMachineAction : MonoBehaviour
+public interface IMachineAction
 {
-	int i = 0;
-	public void Activate(CPlayer player){
-		//Do noooooooothing
-		Debug.Log("MachineAction Activated "+i++);
-	}
+	void Activate(CPlayer player);
 }
