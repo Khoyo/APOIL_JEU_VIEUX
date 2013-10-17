@@ -1,19 +1,25 @@
 using UnityEngine;
 using System.Collections;
 
+public struct SPadInput
+{
+	bool MoveLeft;
+	bool MoveRight;
+	bool MoveUp;
+	bool MoveDown;
+	bool WalkFast;
+	bool WalkSlow;
+	bool PickUpObject;
+	bool DropObject;
+	bool ActivateMachine;
+	float DirectionHorizontal;
+	float DirectionVertical;
+}
+
 public class CApoilInput
 {
-	public static bool MoveLeft;
-	public static bool MoveRight;
-	public static bool MoveUp;
-	public static bool MoveDown;
-	public static bool WalkFast;
-	public static bool WalkSlow;
-	public static bool PickUpObject;
-	public static bool DropObject;
-	public static bool ActivateMachine;
-	public static float PadLightHorizontal;
-	public static float PadLightVertical;
+	public static SPadInput PadInputPlayer1;
+
 	public static Vector2 MousePosition;
 	
 	static CGame m_Game = GameObject.Find("_Game").GetComponent<CGame>();
