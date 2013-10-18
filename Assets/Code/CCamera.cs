@@ -5,16 +5,21 @@ public class CCamera
 {
 	GameObject m_GameObject;
 	GameObject m_CurrentRoom;
-	CGame game;
+	CGame m_Game;
+	Camera m_Camera;
+	
+	const float m_fSizeMax = 800.0f;
+	const float m_fSizeMin = 400.0f;
 	
 	//-------------------------------------------------------------------------------
 	///
 	//-------------------------------------------------------------------------------	
 	public CCamera()
 	{
-		game = GameObject.Find("_Game").GetComponent<CGame>();
+		m_Game = GameObject.Find("_Game").GetComponent<CGame>();
 		m_GameObject = GameObject.Find("Cameras");
 		m_CurrentRoom =  GameObject.Find("Salle1");
+		m_Camera = m_GameObject.transform.FindChild("RenderCamera").GetComponent<Camera>();
 	}
 	
 	//-------------------------------------------------------------------------------
@@ -56,9 +61,10 @@ public class CCamera
 	//-------------------------------------------------------------------------------
 	///
 	//-------------------------------------------------------------------------------
-	public void SetFactorScale(float fCoeff)
+	public void SetFactorScale(float fSize)
 	{
-		
+		if(fSize < m_fSizeMax && fSize > m_fSizeMin)
+			m_Camera.orthographicSize = fSize;
 	}
 	
 	//-------------------------------------------------------------------------------

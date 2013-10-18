@@ -177,17 +177,24 @@ public class CLevel
 		return eId;
 	}
 	
+	//-------------------------------------------------------------------------------
+	///
+	//-------------------------------------------------------------------------------
 	public void SetCameraPosition()
 	{
 		Vector2 posPlayer1 = new Vector2(m_Players[0].getGameObject().transform.position.x, m_Players[0].getGameObject().transform.position.y);
 		Vector2 posPlayer2 = new Vector2(m_Players[1].getGameObject().transform.position.x, m_Players[1].getGameObject().transform.position.y);
 		Vector2 posCenter = (posPlayer2 + posPlayer1)/2;
 		m_Game.getCamera().SetPosition(posCenter);
+		m_Game.getCamera().SetFactorScale((posPlayer1 - posPlayer2).magnitude);
 		
 		//Debug
 	//	Debug.DrawLine (m_Players[0].getGameObject().transform.position, m_Players[1].getGameObject().transform.position);
 		Debug.DrawLine(m_Players[0].getGameObject().transform.position, new Vector3(posCenter.x, posCenter.y, 0));
 	}
+	
+
+	
 	
 	//-------------------------------------------------------------------------------
 	///
