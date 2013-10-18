@@ -6,14 +6,18 @@ public class CScriptTakeElement : MonoBehaviour
 	CGame m_Game;
 	CTakeElement m_TakeElement;
 	
-	// Use this for initialization
+	//-------------------------------------------------------------------------------
+	/// Unity
+	//-------------------------------------------------------------------------------
 	void Start () 
 	{
 		m_Game = GameObject.Find("_Game").GetComponent<CGame>();
 		m_Game.getLevel().CreateElement<CTakeElement>(gameObject);
 	}
 	
-	// Update is called once per frame
+	//-------------------------------------------------------------------------------
+	/// Unity
+	//-------------------------------------------------------------------------------
 	void Update () 
 	{
 		if(CApoilInput.InputPlayer1.DropObject)

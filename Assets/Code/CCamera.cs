@@ -65,6 +65,10 @@ public class CCamera
 	{
 		if(fSize <= m_fSizeMax && fSize >= m_fSizeMin)
 			m_Camera.orthographicSize = fSize;
+		else if(fSize > m_fSizeMax)
+			m_Camera.orthographicSize = m_fSizeMax;
+		else if(fSize < m_fSizeMin)
+			m_Camera.orthographicSize = m_fSizeMin;
 	}
 	
 	//-------------------------------------------------------------------------------

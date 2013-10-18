@@ -6,7 +6,6 @@ public class CLevel
 {
 	CGame m_Game;
 	CPlayer[] m_Players;
-	CMonster m_Monster;
 	float m_bTimerLightSwitch;
 	
 	List<CElement> m_pElement;
@@ -17,13 +16,10 @@ public class CLevel
 	public CLevel()
 	{
 		m_Game = GameObject.Find("_Game").GetComponent<CGame>();
-		
-		Vector2 posInitM = new Vector2(100.0f, 0.0f);
-		
+				
 		m_Players = new CPlayer[m_Game.m_nNbPlayer];
 		CreatePlayers();
 
-		m_Monster = new CMonster(posInitM);
 		m_bTimerLightSwitch = 0;
 		
 		m_pElement = new List<CElement>();
@@ -38,8 +34,6 @@ public class CLevel
 		for(int i = 0 ; i < m_Game.m_nNbPlayer ; ++i)
 			m_Players[i].Init();
 		
-		m_Monster.Init();
-		
 		foreach(CElement elem in m_pElement)
 			elem.Init();
 		
@@ -51,8 +45,9 @@ public class CLevel
 	public void Reset()
 	{
 		for(int i = 0 ; i < m_Game.m_nNbPlayer ; ++i)
+		{
 			m_Players[i].Reset();
-		m_Monster.Reset();
+		}
 		
 		foreach(CElement elem in m_pElement)
 			elem.Reset();
@@ -65,7 +60,6 @@ public class CLevel
 	{
 		for(int i = 0 ; i < m_Game.m_nNbPlayer ; ++i)
 			m_Players[i].Process(fDeltatime);
-		m_Monster.Process(fDeltatime);
 		
 		GestionCameraTwoPlayers();
 		
@@ -123,7 +117,9 @@ public class CLevel
 	//-------------------------------------------------------------------------------
 	public void CreatePlayers()
 	{
-		Vector2 posInit = new Vector2(0.0f, 0.0f);
+		//Vector3 pos3D = m_Game.GetLevelIn(m_Game.GetIdLevel()).transform.position;
+		//Vector2 posInit = new Vector2 (pos3D.x, pos3D.y);
+		Vector2 posInit = new Vector2 (0,0);
 		int nNbPlayer = m_Game.m_nNbPlayer;
 		
 		SAnimationPlayer[] AnimPlayer = new SAnimationPlayer[4];
@@ -217,11 +213,4 @@ public class CLevel
 		return m_Players[i];
 	}
 	
-	//-------------------------------------------------------------------------------
-	///
-	//-------------------------------------------------------------------------------
-	public CMonster getMonster()
-	{
-		return m_Monster;
-	}
 }

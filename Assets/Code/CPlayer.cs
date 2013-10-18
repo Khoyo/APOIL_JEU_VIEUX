@@ -24,6 +24,7 @@ public class CPlayer : CCharacter {
 	GameObject m_Torche;
 	
 	Camera m_CameraCone;
+	Vector2 m_posInit;
 	Vector2 m_DirectionRegard;
 	Vector2 m_DirectionDeplacement;
 	bool m_bMainCharacter;
@@ -76,6 +77,7 @@ public class CPlayer : CCharacter {
 		GameObject prefab = game.prefabPlayer;
 		m_GameObject = GameObject.Instantiate(prefab) as GameObject;
 		SetPosition2D(posInit);
+		m_posInit = posInit;
 		
 		m_ConeVision = m_GameObject.GetComponent<CConeVision>();
 		m_CameraCone = game.m_CameraCone;
@@ -105,7 +107,7 @@ public class CPlayer : CCharacter {
 	public new void Init()
 	{	
 		base.Init();
-		
+		SetPosition2D(m_posInit);
 		//Appel a la main des scripts du gameObject
 		m_spriteSheet.Init();
 		m_ConeVision.Init();
@@ -121,6 +123,9 @@ public class CPlayer : CCharacter {
 	public new void Reset()
 	{
 		base.Reset();
+		SetPosition2D(m_posInit);
+		m_GameObject.active = true;
+		m_bIsAlive = true;
 	}
 
 	//-------------------------------------------------------------------------------
@@ -391,6 +396,11 @@ public class CPlayer : CCharacter {
 	{
 		m_bIsAlive = false;
 		m_GameObject.active = false;
+	}
+	
+	public void ResetPosInit(Vector2 posInit)
+	{
+		m_posInit = posInit;	
 	}
 	
 	//-------------------------------------------------------------------------------

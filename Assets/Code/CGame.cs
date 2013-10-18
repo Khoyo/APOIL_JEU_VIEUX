@@ -9,6 +9,8 @@ public class CGame : MonoBehaviour
 	public Camera m_CameraCone;
 	public GameObject m_debugDraw;
 	public GameObject m_renderScreen;	
+	public int m_nNbLevel;
+	public GameObject m_LevelIn1;
 	
 	// materials
 	public Material m_materialPlayer1Repos;
@@ -63,9 +65,11 @@ public class CGame : MonoBehaviour
 	bool m_bWin;
 	int m_nScreenWidth;
 	int m_nScreenHeight;
+	int m_nIdLevel;
 	CLevel m_Level;
 	CCamera m_Camera;
 	CSoundEngine m_SoundEngine;
+	GameObject[] m_pLevelIn;
 	
 	//-------------------------------------------------------------------------------
 	///
@@ -76,12 +80,18 @@ public class CGame : MonoBehaviour
 		m_SoundEngine.Init();
 		m_SoundEngine.LoadBank(soundbankName);
 		
+		/*m_nIdLevel = 0;
+		m_pLevelIn = new GameObject[m_nNbLevel];
+		m_pLevelIn[0] = m_LevelIn1;*/
+		
 		m_Level = new CLevel();
 		m_Level.Init();
 		m_nScreenWidth = 1280;
 		m_nScreenHeight = 800;
 		m_Camera = new CCamera();
 		m_Camera.Init();
+		
+		
 	}
 	
 	//-------------------------------------------------------------------------------
@@ -91,6 +101,7 @@ public class CGame : MonoBehaviour
 	{
 		m_Level.Reset();
 		m_Camera.Reset();
+		m_bInGame = true;
 	}
 	
 	//-------------------------------------------------------------------------------
@@ -104,11 +115,15 @@ public class CGame : MonoBehaviour
 			m_Level.Process(fDeltatime);
 			m_Camera.Process(fDeltatime);
 			//ProcessRoomState();
+			CheckLooseGame();		
+			
 			//Quit on Escape
 			if(Input.GetKey(KeyCode.Escape))
 				Application.Quit();
 			
 			//Debug
+			if(Input.GetKey(KeyCode.F8))
+				StartLevel(m_nIdLevel);
 			if(Input.GetKey(KeyCode.F9))
 				FinishLevel(true, CPlayer.EIdPlayer.e_IdPlayer_Player1);
 			if(Input.GetKey(KeyCode.F10))
@@ -125,6 +140,7 @@ public class CGame : MonoBehaviour
 	{
 		GUI.Label(new Rect(10, 10, 100, 20), System.Convert.ToString(Time.deltaTime));
 		GUI.Label(new Rect(10, 30, 100, 20), System.Convert.ToString(1f/Time.deltaTime));
+		GUI.Label(new Rect(10, 50, 100, 20), System.Convert.ToString(m_nIdLevel));
 	}
 	
 	//-------------------------------------------------------------------------------
@@ -243,6 +259,41 @@ public class CGame : MonoBehaviour
 	}
 	
 	//-------------------------------------------------------------------------------
+	/// 
+	//-------------------------------------------------------------------------------
+	public void StartLevel(int i)
+	{
+		m_nIdLevel = i;
+		Reset();
+	}
+	
+	public void GoToNextLevel()
+	{
+		if(m_nIdLevel < m_nNbLevel)
+			++m_nIdLevel;
+	}
+	
+	public int GetIdLevel()
+	{
+		return m_nIdLevel;
+	}
+	
+	//-------------------------------------------------------------------------------
+	/// 
+	//-------------------------------------------------------------------------------
+	void CheckLooseGame()
+	{
+		bool bLoose = true;
+		for (int i = 0 ; i < m_nNbPlayer ; ++i)
+		{
+			if(getLevel().getPlayer(i).IsAlive())
+				bLoose = false;
+		}	
+		if(bLoose)
+			FinishLevel(false, CPlayer.EIdPlayer.e_IdPlayer_Player1);
+	}
+	
+	//-------------------------------------------------------------------------------
 	/// Unity
 	//-------------------------------------------------------------------------------
 	void OnGUI() 
@@ -299,5 +350,10 @@ public class CGame : MonoBehaviour
 	public bool IsWin()
 	{
 		return m_bWin;	
+	}
+	
+	public GameObject GetLevelIn(int i)
+	{
+		return m_pLevelIn[i];
 	}
 }

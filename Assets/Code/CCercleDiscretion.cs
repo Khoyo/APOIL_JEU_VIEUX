@@ -35,9 +35,9 @@ public class CCercleDiscretion : MonoBehaviour {
 	}
 	
 	public void OnTriggerEnter(Collider other){
-		CMonster monster = game.getLevel().getMonster();
+		/*CMonster monster = game.getLevel().getMonster();
 		if(other.gameObject == monster.getGameObject()){
 			monster.detectedPlayerAudio();
-		}
+		}*/
 	}
 }

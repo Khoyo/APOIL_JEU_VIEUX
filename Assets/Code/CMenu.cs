@@ -21,8 +21,12 @@ public class CMenu : MonoBehaviour{
 	public Texture m_Texture_ButtonMenu;
 	public Texture m_Texture_ButtonQuit;
 	public Texture m_Texture_ButtonPause;
+	public Texture m_Texture_ButtonOk;
 	public Texture m_Texture_Splash;
 	public Texture m_Texture_Credit;
+	public Texture m_Texture_Blue;
+	public Texture m_Texture_Red;
+	public Texture m_Texture_Lost;
 	public MovieTexture m_Texture_movie_intro;
 	Texture m_Texture_PlayerWin;
 	
@@ -109,7 +113,6 @@ public class CMenu : MonoBehaviour{
 	//-------------------------------------------------------------------------------
 	void OnGUI() 
 	{
-		CGame game = gameObject.GetComponent<CGame>();
 		switch(m_EState)
 		{
 			case EmenuState.e_menuState_splash:
@@ -150,7 +153,7 @@ public class CMenu : MonoBehaviour{
 			
 				if (GUI.Button(new Rect(390, 100, 500, 150), m_Texture_ButtonPlay))
 				{
-		            game.StartGame();
+		            m_Game.StartGame();
 					ResumeGame();
 					m_EState = EmenuState.e_menuState_inGame;
 				}
@@ -217,13 +220,28 @@ public class CMenu : MonoBehaviour{
 			}	
 			case EmenuState.e_menuState_menuWinLoose:
 			{
+				PauseGame();
+				float fPosX = m_Game.GetSizeScreen().x / 2.0f;
+				float fPosY = m_Game.GetSizeScreen().y / 2.0f;
+				float fWidth = 300.0f;
+				float fSizeSprite = 200.0f;
 				if(m_Game.IsWin())
 				{
-					GUI.DrawTexture(new Rect(0, 0, 200, 200), m_Texture_PlayerWin);
+					GUI.DrawTexture(new Rect(0, fPosY - fWidth/2.0f, m_Game.GetSizeScreen().x, fWidth), m_Texture_Blue);
+					GUI.DrawTexture(new Rect(fPosX - fSizeSprite/2.0f, fPosY - fSizeSprite/2.0f, fSizeSprite, fSizeSprite), m_Texture_PlayerWin);
+					
 				}
 				else
 				{
-					
+					GUI.DrawTexture(new Rect(0, fPosY - fWidth/2.0f, m_Game.GetSizeScreen().x, fWidth), m_Texture_Red);
+					GUI.DrawTexture(new Rect(fPosX - fSizeSprite/2.0f, fPosY - fSizeSprite/2.0f, fSizeSprite, fSizeSprite), m_Texture_Lost);
+				}
+			
+				if (GUI.Button(new Rect(390, 100, 500, 150), m_Texture_ButtonOk))
+				{	
+					m_EState = EmenuState.e_menuState_inGame;
+					m_Game.StartLevel(m_Game.GetIdLevel());
+					ResumeGame();
 				}
 				break;
 			}
