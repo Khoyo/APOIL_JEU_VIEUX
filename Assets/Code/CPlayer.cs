@@ -420,4 +420,9 @@ public class CPlayer : CCharacter {
 		return m_bHaveObject;	
 	}
 	
+	public bool IsAlive()
+	{
+		return m_bIsAlive;
+	}	
+	
 }

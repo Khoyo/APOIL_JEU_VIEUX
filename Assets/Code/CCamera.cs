@@ -63,7 +63,7 @@ public class CCamera
 	//-------------------------------------------------------------------------------
 	public void SetFactorScale(float fSize)
 	{
-		if(fSize < m_fSizeMax && fSize > m_fSizeMin)
+		if(fSize <= m_fSizeMax && fSize >= m_fSizeMin)
 			m_Camera.orthographicSize = fSize;
 	}
 	
