@@ -6,11 +6,11 @@ public class CMachineLanceurDeScie : MonoBehaviour, IMachineAction
 {
 	
 	public GameObject m_PrefabScie;
-	public bool shouldFire = true;
 	public int m_MaxScie ;
 	CScie[] m_Scies;
 	int m_ScieNumber = 0;
-	
+	float m_timeOfLastLaunch = 0;
+	public float m_Delay;
 	
 	public void Init()
 	{
@@ -28,13 +28,14 @@ public class CMachineLanceurDeScie : MonoBehaviour, IMachineAction
 	
 	public void Process()
 	{
-		if(shouldFire){
+		if((Time.time-m_Delay) > m_timeOfLastLaunch){
 			CScie saw = GetNewSaw();
 			saw.getGameObject().active = true;
 			saw.getGameObject().transform.position = transform.position + new Vector3(150, 0, 0);;
 			saw.getGameObject().rigidbody.velocity = new Vector3(2500,0,0);
 			
 			shouldFire = false;
+			m_timeOfLastLaunch = Time.time;
 		}
 	}
 	
@@ -51,7 +52,7 @@ public class CMachineLanceurDeScie : MonoBehaviour, IMachineAction
 				index_min = i;
 			}
 		}
-		Debug.Log ("returning Scie number "+index_min);
+		//Debug.Log ("returning Scie number "+index_min);
 		m_Scies[index_min].m_number = m_ScieNumber++;
 		
 		return m_Scies[index_min];
