@@ -3,13 +3,14 @@ using System.Collections;
 
 public class CMenu : MonoBehaviour{
 	
-	enum EmenuState
+	public enum EmenuState
 	{
 		e_menuState_splash,
 		e_menuState_main,
 		e_menuState_credits,
 		e_menuState_movie,
-		e_menuState_inGame
+		e_menuState_inGame,
+		e_menuState_menuWinLoose,
 	}
 	
 	EmenuState m_EState;
@@ -23,6 +24,7 @@ public class CMenu : MonoBehaviour{
 	public Texture m_Texture_Splash;
 	public Texture m_Texture_Credit;
 	public MovieTexture m_Texture_movie_intro;
+	Texture m_Texture_PlayerWin;
 	
 	float m_fTempsSplash;
 	const float m_fTempsSplashInit = 2.0f;
@@ -56,6 +58,22 @@ public class CMenu : MonoBehaviour{
 	bool GameIsPaused()
 	{
 		return m_bGamePaused;
+	}
+	
+	//-------------------------------------------------------------------------------
+	/// 
+	//-------------------------------------------------------------------------------
+	public void SetMenuState(EmenuState eState)
+	{
+		m_EState = eState;
+	}
+	
+	//-------------------------------------------------------------------------------
+	/// 
+	//-------------------------------------------------------------------------------
+	public void SetTexturePlayerWin(Texture TexturePlayerWin)
+	{
+		m_Texture_PlayerWin = TexturePlayerWin;
 	}
 	
 	//-------------------------------------------------------------------------------
@@ -197,6 +215,18 @@ public class CMenu : MonoBehaviour{
 				}
 				break;
 			}	
+			case EmenuState.e_menuState_menuWinLoose:
+			{
+				if(m_Game.IsWin())
+				{
+					GUI.DrawTexture(new Rect(0, 0, 200, 200), m_Texture_PlayerWin);
+				}
+				else
+				{
+					
+				}
+				break;
+			}
 		}
     }
 }

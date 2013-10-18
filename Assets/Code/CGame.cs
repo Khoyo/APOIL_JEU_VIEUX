@@ -17,6 +17,12 @@ public class CGame : MonoBehaviour
 	public Material m_materialPlayer2Repos;
 	public Material m_materialPlayer2Horizontal;
 	public Material m_materialPlayer2Vertical;
+	public Material m_materialPlayer3Repos;
+	public Material m_materialPlayer3Horizontal;
+	public Material m_materialPlayer3Vertical;
+	public Material m_materialPlayer4Repos;
+	public Material m_materialPlayer4Horizontal;
+	public Material m_materialPlayer4Vertical;
 	
 	// variables de LD
 	public bool m_bPadXBox = false;
@@ -52,6 +58,7 @@ public class CGame : MonoBehaviour
 	// variables
 	bool m_bInGame;
 	bool m_bGameStarted;
+	bool m_bWin;
 	int m_nScreenWidth;
 	int m_nScreenHeight;
 	CLevel m_Level;
@@ -98,6 +105,12 @@ public class CGame : MonoBehaviour
 			//Quit on Escape
 			if(Input.GetKey(KeyCode.Escape))
 				Application.Quit();
+			
+			//Debug
+			if(Input.GetKey(KeyCode.F9))
+				FinishLevel(true, CPlayer.EIdPlayer.e_IdPlayer_Player1);
+			if(Input.GetKey(KeyCode.F10))
+				FinishLevel(false, CPlayer.EIdPlayer.e_IdPlayer_Player1);
 		}
 		
 	}
@@ -184,6 +197,50 @@ public class CGame : MonoBehaviour
 	}
 	
 	//-------------------------------------------------------------------------------
+	/// 
+	//-------------------------------------------------------------------------------
+	public void FinishLevel(bool bWin, CPlayer.EIdPlayer idPlayerWin)
+	{
+		m_bInGame = false;
+		m_bWin = bWin;
+		CMenu menu = gameObject.GetComponent<CMenu>();
+		Texture TexturePlayerWin = m_materialPlayer1Repos.mainTexture;;
+		if(m_bWin)
+		{	
+			switch(idPlayerWin)
+			{
+				case CPlayer.EIdPlayer.e_IdPlayer_Player1 :
+				{
+					TexturePlayerWin = m_materialPlayer1Repos.mainTexture;
+					break;	
+				}
+				case CPlayer.EIdPlayer.e_IdPlayer_Player2 :
+				{
+					TexturePlayerWin = m_materialPlayer2Repos.mainTexture;
+					break;	
+				}
+				case CPlayer.EIdPlayer.e_IdPlayer_Player3 :
+				{
+					TexturePlayerWin = m_materialPlayer3Repos.mainTexture;
+					break;	
+				}
+				case CPlayer.EIdPlayer.e_IdPlayer_Player4 :
+				{
+					TexturePlayerWin = m_materialPlayer4Repos.mainTexture;
+					break;	
+				}
+			}
+			
+			menu.SetTexturePlayerWin(TexturePlayerWin);
+		}
+		else
+		{
+			
+		}
+		menu.SetMenuState(CMenu.EmenuState.e_menuState_menuWinLoose);
+	}
+	
+	//-------------------------------------------------------------------------------
 	/// Unity
 	//-------------------------------------------------------------------------------
 	void OnGUI() 
@@ -203,6 +260,7 @@ public class CGame : MonoBehaviour
 	{
 		m_bInGame = false;
 		m_bGameStarted = false;
+		m_bWin = false;
 		if (m_bNotUseMasterGame)
 		{
 			StartGame();
@@ -234,5 +292,10 @@ public class CGame : MonoBehaviour
 	
 	public CSoundEngine getSoundEngine(){
 		return m_SoundEngine;
+	}
+	
+	public bool IsWin()
+	{
+		return m_bWin;	
 	}
 }
