@@ -50,7 +50,7 @@ public class CMonster : CCharacter
 		base.Init();
 		SetState(m_eMonsterState);
 		m_fTimerErrance = 0.0f;
-		m_Player = m_Game.getLevel().getPlayer();
+		m_Player = m_Game.getLevel().getPlayer(0);
 	}
 
 	//-------------------------------------------------------------------------------

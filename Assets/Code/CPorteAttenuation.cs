@@ -29,7 +29,7 @@ public class CPorteAttenuation : MonoBehaviour
 	
 	void OnTriggerEnter(Collider other){
 		
-		if(other.gameObject != game.getLevel().getPlayer().getGameObject())
+		if(other.gameObject != game.getLevel().getPlayer(0).getGameObject())
 			return;
 
 		
@@ -43,7 +43,7 @@ public class CPorteAttenuation : MonoBehaviour
 	}
 	
 	void OnTriggerExit(Collider other){
-		if(other.gameObject != game.getLevel().getPlayer().getGameObject())
+		if(other.gameObject != game.getLevel().getPlayer(0).getGameObject())
 			return;
 		
 		
@@ -67,7 +67,7 @@ public class CPorteAttenuation : MonoBehaviour
 	
 	
 	void OnTriggerStay(Collider other){
-		if(other.gameObject != game.getLevel().getPlayer().getGameObject() )
+		if(other.gameObject != game.getLevel().getPlayer(0).getGameObject() )
 			return;
 		
 		float dist = Mathf.InverseLerp(0, m_size, Vector3.Distance(transform.position, other.transform.position));

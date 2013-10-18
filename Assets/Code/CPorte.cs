@@ -71,9 +71,9 @@ public class CPorte : MonoBehaviour
 	//-------------------------------------------------------------------------------
 	void OnTriggerEnter(Collider other)
 	{
-		if (other.gameObject == game.getLevel().getPlayer().getGameObject())
+		if (other.gameObject == game.getLevel().getPlayer(0).getGameObject())
 		{
-			if(Vector2.Dot(game.getLevel().getPlayer().getDirectionDeplacement(), m_Direction) > 0)
+			if(Vector2.Dot(game.getLevel().getPlayer(0).getDirectionDeplacement(), m_Direction) > 0)
 				m_bGoodWay = true;
 			else
 				m_bGoodWay = false;
@@ -85,7 +85,7 @@ public class CPorte : MonoBehaviour
 	//-------------------------------------------------------------------------------
 	void OnTriggerExit(Collider other)
 	{		
-		if (other.gameObject == game.getLevel().getPlayer().getGameObject())
+		if (other.gameObject == game.getLevel().getPlayer(0).getGameObject())
 		{
 			Vector3 player_pos = getRelativePosition(gameObject.transform, other.gameObject.transform.position);
 			

@@ -11,10 +11,12 @@ public class CGame : MonoBehaviour
 	public GameObject m_renderScreen;	
 	
 	// materials
-	public Material m_materialPlayerRepos;
-	public Material m_materialPlayerHorizontal;
-	public Material m_materialPlayerVertical;
-	public Material m_materialDEBUGscreen;
+	public Material m_materialPlayer1Repos;
+	public Material m_materialPlayer1Horizontal;
+	public Material m_materialPlayer1Vertical;
+	public Material m_materialPlayer2Repos;
+	public Material m_materialPlayer2Horizontal;
+	public Material m_materialPlayer2Vertical;
 	
 	// variables de LD
 	public bool m_bPadXBox = false;
@@ -110,8 +112,6 @@ public class CGame : MonoBehaviour
 	{
 		GUI.Label(new Rect(10, 10, 100, 20), System.Convert.ToString(Time.deltaTime));
 		GUI.Label(new Rect(10, 30, 100, 20), System.Convert.ToString(1f/Time.deltaTime));
-		GUI.Label(new Rect(10, 50, 100, 20), System.Convert.ToString(getLevel().getPlayer().getState()));
-		GUI.Label(new Rect(10, 70, 150, 20), System.Convert.ToString(getLevel().getMonster().getState()));
 	}
 	
 	//-------------------------------------------------------------------------------
@@ -212,7 +212,6 @@ public class CGame : MonoBehaviour
 		if (m_bDebugRendu)
 		{
 			m_debugDraw.SetActiveRecursively(true);
-			m_renderScreen.renderer.material = m_materialDEBUGscreen;
 		}
 	}
 	
