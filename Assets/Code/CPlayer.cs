@@ -28,6 +28,7 @@ public class CPlayer : CCharacter {
 	Vector2 m_DirectionDeplacement;
 	bool m_bMainCharacter;
 	bool m_bHaveObject;
+	bool m_bIsAlive;
 	
 	CCercleDiscretion m_CercleDiscretion;
 	CTakeElement m_YounesSuceDesBites;
@@ -91,6 +92,7 @@ public class CPlayer : CCharacter {
 		
 		m_YounesSuceDesBites = null;
 		m_bHaveObject = false;
+		m_bIsAlive = true;
 		
 		m_Torche = m_GameObject.transform.FindChild("Torche").gameObject;
 		
@@ -126,46 +128,46 @@ public class CPlayer : CCharacter {
 	//-------------------------------------------------------------------------------	
 	public new void Process(float fDeltatime)
 	{
-		base.Process(fDeltatime);
-		SetPlayerInput();
-		MovePlayer(fDeltatime);
-		GestionTorche(fDeltatime);
-		
-		if(game.IsDebug())
+		if(m_bIsAlive)
 		{
-			if(Input.GetKeyDown(KeyCode.A))
+			base.Process(fDeltatime);
+			SetPlayerInput();
+			MovePlayer(fDeltatime);
+			GestionTorche(fDeltatime);
+			
+			if(game.IsDebug())
 			{
-				m_eState = (m_eState + 1);
-				if (m_eState >= EState.e_state_nbState)
-					m_eState = EState.e_state_normal;
+				if(Input.GetKeyDown(KeyCode.A))
+				{
+					m_eState = (m_eState + 1);
+					if (m_eState >= EState.e_state_nbState)
+						m_eState = EState.e_state_normal;
+				}
 			}
+			
+			//gestion de la lampe torche
+			if(game.m_bLightIsOn == false)
+			{
+				m_Torche.SetActiveRecursively(true);
+			}
+			else
+			{
+				m_Torche.SetActiveRecursively(false);
+			}
+			
+			//gestion si on tiens un objet
+			if(m_bHaveObject)
+			{
+				m_YounesSuceDesBites.SetPosition2D(m_GameObject.transform.position);
+			}
+		
+			//Appel a la main des scripts du gameObject
+			m_spriteSheet.Process();
+			if(m_bMainCharacter)
+				m_ConeVision.Process();
+			
+			m_CercleDiscretion.Process();
 		}
-		
-		//gestion de la lampe torche
-		if(game.m_bLightIsOn == false)
-		{
-			m_Torche.SetActiveRecursively(true);
-		}
-		else
-		{
-			m_Torche.SetActiveRecursively(false);
-		}
-		
-		//gestion si on tiens un objet
-		if(m_bHaveObject)
-		{
-			m_YounesSuceDesBites.SetPosition2D(m_GameObject.transform.position);
-		}
-		
-		//DEBUG
-		
-		
-		//Appel a la main des scripts du gameObject
-		m_spriteSheet.Process();
-		if(m_bMainCharacter)
-			m_ConeVision.Process();
-		
-		m_CercleDiscretion.Process();
 	}
 	
 	//-------------------------------------------------------------------------------
@@ -380,6 +382,15 @@ public class CPlayer : CCharacter {
 				break;
 		}
 			
+	}
+	
+	//-------------------------------------------------------------------------------
+	///
+	//-------------------------------------------------------------------------------
+	public void Die()
+	{
+		m_bIsAlive = false;
+		m_GameObject.active = false;
 	}
 	
 	//-------------------------------------------------------------------------------

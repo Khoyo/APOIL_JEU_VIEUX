@@ -33,8 +33,7 @@ public class CMachineLanceurDeScie : MonoBehaviour, IMachineAction
 			saw.getGameObject().active = true;
 			saw.getGameObject().transform.position = transform.position + new Vector3(150, 0, 0);;
 			saw.getGameObject().rigidbody.velocity = new Vector3(2500,0,0);
-			
-			shouldFire = false;
+		
 			m_timeOfLastLaunch = Time.time;
 		}
 	}
