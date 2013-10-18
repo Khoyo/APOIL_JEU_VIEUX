@@ -55,6 +55,8 @@ public class CGame : MonoBehaviour
 	
 	public int m_nNbPlayer = 1;
 	
+	public GameObject m_PrefabScie;
+	
 	// variables
 	bool m_bInGame;
 	bool m_bGameStarted;
