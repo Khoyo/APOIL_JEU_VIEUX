@@ -51,4 +51,9 @@ public class CTakeElement : CElement {
 	{
 		base.Process(fDeltatime);
 	}
+	
+	public ETypeObject GetTypeElement()
+	{
+		return m_eTypeObject;
+	}
 }
