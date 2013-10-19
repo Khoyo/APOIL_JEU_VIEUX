@@ -14,7 +14,6 @@ public class CScie : CElement {
 		m_GameObject = GameObject.Instantiate(m_Game.m_PrefabScie) as GameObject;
 		m_GameObject.GetComponent<CScriptScie>().SetScie(this);
 		
-		Debug.Log("Init CScie number "+m_number);
 	}
 	
 	
