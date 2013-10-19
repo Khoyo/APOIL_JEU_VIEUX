@@ -7,6 +7,7 @@ public class CLevel
 	CGame m_Game;
 	CPlayer[] m_Players;
 	float m_bTimerLightSwitch;
+	GameObject m_ObjetLevel;
 	
 	List<CElement> m_pElement;
 	
@@ -117,7 +118,7 @@ public class CLevel
 	//-------------------------------------------------------------------------------
 	public void CreatePlayers()
 	{
-		//Vector3 pos3D = m_Game.GetLevelIn(m_Game.GetIdLevel()).transform.position;
+		//Vector3 pos3D = m_ObjetLevel.GetComponentInChildren<GameObject>("LevelIn").transform.position;
 		//Vector2 posInit = new Vector2 (pos3D.x, pos3D.y);
 		Vector2 posInit = new Vector2 (0,0);
 		int nNbPlayer = m_Game.m_nNbPlayer;
@@ -202,6 +203,13 @@ public class CLevel
 
 	}
 	
+	//-------------------------------------------------------------------------------
+	///
+	//-------------------------------------------------------------------------------
+	public void SetObjetLevel(GameObject obj)
+	{
+		m_ObjetLevel = obj;
+	}
 
 	
 	

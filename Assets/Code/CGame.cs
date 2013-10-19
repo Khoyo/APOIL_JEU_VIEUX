@@ -10,7 +10,7 @@ public class CGame : MonoBehaviour
 	public GameObject m_debugDraw;
 	public GameObject m_renderScreen;	
 	public int m_nNbLevel;
-	public GameObject m_LevelIn1;
+	public GameObject m_ObjLevel1;
 	
 	// materials
 	public Material m_materialPlayer1Repos;
@@ -167,6 +167,7 @@ public class CGame : MonoBehaviour
 		if(!m_bGameStarted)
 		{
 			Init();
+			StartLevel(0);
 			m_bGameStarted = true;
 		}
 		
@@ -264,7 +265,9 @@ public class CGame : MonoBehaviour
 	public void StartLevel(int i)
 	{
 		m_nIdLevel = i;
+		m_Level.SetObjetLevel(m_ObjLevel1);
 		Reset();
+		
 	}
 	
 	public void GoToNextLevel()
