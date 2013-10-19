@@ -32,7 +32,7 @@ public class CPlayer : CCharacter {
 	bool m_bIsAlive;
 	
 	CCercleDiscretion m_CercleDiscretion;
-	CTakeElement m_YounesSuceDesBites;
+	CTakeElement m_HeldObject;
 	SPlayerInput m_PlayerInput;
 	
 	public enum EMoveModState // mode de deplacement
@@ -92,7 +92,7 @@ public class CPlayer : CCharacter {
 		
 		SetPlayerInput();
 		
-		m_YounesSuceDesBites = null;
+		m_HeldObject = null;
 		m_bHaveObject = false;
 		m_bIsAlive = true;
 		
@@ -163,7 +163,7 @@ public class CPlayer : CCharacter {
 			//gestion si on tiens un objet
 			if(m_bHaveObject)
 			{
-				m_YounesSuceDesBites.SetPosition2D(m_GameObject.transform.position);
+				m_HeldObject.SetPosition2D(m_GameObject.transform.position);
 			}
 		
 			//Appel a la main des scripts du gameObject
@@ -218,8 +218,13 @@ public class CPlayer : CCharacter {
 	//-------------------------------------------------------------------------------
 	public void PickUpObject(CTakeElement obj)
 	{
-		m_YounesSuceDesBites = obj;
+		m_HeldObject = obj;
 		m_bHaveObject = true;
+	}
+	
+	public CTakeElement GetHeldElement()
+	{
+		return m_HeldObject;
 	}
 	
 	//-------------------------------------------------------------------------------
@@ -227,7 +232,7 @@ public class CPlayer : CCharacter {
 	//-------------------------------------------------------------------------------
 	public void DropElement()
 	{
-		m_YounesSuceDesBites = null;
+		m_HeldObject = null;
 		m_bHaveObject = false;
 	}
 	

@@ -54,6 +54,9 @@ public class CMachine : CElement
 	//-------------------------------------------------------------------------------	
 	public override void Process(float fDeltatime)
 	{
+		if(!m_GameObject.active)
+			return;
+		
 		base.Process(fDeltatime);
 		
 		Component[] components = m_GameObject.GetComponents<Component>();
