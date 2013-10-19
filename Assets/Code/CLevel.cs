@@ -19,7 +19,6 @@ public class CLevel
 		m_Game = GameObject.Find("_Game").GetComponent<CGame>();
 				
 		m_Players = new CPlayer[m_Game.m_nNbPlayer];
-		CreatePlayers();
 
 		m_bTimerLightSwitch = 0;
 		
@@ -32,6 +31,7 @@ public class CLevel
 	//-------------------------------------------------------------------------------
 	public void Init()
 	{	
+		CreatePlayers();
 		for(int i = 0 ; i < m_Game.m_nNbPlayer ; ++i)
 			m_Players[i].Init();
 		
@@ -118,9 +118,15 @@ public class CLevel
 	//-------------------------------------------------------------------------------
 	public void CreatePlayers()
 	{
-		//Vector3 pos3D = m_ObjetLevel.GetComponentInChildren<GameObject>("LevelIn").transform.position;
-		//Vector2 posInit = new Vector2 (pos3D.x, pos3D.y);
-		Vector2 posInit = new Vector2 (0,0);
+		Vector3 pos3D = m_ObjetLevel.transform.FindChild("_LevelIn").position;
+		Vector2 posInit = new Vector2 (pos3D.x, pos3D.y);
+		float fSizePlayer = 100.0f;
+		Vector2[] posPlayer = new Vector2[4];
+		posPlayer[0] = new Vector2(pos3D.x - fSizePlayer / 2.0f, pos3D.y - fSizePlayer / 2.0f);
+		posPlayer[1] = new Vector2(pos3D.x + fSizePlayer / 2.0f, pos3D.y - fSizePlayer / 2.0f);
+		posPlayer[2] = new Vector2(pos3D.x + fSizePlayer / 2.0f, pos3D.y + fSizePlayer / 2.0f);
+		posPlayer[3] = new Vector2(pos3D.x - fSizePlayer / 2.0f, pos3D.y + fSizePlayer / 2.0f);
+		//Vector2 posInit = new Vector2 (0,0);
 		int nNbPlayer = m_Game.m_nNbPlayer;
 		
 		SAnimationPlayer[] AnimPlayer = new SAnimationPlayer[4];
@@ -143,9 +149,9 @@ public class CLevel
 		
 		for(int i = 0 ; i < m_Game.m_nNbPlayer ; ++i)
 		{
+			
 			CPlayer.EIdPlayer eIdPlayer = SetIdPlayer(i);
-			m_Players[i] = new CPlayer(posInit, eIdPlayer, AnimPlayer[i]);
-			posInit[1] += 150.0f;
+			m_Players[i] = new CPlayer(posPlayer[i], eIdPlayer, AnimPlayer[i]);
 		}
 		
 	}

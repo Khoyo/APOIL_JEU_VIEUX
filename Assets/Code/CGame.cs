@@ -85,13 +85,13 @@ public class CGame : MonoBehaviour
 		m_pLevelIn[0] = m_LevelIn1;*/
 		
 		m_Level = new CLevel();
+		m_Level.SetObjetLevel(m_ObjLevel1);
 		m_Level.Init();
+		
 		m_nScreenWidth = 1280;
 		m_nScreenHeight = 800;
 		m_Camera = new CCamera();
-		m_Camera.Init();
-		
-		
+		m_Camera.Init();		
 	}
 	
 	//-------------------------------------------------------------------------------
@@ -165,7 +165,7 @@ public class CGame : MonoBehaviour
 	public void StartGame()
 	{
 		if(!m_bGameStarted)
-		{
+		{	
 			Init();
 			StartLevel(0);
 			m_bGameStarted = true;
@@ -266,8 +266,7 @@ public class CGame : MonoBehaviour
 	{
 		m_nIdLevel = i;
 		m_Level.SetObjetLevel(m_ObjLevel1);
-		Reset();
-		
+		Reset();	
 	}
 	
 	public void GoToNextLevel()
