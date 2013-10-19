@@ -118,6 +118,21 @@ public class CApoilInput
 		
 	}
 	
+	public static SPlayerInput GetInput(int player_number){
+		switch(player_number){
+			case 0:
+				return InputPlayer1;
+			case 1:
+				return InputPlayer2;
+			case 2: 
+				return InputPlayer3;
+			case 3: 
+				return InputPlayer4;
+		}
+		Debug.LogError("Player "+player_number+" does not exist");
+		return new SPlayerInput();
+	}
+	
 	//-------------------------------------------------------------------------------
 	///
 	//-------------------------------------------------------------------------------	
