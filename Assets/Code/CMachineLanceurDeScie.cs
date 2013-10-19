@@ -31,8 +31,8 @@ public class CMachineLanceurDeScie : MonoBehaviour, IMachineAction
 		if((Time.time-m_Delay) > m_timeOfLastLaunch){
 			CScie saw = GetNewSaw();
 			saw.getGameObject().active = true;
-			saw.getGameObject().transform.position = transform.position + new Vector3(150, 0, 0);;
-			saw.getGameObject().rigidbody.velocity = new Vector3(2500,0,0);
+			saw.getGameObject().transform.position = transform.position + gameObject.transform.rotation * new Vector3(150, 0, 0);;
+			saw.getGameObject().rigidbody.velocity = gameObject.transform.rotation * new Vector3(2500,0,0);
 		
 			m_timeOfLastLaunch = Time.time;
 		}
