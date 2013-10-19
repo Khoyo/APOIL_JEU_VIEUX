@@ -394,6 +394,7 @@ public class CPlayer : CCharacter {
 	//-------------------------------------------------------------------------------
 	public void Die()
 	{
+		DropElement();
 		m_bIsAlive = false;
 		m_GameObject.active = false;
 	}
