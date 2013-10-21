@@ -240,6 +240,7 @@ public class CMenu : MonoBehaviour{
 				if (GUI.Button(new Rect(390, 100, 500, 150), m_Texture_ButtonOk))
 				{	
 					m_EState = EmenuState.e_menuState_inGame;
+					ResumeGame();
 					m_Game.GoToNextLevel();
 				}
 				break;

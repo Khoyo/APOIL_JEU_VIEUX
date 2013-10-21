@@ -279,8 +279,10 @@ public class CGame : MonoBehaviour
 	
 	public void GoToNextLevel()
 	{
+		Debug.Log ("Exiting level "+Application.loadedLevel);
 		if(Application.loadedLevel < Application.levelCount)
 			Application.LoadLevel(Application.loadedLevel+1);
+		m_bInGame = true;
 		
 	}
 	

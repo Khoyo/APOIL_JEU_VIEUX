@@ -113,7 +113,7 @@ public class CPlayer : CCharacter {
 		m_ConeVision.Init();
 		//m_spriteSheet.SetAnimation(m_AnimRepos);
 		m_CercleDiscretion.Init(this);
-		
+		PrepareStargate();
 		game.getSoundEngine().setSwitch("Sol", "Metal02", m_GameObject);
 	}
 
@@ -173,6 +173,16 @@ public class CPlayer : CCharacter {
 			
 			m_CercleDiscretion.Process();
 		}
+	}
+	
+	void PrepareStargate()
+	{
+		Object.DontDestroyOnLoad(m_GameObject);
+	}
+	
+	void LaunchStargate()
+	{
+		
 	}
 	
 	//-------------------------------------------------------------------------------
@@ -324,6 +334,7 @@ public class CPlayer : CCharacter {
 			CalculateSpeed();
 			
 			m_GameObject.transform.position += m_fSpeed * velocity * fDeltatime;
+			Debug.Log(m_eIdPlayer+": "+ m_fSpeed + " " + velocity + " "+fDeltatime);
 		}
 		else
 		{
