@@ -34,4 +34,9 @@ public class CScriptMachine : MonoBehaviour {
 	public CAnimation GetAnimation(){ 
 		return m_Animation;
 	}
+	
+	public CMachine GetMachine()
+	{
+		return m_Machine;	
+	}
 }

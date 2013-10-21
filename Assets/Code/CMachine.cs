@@ -58,6 +58,7 @@ public class CMachine : CElement
 			return;
 		
 		base.Process(fDeltatime);
+		m_SpriteSheet.Process();
 		
 		Component[] components = m_GameObject.GetComponents<Component>();
 		foreach(Component component in components){
@@ -75,6 +76,11 @@ public class CMachine : CElement
 			if(action != null)
 				action.Activate(player);
 		}
+	}
+	
+	public CSpriteSheet GetSpriteSheet()
+	{
+		return m_SpriteSheet;	
 	}
 	
 

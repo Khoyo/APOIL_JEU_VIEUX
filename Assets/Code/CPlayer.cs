@@ -20,7 +20,7 @@ public class CPlayer : CCharacter {
 	float m_fSpeed;
 	float m_fAngleCone;
 	float m_fTimerDead;
-	const float m_fTimerDeadMax = 3.0f;
+	const float m_fTimerDeadMax = 2.0f;
 	CSpriteSheet m_spriteSheet;
 	SAnimationPlayer m_AnimPlayer;
 	CConeVision m_ConeVision;

@@ -5,6 +5,7 @@ public class CSpriteSheet // : MonoBehaviour
 {
 	bool m_bIsPlaying;
 	bool m_bIsForward;
+	bool m_bIsEnd;
 	int m_nColumns = 1;
 	int m_nRows = 1;	
 	float m_fFPS = 1.0f;
@@ -35,6 +36,7 @@ public class CSpriteSheet // : MonoBehaviour
 	public void Init () {
 		m_bIsPlaying = false;
 		m_bIsForward = true;
+		m_bIsEnd = false;
 		m_myRenderer = m_parent.renderer;
 		m_fTemps = 0.0f;
 		//game = GameObject.Find("_Game").GetComponent<CGame>();
@@ -48,6 +50,15 @@ public class CSpriteSheet // : MonoBehaviour
 	{
 		m_fTemps = 0.0f;
 		m_nIndex = 0;
+	}
+	
+	//-------------------------------------------------------------------------------
+	///	
+	//-------------------------------------------------------------------------------
+	public void ResetAtEnd()
+	{
+		m_fTemps = 0.0f;
+		m_nIndex = m_nRows * m_nColumns - 1;
 	}
 	
 	//-------------------------------------------------------------------------------
@@ -141,6 +152,7 @@ public class CSpriteSheet // : MonoBehaviour
 	public void AnimationStart()
 	{
 		m_bIsPlaying = true;
+		m_bIsEnd = false;
 	}
 	
 	//-------------------------------------------------------------------------------
@@ -149,6 +161,7 @@ public class CSpriteSheet // : MonoBehaviour
 	public void AnimationStop()
 	{
 		m_bIsPlaying = false;	
+		m_bIsEnd = true;
 	}
 	
 	public void SetDirection(bool forward)
@@ -160,7 +173,13 @@ public class CSpriteSheet // : MonoBehaviour
 		m_bIsForward = !m_bIsForward;
 	}
 	
+	
 	public void setEndCondition(EEndCondition c){
 		m_endCondition = c;
+	}
+	
+	public bool IsEnd()
+	{
+		return ((m_endCondition == EEndCondition.e_Stop) && m_bIsEnd);
 	}
 }
