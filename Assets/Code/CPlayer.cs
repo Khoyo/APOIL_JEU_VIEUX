@@ -359,7 +359,10 @@ public class CPlayer : CCharacter {
 			if(Mathf.Abs(fPadX) > fTolerance || Mathf.Abs(fPadY) > fTolerance)
 				m_DirectionRegard = (new Vector2(fPadX, -fPadY)).normalized;
 			
-			m_fAngleCone = CApoilMath.ConvertCartesianToPolar(new Vector2(fPadY, fPadX)).y;
+			Vector3 debugVec = new Vector3 (m_DirectionRegard.x, m_DirectionRegard.y, 0.0f);
+			Debug.DrawLine(m_GameObject.transform.position, m_GameObject.transform.position + 100*debugVec);
+			
+			m_fAngleCone = CApoilMath.ConvertCartesianToPolar(new Vector2(m_DirectionRegard.x, m_DirectionRegard.y)).y;
 		}
 		else
 		{
@@ -372,15 +375,12 @@ public class CPlayer : CCharacter {
 			if(posMouse.y < posPlayer.y)
 			{
 				m_fAngleCone *=-1;
-			}
-			
+			}		
 			//float fAngleVise = -m_fAngleCone*180/3.14159f - 90 - 75/2;
-			//m_ConeVision.setAngleVise(fAngleVise);  
-			
-			m_fAngleCone +=90.0f + 75.0f/2.0f;	
+			//m_ConeVision.setAngleVise(fAngleVise);  		
 		}
 		
-		
+		m_fAngleCone += 3.14159f/2.0f;
 		m_Torche.transform.RotateAround(new Vector3(0,0,1),  m_fAngleCone - fAngleOld);
 	}
 	
