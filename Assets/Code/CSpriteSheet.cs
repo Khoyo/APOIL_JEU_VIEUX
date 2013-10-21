@@ -37,8 +37,17 @@ public class CSpriteSheet // : MonoBehaviour
 		m_bIsForward = true;
 		m_myRenderer = m_parent.renderer;
 		m_fTemps = 0.0f;
-		game = GameObject.Find("_Game").GetComponent<CGame>();
+		//game = GameObject.Find("_Game").GetComponent<CGame>();
 		m_endCondition = EEndCondition.e_Loop;
+	}
+	
+	//-------------------------------------------------------------------------------
+	///	
+	//-------------------------------------------------------------------------------
+	public void Reset()
+	{
+		m_fTemps = 0.0f;
+		m_nIndex = 0;
 	}
 	
 	//-------------------------------------------------------------------------------
@@ -46,14 +55,17 @@ public class CSpriteSheet // : MonoBehaviour
 	//-------------------------------------------------------------------------------
 	public void Process () {
 		m_fTemps += 1.0f/m_fFPS;
-		if (m_fTemps > 1.0f)
+		
+		if (m_fTemps > 1.0f && m_bIsPlaying)
 		{
 			// Calculate index
 			if(m_bIsForward){
 				m_nIndex++;
 	            if (m_nIndex >= m_nRows * m_nColumns)
-	                switch(m_endCondition){
+	                switch(m_endCondition)
+					{
 						case EEndCondition.e_Stop:
+							m_nIndex--;
 							AnimationStop();
 					 		break;
 						case EEndCondition.e_Loop:
@@ -63,7 +75,7 @@ public class CSpriteSheet // : MonoBehaviour
 							m_nIndex--;
 							Reverse();
 							break;
-				}
+					}
 				
 			}
 			else {
@@ -72,6 +84,7 @@ public class CSpriteSheet // : MonoBehaviour
 					switch(m_endCondition){
 						case EEndCondition.e_Stop:
 							AnimationStop();
+							m_nIndex++;
 					 		break;
 						case EEndCondition.e_Loop:
 							m_nIndex = m_nRows * m_nColumns;
@@ -88,10 +101,13 @@ public class CSpriteSheet // : MonoBehaviour
 				game.getSoundEngine().postEvent(m_sounds[m_nIndex], m_parent);
 			
 			m_fTemps = 0.0f;
+			
 		}
 		
-		 Vector2 offset = new Vector2((float)m_nIndex / m_nColumns - (m_nIndex / m_nColumns), //x index
-                                      1 - ((m_nIndex / m_nColumns) / (float)m_nRows));    //y index
+		
+
+		Vector2 offset = new Vector2(	((float)m_nIndex / m_nColumns - (m_nIndex / m_nColumns)), //x index
+                                      1-	((m_nIndex / m_nColumns) / (float)m_nRows));    //y index
 		
 		Vector2 textureSize = new Vector2(1f / m_nColumns, 1f / m_nRows);
         // Reset the y offset, if needed
@@ -101,7 +117,7 @@ public class CSpriteSheet // : MonoBehaviour
 		// If we have scaled the texture, we need to reposition the texture to the center of the object
         offset.x += ((1f / m_nColumns) - textureSize.x) / 2.0f;
         offset.y += ((1f / m_nRows) - textureSize.y) / 2.0f;
-  
+
 		m_myRenderer.sharedMaterial.SetTextureOffset("_MainTex", offset);
 	}	
 	
@@ -135,7 +151,8 @@ public class CSpriteSheet // : MonoBehaviour
 		m_bIsPlaying = false;	
 	}
 	
-	public void SetDirection(bool forward){
+	public void SetDirection(bool forward)
+	{
 		m_bIsForward = forward;
 	}
 	

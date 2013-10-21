@@ -6,6 +6,7 @@ public struct SAnimationPlayer
 	public CAnimation AnimRepos;
 	public CAnimation AnimHorizontal;
 	public CAnimation AnimVertical;
+	public CAnimation AnimDie;
 }
 
 public class CPlayer : CCharacter {
@@ -18,6 +19,8 @@ public class CPlayer : CCharacter {
 	//CGame m_game = GameObject.Find("_Game").GetComponent<CGame>();
 	float m_fSpeed;
 	float m_fAngleCone;
+	float m_fTimerDead;
+	const float m_fTimerDeadMax = 3.0f;
 	CSpriteSheet m_spriteSheet;
 	SAnimationPlayer m_AnimPlayer;
 	CConeVision m_ConeVision;
@@ -95,6 +98,7 @@ public class CPlayer : CCharacter {
 		m_HeldObject = null;
 		m_bHaveObject = false;
 		m_bIsAlive = true;
+		m_fTimerDead = 0.0f;
 		
 		m_Torche = m_GameObject.transform.FindChild("Torche").gameObject;
 		
@@ -172,6 +176,15 @@ public class CPlayer : CCharacter {
 				m_ConeVision.Process();
 			
 			m_CercleDiscretion.Process();
+		}
+		else if (m_fTimerDead < m_fTimerDeadMax)
+		{
+			m_spriteSheet.Process();
+			m_fTimerDead += fDeltatime;
+		}
+		else 
+		{
+			m_GameObject.active = false;
 		}
 	}
 	
@@ -399,9 +412,16 @@ public class CPlayer : CCharacter {
 	//-------------------------------------------------------------------------------
 	public void Die()
 	{
-		DropElement();
-		m_bIsAlive = false;
-		m_GameObject.active = false;
+		if(m_bIsAlive)
+		{
+			DropElement();
+			m_bIsAlive = false;
+			m_spriteSheet.SetAnimation(m_AnimPlayer.AnimDie);
+			m_spriteSheet.setEndCondition(CSpriteSheet.EEndCondition.e_Stop);
+			m_spriteSheet.Reset();
+			m_spriteSheet.AnimationStart();
+			m_fTimerDead = 0.0f;
+		}
 	}
 	
 	public void ResetPosInit(Vector2 posInit)
@@ -438,7 +458,7 @@ public class CPlayer : CCharacter {
 	
 	public bool IsAlive()
 	{
-		return m_bIsAlive;
+		return (m_bIsAlive || m_GameObject.active);
 	}	
 	
 }

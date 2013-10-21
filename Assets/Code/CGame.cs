@@ -16,15 +16,19 @@ public class CGame : MonoBehaviour
 	public Material m_materialPlayer1Repos;
 	public Material m_materialPlayer1Horizontal;
 	public Material m_materialPlayer1Vertical;
+	public Material m_materialPlayer1Die;
 	public Material m_materialPlayer2Repos;
 	public Material m_materialPlayer2Horizontal;
 	public Material m_materialPlayer2Vertical;
+	public Material m_materialPlayer2Die;
 	public Material m_materialPlayer3Repos;
 	public Material m_materialPlayer3Horizontal;
 	public Material m_materialPlayer3Vertical;
+	public Material m_materialPlayer3Die;
 	public Material m_materialPlayer4Repos;
 	public Material m_materialPlayer4Horizontal;
 	public Material m_materialPlayer4Vertical;
+	public Material m_materialPlayer4Die;
 	
 	// variables de LD
 	public bool m_bPadXBox = false;
@@ -79,10 +83,6 @@ public class CGame : MonoBehaviour
 		m_SoundEngine = new CSoundEngine();
 		m_SoundEngine.Init();
 		m_SoundEngine.LoadBank(soundbankName);
-		
-		/*m_nIdLevel = 0;
-		m_pLevelIn = new GameObject[m_nNbLevel];
-		m_pLevelIn[0] = m_LevelIn1;*/
 		
 		m_Level = new CLevel();
 		m_Level.SetObjetLevel(m_ObjLevel1);
