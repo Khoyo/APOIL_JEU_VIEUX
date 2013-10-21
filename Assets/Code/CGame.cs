@@ -131,7 +131,7 @@ public class CGame : MonoBehaviour
 			
 			//Debug
 			if(Input.GetKey(KeyCode.F8))
-				StartLevel(m_nIdLevel);
+				RestartLevel();
 			if(Input.GetKey(KeyCode.F9))
 				FinishLevel(true, CPlayer.EIdPlayer.e_IdPlayer_Player1);
 			if(Input.GetKey(KeyCode.F10))
@@ -175,7 +175,7 @@ public class CGame : MonoBehaviour
 		if(!m_bGameStarted)
 		{	
 			Init();
-			StartLevel(0);
+			//StartLevel();
 			m_bGameStarted = true;
 		}
 		
@@ -270,10 +270,14 @@ public class CGame : MonoBehaviour
 	//-------------------------------------------------------------------------------
 	/// 
 	//-------------------------------------------------------------------------------
-	public void StartLevel(int i)
+	public void StartLevel()
 	{
-		m_nIdLevel = i;
-		//m_Level.SetObjetLevel(m_ObjLevel1);
+		GameObject levelObj; 
+		if((levelObj = GameObject.Find("Level")) == null)
+			Debug.LogError("No object named Level in scene");
+		m_Level.SetObjetLevel(levelObj.gameObject);
+		m_bInGame = true;
+		m_Level.SetPlayerPosition();
 		Reset();	
 	}
 	
@@ -282,8 +286,11 @@ public class CGame : MonoBehaviour
 		Debug.Log ("Exiting level "+Application.loadedLevel);
 		if(Application.loadedLevel < Application.levelCount)
 			Application.LoadLevel(Application.loadedLevel+1);
-		m_bInGame = true;
-		
+		StartLevel();
+	}
+	
+	public void RestartLevel()
+	{
 	}
 	
 	public int GetIdLevel()
