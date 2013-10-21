@@ -5,24 +5,15 @@ public class CMachinePorte : MonoBehaviour, IMachineAction
 {	
 	bool m_bIsOpen;
 	bool m_bChangeState;
+	float m_fTimer;
+	const float m_fTimerMax = 3.0f;
 	
 	public void Activate(CPlayer player)
 	{
 		if(!m_bIsOpen)
-		{
-			gameObject.GetComponent<CScriptMachine>().GetMachine().GetSpriteSheet().Reset();	
-			gameObject.GetComponent<CScriptMachine>().GetMachine().GetSpriteSheet().SetDirection(true);
-		}
+			Open();
 		else
-		{
-			//Vector3 posDeplacement = gameObject.transform.position - player.getGameObject().transform.position;
-			//player.getGameObject().transform.Translate(new Vector3(posDeplacement.x, 0, posDeplacement.y));
-			gameObject.GetComponent<CScriptMachine>().GetMachine().GetSpriteSheet().ResetAtEnd();
-			gameObject.GetComponent<CScriptMachine>().GetMachine().GetSpriteSheet().SetDirection(false);
-		}
-		
-		gameObject.GetComponent<CScriptMachine>().GetMachine().GetSpriteSheet().AnimationStart();
-		m_bChangeState = true;
+			Close();
 	}
 	
 	public void Init()
@@ -31,6 +22,7 @@ public class CMachinePorte : MonoBehaviour, IMachineAction
 		m_bChangeState = false;
 		gameObject.GetComponent<CScriptMachine>().GetMachine().GetSpriteSheet().setEndCondition(CSpriteSheet.EEndCondition.e_Stop);
 		gameObject.GetComponent<CScriptMachine>().GetMachine().GetSpriteSheet().AnimationStop();
+		m_fTimer = 0.0f;
 	}
 	
 	public void Process()
@@ -40,6 +32,36 @@ public class CMachinePorte : MonoBehaviour, IMachineAction
 			m_bIsOpen = !m_bIsOpen;	
 			m_bChangeState = false;
 		}
+		
 		gameObject.collider.isTrigger = m_bIsOpen;
+		
+		if(m_bIsOpen && !m_bChangeState)
+		{
+			if(m_fTimer < m_fTimerMax)
+				m_fTimer += Time.deltaTime;
+			else
+				Close();
+		}
+			
+	}
+	
+	//-------------------------------------------------------------------------------
+	///
+	//-------------------------------------------------------------------------------
+	public void Open()
+	{
+		gameObject.GetComponent<CScriptMachine>().GetMachine().GetSpriteSheet().Reset();	
+		gameObject.GetComponent<CScriptMachine>().GetMachine().GetSpriteSheet().SetDirection(true);
+		m_bChangeState = true;
+		gameObject.GetComponent<CScriptMachine>().GetMachine().GetSpriteSheet().AnimationStart();	
+		m_fTimer = 0.0f;
+	}
+	
+	public void Close()
+	{
+		gameObject.GetComponent<CScriptMachine>().GetMachine().GetSpriteSheet().ResetAtEnd();
+		gameObject.GetComponent<CScriptMachine>().GetMachine().GetSpriteSheet().SetDirection(false);
+		m_bChangeState = true;
+		gameObject.GetComponent<CScriptMachine>().GetMachine().GetSpriteSheet().AnimationStart();	
 	}
 }
