@@ -75,7 +75,11 @@ public class CGame : MonoBehaviour
 	///
 	//-------------------------------------------------------------------------------
 	public void Init()
-	{		
+	{	
+		//Make _Game (and CGame) persitent beetween scenes
+		Object.DontDestroyOnLoad(gameObject);
+		Object.DontDestroyOnLoad(this);
+		
 		m_SoundEngine = new CSoundEngine();
 		m_SoundEngine.Init();
 		m_SoundEngine.LoadBank(soundbankName);
