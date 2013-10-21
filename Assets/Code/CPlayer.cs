@@ -145,7 +145,7 @@ public class CPlayer : CCharacter {
 				if(Input.GetKeyDown(KeyCode.A))
 				{
 					m_eState = (m_eState + 1);
-					if (m_eState >= EState.e_state_nbState)
+					if(m_eState >= EState.e_state_nbState)
 						m_eState = EState.e_state_normal;
 				}
 			}
@@ -334,7 +334,6 @@ public class CPlayer : CCharacter {
 			CalculateSpeed();
 			
 			m_GameObject.transform.position += m_fSpeed * velocity * fDeltatime;
-			Debug.Log(m_eIdPlayer+": "+ m_fSpeed + " " + velocity + " "+fDeltatime);
 		}
 		else
 		{
