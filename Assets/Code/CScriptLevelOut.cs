@@ -55,7 +55,6 @@ public class CScriptLevelOut : MonoBehaviour
 					}
 				}
 				m_Game.FinishLevel(true, eIdPlayer);
-				m_Game.GoToNextLevel();
 			}
 		}
 	}

@@ -118,7 +118,7 @@ public class CLevel
 	//-------------------------------------------------------------------------------
 	public void CreatePlayers()
 	{
-		Vector3 pos3D = m_ObjetLevel.transform.FindChild("_LevelIn").position;
+		Vector3 pos3D = m_ObjetLevel.transform.FindChild("LevelIn").position;
 		Vector2 posInit = new Vector2 (pos3D.x, pos3D.y);
 		float fSizePlayer = 100.0f;
 		Vector2[] posPlayer = new Vector2[4];

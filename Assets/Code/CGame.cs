@@ -10,7 +10,7 @@ public class CGame : MonoBehaviour
 	public GameObject m_debugDraw;
 	public GameObject m_renderScreen;	
 	public int m_nNbLevel;
-	public GameObject m_ObjLevel1;
+	//public GameObject m_ObjLevel1;
 	
 	// materials
 	public Material m_materialPlayer1Repos;
@@ -77,7 +77,6 @@ public class CGame : MonoBehaviour
 	public void Init()
 	{	
 		//Make _Game (and CGame) persitent beetween scenes
-		Object.DontDestroyOnLoad(gameObject);
 		Object.DontDestroyOnLoad(this);
 		
 		m_SoundEngine = new CSoundEngine();
@@ -89,13 +88,18 @@ public class CGame : MonoBehaviour
 		m_pLevelIn[0] = m_LevelIn1;*/
 		
 		m_Level = new CLevel();
-		m_Level.SetObjetLevel(m_ObjLevel1);
+		GameObject levelObj;
+		if((levelObj = GameObject.Find("Level")) == null)
+			Debug.LogError("No object named Level in scene");
+		m_Level.SetObjetLevel(levelObj.gameObject);
 		m_Level.Init();
 		
 		m_nScreenWidth = 1280;
 		m_nScreenHeight = 800;
 		m_Camera = new CCamera();
-		m_Camera.Init();		
+		m_Camera.Init();	
+		
+		Object.DontDestroyOnLoad(transform.gameObject);
 	}
 	
 	//-------------------------------------------------------------------------------
@@ -269,14 +273,15 @@ public class CGame : MonoBehaviour
 	public void StartLevel(int i)
 	{
 		m_nIdLevel = i;
-		m_Level.SetObjetLevel(m_ObjLevel1);
+		//m_Level.SetObjetLevel(m_ObjLevel1);
 		Reset();	
 	}
 	
 	public void GoToNextLevel()
 	{
-		if(m_nIdLevel < m_nNbLevel)
-			++m_nIdLevel;
+		if(Application.loadedLevel < Application.levelCount)
+			Application.LoadLevel(Application.loadedLevel+1);
+		
 	}
 	
 	public int GetIdLevel()
