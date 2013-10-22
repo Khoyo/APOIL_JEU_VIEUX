@@ -113,6 +113,11 @@ public class CLevel
 		
 	}
 	
+	public void UnregisterElement(CElement elem)
+	{
+		m_pElement.Remove(elem);
+	}
+	
 	//-------------------------------------------------------------------------------
 	///
 	//-------------------------------------------------------------------------------
@@ -173,6 +178,16 @@ public class CLevel
 		for(int i = 0 ; i < m_Game.m_nNbPlayer ; ++i)
 		{
 			m_Players[i].SetPosition2D(posPlayer[i]);
+		}
+	}
+	
+	public void StartLevel()
+	{
+		SetPlayerPosition();
+		
+		for(int i = 0 ; i < m_Game.m_nNbPlayer ; ++i)
+		{
+			m_Players[i].LaunchStargate();
 		}
 	}
 	

@@ -277,7 +277,7 @@ public class CGame : MonoBehaviour
 			Debug.LogError("No object named Level in scene");
 		m_Level.SetObjetLevel(levelObj.gameObject);
 		m_bInGame = true;
-		m_Level.SetPlayerPosition();
+		m_Level.StartLevel();
 		Reset();	
 	}
 	
@@ -287,6 +287,7 @@ public class CGame : MonoBehaviour
 		if(Application.loadedLevel < Application.levelCount)
 			Application.LoadLevel(Application.loadedLevel+1);
 		StartLevel();
+		
 	}
 	
 	public void RestartLevel()

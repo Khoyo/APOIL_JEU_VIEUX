@@ -4,6 +4,7 @@ using System.Collections;
 public class CElement
 {
 	protected GameObject m_GameObject;
+	CGame m_Game;
 	
 	//-------------------------------------------------------------------------------
 	///
@@ -18,7 +19,7 @@ public class CElement
 	//-------------------------------------------------------------------------------
 	public virtual void Init()
 	{	
-		
+		m_Game = GameObject.Find("_Game").GetComponent<CGame>();
 	}
 	
 	
@@ -36,6 +37,11 @@ public class CElement
 	public virtual void Process(float fDeltatime)
 	{
 		
+	}
+	
+	public virtual void Destroy()
+	{
+		m_Game.getLevel().UnregisterElement(this);
 	}
 	
 	//-------------------------------------------------------------------------------

@@ -180,9 +180,13 @@ public class CPlayer : CCharacter {
 		Object.DontDestroyOnLoad(m_GameObject);
 	}
 	
-	void LaunchStargate()
+	
+	//Prepare player for a new level
+	public void LaunchStargate()
 	{
-		
+		m_bIsAlive = true;
+		m_HeldObject = null;
+		m_bHaveObject = false;
 	}
 	
 	//-------------------------------------------------------------------------------

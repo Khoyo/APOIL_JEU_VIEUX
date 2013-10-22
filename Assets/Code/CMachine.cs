@@ -5,7 +5,7 @@ using System.Collections.Generic;
 public class CMachine : CElement 
 {
 	CSpriteSheet m_SpriteSheet;
-	CGame m_Game;
+	
 	
 	CScriptMachine m_ScriptMachine;
 	CMachineActiveZone m_ActiveZone;	
@@ -75,9 +75,6 @@ public class CMachine : CElement
 			if(action != null)
 				action.Activate(player);
 		}
-	}
-	
-
-	
+	}	
 }
 

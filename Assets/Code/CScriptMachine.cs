@@ -27,11 +27,17 @@ public class CScriptMachine : MonoBehaviour {
 	}
 	
 	public void SetMachine(CMachine obj)
-	{
+	{ 
 		m_Machine = obj;
+	}
+	
+	public void OnDestroy(){
+		m_Machine.Destroy();
 	}
 	
 	public CAnimation GetAnimation(){ 
 		return m_Animation;
 	}
+	
+	
 }
