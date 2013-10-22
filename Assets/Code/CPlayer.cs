@@ -48,15 +48,15 @@ public class CPlayer : CCharacter {
 	
 	public enum EState // etat de l'avatar
 	{
-		e_state_normal,
-		e_state_enflamme,
-		e_state_oxygeneManque,
-		e_state_empoisonne,
-		e_state_parasite,
-		e_state_frigorifie,
-		e_state_aveugle,
+		e_State_normal,
+		e_State_enflamme,
+		e_State_oxygeneManque,
+		e_State_empoisonne,
+		e_State_parasite,
+		e_State_frigorifie,
+		e_State_aveugle,
 		
-		e_state_nbState
+		e_State_nbState
 	}
 	
 	public enum EIdPlayer // commentaire
@@ -149,8 +149,8 @@ public class CPlayer : CCharacter {
 				if(Input.GetKeyDown(KeyCode.A))
 				{
 					m_eState = (m_eState + 1);
-					if (m_eState >= EState.e_state_nbState)
-						m_eState = EState.e_state_normal;
+					if (m_eState >= EState.e_State_nbState)
+						m_eState = EState.e_State_normal;
 				}
 			}
 			
@@ -359,8 +359,10 @@ public class CPlayer : CCharacter {
 			if(Mathf.Abs(fPadX) > fTolerance || Mathf.Abs(fPadY) > fTolerance)
 				m_DirectionRegard = (new Vector2(fPadX, -fPadY)).normalized;
 			
+			/*
 			Vector3 debugVec = new Vector3 (m_DirectionRegard.x, m_DirectionRegard.y, 0.0f);
-			Debug.DrawLine(m_GameObject.transform.position, m_GameObject.transform.position + 100*debugVec);
+           // Debug.DrawLine(m_GameObject.transform.position, m_GameObject.transform.position + 100*debugVec);
+			Debug.DrawRay(m_GameObject.transform.position, 100*debugVec);*/
 			
 			m_fAngleCone = CApoilMath.ConvertCartesianToPolar(new Vector2(m_DirectionRegard.x, m_DirectionRegard.y)).y;
 		}
@@ -432,21 +434,26 @@ public class CPlayer : CCharacter {
 	//-------------------------------------------------------------------------------
 	///
 	//-------------------------------------------------------------------------------
-	public EState getState()
+	public EState GetState()
 	{
 		return m_eState;	
 	}
 	
-	public Vector2 getDirectionDeplacement()
+	public Vector2 GetDirectionDeplacement()
 	{
 		return m_DirectionDeplacement;	
 	}
 	
-	public EMoveModState getMoveModState(){
+	public Vector3 GetDirectionRegard()
+	{
+		return m_DirectionRegard;	
+	}
+	
+	public EMoveModState GetMoveModState(){
 		return m_eMoveModState;
 	}
 	
-	public float getSpeed()
+	public float GetSpeed()
 	{
 		return m_fSpeed;
 	}

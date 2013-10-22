@@ -42,4 +42,20 @@ public class CApoilMath
 	{
 		return new Vector2(coordPolar.x * Mathf.Cos(coordPolar.y) , coordPolar.x * Mathf.Sin(coordPolar.y));
 	}
+	
+	//-------------------------------------------------------------------------------
+	///
+	//-------------------------------------------------------------------------------
+	public static float ConvertDegreeToRadian(float fDeg) 
+	{
+		return fDeg * Mathf.Deg2Rad;
+	}
+	
+	//-------------------------------------------------------------------------------
+	///
+	//-------------------------------------------------------------------------------
+	public static float ConvertRadianToDegree(float fRad) 
+	{
+		return fRad * Mathf.Rad2Deg;
+	}
 }

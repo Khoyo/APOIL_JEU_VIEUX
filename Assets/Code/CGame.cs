@@ -359,4 +359,9 @@ public class CGame : MonoBehaviour
 	{
 		return m_pLevelIn[i];
 	}
+	
+	public bool LightIsOn()
+	{
+		return m_bLightIsOn;	
+	}
 }

@@ -5,6 +5,7 @@ public class CMachinePorte : MonoBehaviour, IMachineAction
 {	
 	bool m_bIsOpen;			// statut en cours	
 	bool m_bTargetIsOpen;	// statut vers lequel tend la porte
+	bool m_bBlockClose;
 	bool m_bChangeState;
 	float m_fTimer;
 	const float m_fTimerMax = 3.0f;
@@ -22,6 +23,7 @@ public class CMachinePorte : MonoBehaviour, IMachineAction
 		m_bIsOpen = false;
 		m_bChangeState = false;
 		m_bTargetIsOpen = false;
+		m_bBlockClose = false;
 		gameObject.GetComponent<CScriptMachine>().GetMachine().GetSpriteSheet().setEndCondition(CSpriteSheet.EEndCondition.e_Stop);
 		gameObject.GetComponent<CScriptMachine>().GetMachine().GetSpriteSheet().AnimationStop();
 		m_fTimer = 0.0f;
@@ -44,7 +46,27 @@ public class CMachinePorte : MonoBehaviour, IMachineAction
 			else
 				Close();
 		}
-			
+		
+		if(m_bTargetIsOpen)	
+			gameObject.transform.FindChild("Detecteur").FindChild("light").light.enabled = true;
+		else
+			gameObject.transform.FindChild("Detecteur").FindChild("light").light.enabled = false;
+	}
+	
+	//-------------------------------------------------------------------------------
+	///
+	//-------------------------------------------------------------------------------
+	public void BlockClose()
+	{
+		m_bBlockClose = true;
+	}
+	
+	//-------------------------------------------------------------------------------
+	///
+	//-------------------------------------------------------------------------------
+	public void StopBlockClose()
+	{
+		m_bBlockClose = false;
 	}
 	
 	//-------------------------------------------------------------------------------
@@ -65,7 +87,7 @@ public class CMachinePorte : MonoBehaviour, IMachineAction
 	
 	public void Close()
 	{
-		if(m_bTargetIsOpen)
+		if(m_bTargetIsOpen && !m_bBlockClose)
 		{
 			gameObject.GetComponent<CScriptMachine>().GetMachine().GetSpriteSheet().ResetAtEnd();
 			gameObject.GetComponent<CScriptMachine>().GetMachine().GetSpriteSheet().SetDirection(false);

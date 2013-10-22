@@ -4,28 +4,55 @@ using System.Collections;
 public class CScriptZoneOpenDoor : MonoBehaviour 
 {
 	bool m_bOpen;
+	bool m_bNoPlayerInZone;
+	
+	CGame m_Game;
 	// Use this for initialization
 	void Start () {
 		m_bOpen = false;
+		m_bNoPlayerInZone = true;
+		m_Game = GameObject.Find("_Game").GetComponent<CGame>();
 	}
 	
 	// Update is called once per frame
-	void Update () {
-	
+	void Update () 
+	{
+		if(m_bNoPlayerInZone)
+			gameObject.transform.parent.gameObject.GetComponent<CMachinePorte>().StopBlockClose();
 	}
 	
-	void OnTriggerEnter(Collider other)
+	void OnTriggerStay(Collider other)
 	{
-		CGame game = GameObject.Find("_Game").GetComponent<CGame>();
-		Debug.DrawLine(other.gameObject.transform.position, gameObject.transform.position);
+		bool bCanOpen = true;	
+		m_bNoPlayerInZone = true;
+		float fAngle = 75.0f;
 		
-		bool bCanOpen = true;
-		
-		for(int i = 0 ; i < game.m_nNbPlayer ; ++i)
+		for(int i = 0 ; i < m_Game.m_nNbPlayer ; ++i)
 		{
-			if(other.gameObject == game.getLevel().getPlayer(i).getGameObject() && bCanOpen)
+			if(!m_Game.LightIsOn())
+			{
+				Vector3 PosPlayer = m_Game.getLevel().getPlayer(i).getGameObject().transform.position;
+				Vector3 DirectionRegard = m_Game.getLevel().getPlayer(i).GetDirectionRegard();
+				Vector3 DirectionDetecteur = gameObject.transform.parent.gameObject.transform.FindChild("Detecteur").position - PosPlayer;
+				
+				float fDotProduct = Vector3.Dot(DirectionRegard.normalized, DirectionDetecteur.normalized);
+				
+				Color col = Color.white;
+				if(fDotProduct < Mathf.Cos(CApoilMath.ConvertDegreeToRadian((fAngle/2.0f))))
+				{
+					bCanOpen = false;
+					col = Color.red;
+				}
+								
+				Debug.DrawRay(PosPlayer, 100*DirectionRegard.normalized,col);
+				Debug.DrawRay(PosPlayer, 100*DirectionDetecteur.normalized,col);
+			}
+			
+			if(other.gameObject == m_Game.getLevel().getPlayer(i).getGameObject() && bCanOpen)
 			{
 				gameObject.transform.parent.gameObject.GetComponent<CMachinePorte>().Open();	
+				gameObject.transform.parent.gameObject.GetComponent<CMachinePorte>().BlockClose();
+				m_bNoPlayerInZone = false;
 			}
 		}
 	}
