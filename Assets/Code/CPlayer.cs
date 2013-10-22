@@ -14,7 +14,7 @@ public class CPlayer : CCharacter {
 	// a foutre dans le constructeur si on veut pouvoir le faire indifferement des jouerus
 	int m_nResistance = 5;
 	int m_nRadiusDiscrectionCircle = 10;
-	CGame game;
+	CGame m_Game;
 	
 	//CGame m_game = GameObject.Find("_Game").GetComponent<CGame>();
 	float m_fSpeed;
@@ -76,16 +76,16 @@ public class CPlayer : CCharacter {
 	//-------------------------------------------------------------------------------
 	public CPlayer(Vector2 posInit, EIdPlayer eIdPlayer, SAnimationPlayer AnimPlayer)
 	{
-		game = GameObject.Find("_Game").GetComponent<CGame>();
-		GameObject prefab = game.prefabPlayer;
+		m_Game = GameObject.Find("_Game").GetComponent<CGame>();
+		GameObject prefab = m_Game.prefabPlayer;
 		m_GameObject = GameObject.Instantiate(prefab) as GameObject;
 		SetPosition2D(posInit);
 		m_posInit = posInit;
 		
 		m_ConeVision = m_GameObject.GetComponent<CConeVision>();
-		m_CameraCone = game.m_CameraCone;
+		m_CameraCone = m_Game.m_CameraCone;
 		
-		m_fSpeed = game.m_fSpeedPlayer;
+		m_fSpeed = m_Game.m_fSpeedPlayer;
 		m_spriteSheet = new CSpriteSheet(m_GameObject); //m_GameObject.GetComponent<CSpriteSheet>();	
 				
 		m_AnimPlayer = AnimPlayer;
@@ -118,7 +118,7 @@ public class CPlayer : CCharacter {
 		//m_spriteSheet.SetAnimation(m_AnimRepos);
 		m_CercleDiscretion.Init(this);
 		
-		game.getSoundEngine().setSwitch("Sol", "Metal02", m_GameObject);
+		m_Game.getSoundEngine().setSwitch("Sol", "Metal02", m_GameObject);
 	}
 
 	//-------------------------------------------------------------------------------
@@ -144,7 +144,7 @@ public class CPlayer : CCharacter {
 			MovePlayer(fDeltatime);
 			GestionTorche(fDeltatime);
 			
-			if(game.IsDebug())
+			if(m_Game.IsDebug())
 			{
 				if(Input.GetKeyDown(KeyCode.A))
 				{
@@ -155,7 +155,7 @@ public class CPlayer : CCharacter {
 			}
 			
 			//gestion de la lampe torche
-			if(game.m_bLightIsOn == false)
+			if(m_Game.m_bLightIsOn == false)
 			{
 				m_Torche.SetActiveRecursively(true);
 			}
@@ -204,26 +204,26 @@ public class CPlayer : CCharacter {
 			}
 			case EMoveModState.e_MoveModState_discret:
 			{
-				fVitesseAttitude = game.m_fCoeffSlowWalk;
+				fVitesseAttitude = m_Game.m_fCoeffSlowWalk;
 				break;
 			}
 			case EMoveModState.e_MoveModState_marche:
 			{
-				fVitesseAttitude = game.m_fCoeffNormalWalk;
+				fVitesseAttitude = m_Game.m_fCoeffNormalWalk;
 				break;
 			}
 			case EMoveModState.e_MoveModState_cours	:
 			{
-				fVitesseAttitude = game.m_fCoeffRunWalk;
+				fVitesseAttitude = m_Game.m_fCoeffRunWalk;
 				break;
 			}
 			default: fVitesseAttitude = 1.0f; break;
 		}
 		
 		float fCoeffDirection = Vector2.Dot(m_DirectionRegard, m_DirectionDeplacement);
-		fCoeffDirection = game.m_fCoeffReverseWalk + (1.0f - game.m_fCoeffReverseWalk)*(fCoeffDirection + 1)/2;
+		fCoeffDirection = m_Game.m_fCoeffReverseWalk + (1.0f - m_Game.m_fCoeffReverseWalk)*(fCoeffDirection + 1)/2;
 		
-		m_fSpeed = game.m_fSpeedPlayer * fVitesseEtat * fVitesseAttitude * fCoeffDirection;
+		m_fSpeed = m_Game.m_fSpeedPlayer * fVitesseEtat * fVitesseAttitude * fCoeffDirection;
 	}
 	
 	//-------------------------------------------------------------------------------
@@ -351,7 +351,7 @@ public class CPlayer : CCharacter {
 	{
 		float fAngleOld = m_fAngleCone;
 		
-		if(game.IsPadXBoxMod())
+		if(m_Game.IsPadXBoxMod())
 		{
 			float fPadY = m_PlayerInput.DirectionHorizontal;
 			float fPadX = m_PlayerInput.DirectionVertical;

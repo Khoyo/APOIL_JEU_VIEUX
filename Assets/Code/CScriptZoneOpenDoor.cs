@@ -19,12 +19,13 @@ public class CScriptZoneOpenDoor : MonoBehaviour
 		CGame game = GameObject.Find("_Game").GetComponent<CGame>();
 		Debug.DrawLine(other.gameObject.transform.position, gameObject.transform.position);
 		
+		bool bCanOpen = true;
+		
 		for(int i = 0 ; i < game.m_nNbPlayer ; ++i)
 		{
-			if(other.gameObject == game.getLevel().getPlayer(i).getGameObject())
+			if(other.gameObject == game.getLevel().getPlayer(i).getGameObject() && bCanOpen)
 			{
 				gameObject.transform.parent.gameObject.GetComponent<CMachinePorte>().Open();	
-				
 			}
 		}
 	}

@@ -104,8 +104,7 @@ public class CLevel
 	/// 
 	//-------------------------------------------------------------------------------
 	public void CreateElement<ElemType>(GameObject obj) where ElemType : CElement, new()
-	{
-		
+	{	
 		ElemType elem = new ElemType();
 		elem.setGameObject(obj);
 		elem.Init();

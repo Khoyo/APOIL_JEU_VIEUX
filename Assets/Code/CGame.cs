@@ -166,7 +166,7 @@ public class CGame : MonoBehaviour
 	{
 		if(!m_bGameStarted)
 		{	
-			Init();
+			//Init();
 			StartLevel(0);
 			m_bGameStarted = true;
 		}
@@ -316,6 +316,7 @@ public class CGame : MonoBehaviour
 		m_bInGame = false;
 		m_bGameStarted = false;
 		m_bWin = false;
+		Init();
 		if (m_bNotUseMasterGame)
 		{
 			StartGame();

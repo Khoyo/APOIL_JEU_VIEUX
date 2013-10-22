@@ -7,7 +7,8 @@ public class CMachineActiveZone : MonoBehaviour {
 	CGame m_Game;
 	
 
-	public void Init(CMachine obj){
+	public void Init(CMachine obj)
+	{
 		m_Game = GameObject.Find("_Game").GetComponent<CGame>();
 		
 		m_Machine = obj;
@@ -17,6 +18,11 @@ public class CMachineActiveZone : MonoBehaviour {
 		if(gameObject.GetComponent<Collider>() == null){
 			Debug.LogError("Machine "+m_Machine.getGameObject().name+" have no active zone collider");
 		}
+	}
+
+	public void Process ()
+	{
+		
 	}
 	
  	void OnTriggerStay(Collider other)
