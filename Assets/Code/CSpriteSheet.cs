@@ -17,7 +17,8 @@ public class CSpriteSheet // : MonoBehaviour
 	public enum EEndCondition{
 		e_Loop,
 		e_PingPong,
-		e_Stop
+		e_Stop,
+		e_FramPerFram
 	};
 	
 	EEndCondition m_endCondition;
@@ -61,60 +62,70 @@ public class CSpriteSheet // : MonoBehaviour
 		m_nIndex = m_nRows * m_nColumns - 1;
 	}
 	
+	public void GoToNextFram()
+	{
+		if (m_nIndex < m_nRows * m_nColumns)
+			++m_nIndex;
+	}
+	
 	//-------------------------------------------------------------------------------
 	/// 
 	//-------------------------------------------------------------------------------
-	public void Process () {
-		m_fTemps += 1.0f/m_fFPS;
+	public void Process () 
+	{
 		
-		if (m_fTemps > 1.0f && m_bIsPlaying)
+		if(m_endCondition != EEndCondition.e_FramPerFram)
 		{
-			// Calculate index
-			if(m_bIsForward){
-				m_nIndex++;
-	            if (m_nIndex >= m_nRows * m_nColumns)
-	                switch(m_endCondition)
-					{
-						case EEndCondition.e_Stop:
-							m_nIndex--;
-							AnimationStop();
-					 		break;
-						case EEndCondition.e_Loop:
-							m_nIndex = 0;
-							break;
-						case EEndCondition.e_PingPong:
-							m_nIndex--;
-							Reverse();
-							break;
+			m_fTemps += 1.0f/m_fFPS;
+			
+			if (m_fTemps > 1.0f && m_bIsPlaying)
+			{
+				// Calculate index
+				if(m_bIsForward){
+					m_nIndex++;
+		            if (m_nIndex >= m_nRows * m_nColumns)
+		                switch(m_endCondition)
+						{
+							case EEndCondition.e_Stop:
+								m_nIndex--;
+								AnimationStop();
+						 		break;
+							case EEndCondition.e_Loop:
+								m_nIndex = 0;
+								break;
+							case EEndCondition.e_PingPong:
+								m_nIndex--;
+								Reverse();
+								break;
+						}
+					
+				}
+				else {
+					m_nIndex--;
+		            if (m_nIndex < 0)
+						switch(m_endCondition){
+							case EEndCondition.e_Stop:
+								AnimationStop();
+								m_nIndex++;
+						 		break;
+							case EEndCondition.e_Loop:
+								m_nIndex = m_nRows * m_nColumns;
+								break;
+							case EEndCondition.e_PingPong:
+								m_nIndex++;
+								Reverse();
+								break;
 					}
+				}
+				
+				//Play sound if necessary
+				if(m_sounds[m_nIndex] != "" && m_sounds[m_nIndex] != null)
+					game.getSoundEngine().postEvent(m_sounds[m_nIndex], m_parent);
+				
+				m_fTemps = 0.0f;
 				
 			}
-			else {
-				m_nIndex--;
-	            if (m_nIndex < 0)
-					switch(m_endCondition){
-						case EEndCondition.e_Stop:
-							AnimationStop();
-							m_nIndex++;
-					 		break;
-						case EEndCondition.e_Loop:
-							m_nIndex = m_nRows * m_nColumns;
-							break;
-						case EEndCondition.e_PingPong:
-							m_nIndex++;
-							Reverse();
-							break;
-				}
-			}
-			
-			//Play sound if necessary
-			if(m_sounds[m_nIndex] != "" && m_sounds[m_nIndex] != null)
-				game.getSoundEngine().postEvent(m_sounds[m_nIndex], m_parent);
-			
-			m_fTemps = 0.0f;
-			
 		}
-		
 		
 
 		Vector2 offset = new Vector2(	((float)m_nIndex / m_nColumns - (m_nIndex / m_nColumns)), //x index
