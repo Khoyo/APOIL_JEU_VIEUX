@@ -112,12 +112,17 @@ public class CLevel
 		
 	}
 	
+	public void UnregisterElement(CElement elem)
+	{
+		m_pElement.Remove(elem);
+	}
+	
 	//-------------------------------------------------------------------------------
 	///
 	//-------------------------------------------------------------------------------
 	public void CreatePlayers()
 	{
-		Vector3 pos3D = m_ObjetLevel.transform.FindChild("_LevelIn").position;
+		Vector3 pos3D = m_ObjetLevel.transform.FindChild("LevelIn").position;
 		Vector2 posInit = new Vector2 (pos3D.x, pos3D.y);
 		float fSizePlayer = 100.0f;
 		Vector2[] posPlayer = new Vector2[4];
@@ -127,6 +132,7 @@ public class CLevel
 		posPlayer[3] = new Vector2(pos3D.x - fSizePlayer / 2.0f, pos3D.y + fSizePlayer / 2.0f);
 		//Vector2 posInit = new Vector2 (0,0);
 		int nNbPlayer = m_Game.m_nNbPlayer;
+		
 		
 		SAnimationPlayer[] AnimPlayer = new SAnimationPlayer[4];
 		
@@ -157,6 +163,35 @@ public class CLevel
 			m_Players[i] = new CPlayer(posPlayer[i], eIdPlayer, AnimPlayer[i]);
 		}
 		
+	}
+	
+	public void SetPlayerPosition()
+	{
+		Vector3 pos3D = m_ObjetLevel.transform.FindChild("LevelIn").position;
+		Vector2 posInit = new Vector2 (pos3D.x, pos3D.y);
+		float fSizePlayer = 100.0f;
+		Vector2[] posPlayer = new Vector2[4];
+		posPlayer[0] = new Vector2(pos3D.x - fSizePlayer / 2.0f, pos3D.y - fSizePlayer / 2.0f);
+		posPlayer[1] = new Vector2(pos3D.x + fSizePlayer / 2.0f, pos3D.y - fSizePlayer / 2.0f);
+		posPlayer[2] = new Vector2(pos3D.x + fSizePlayer / 2.0f, pos3D.y + fSizePlayer / 2.0f);
+		posPlayer[3] = new Vector2(pos3D.x - fSizePlayer / 2.0f, pos3D.y + fSizePlayer / 2.0f);
+		//Vector2 posInit = new Vector2 (0,0);
+		int nNbPlayer = m_Game.m_nNbPlayer;
+		
+		for(int i = 0 ; i < m_Game.m_nNbPlayer ; ++i)
+		{
+			m_Players[i].SetPosition2D(posPlayer[i]);
+		}
+	}
+	
+	public void StartLevel()
+	{
+		SetPlayerPosition();
+		
+		for(int i = 0 ; i < m_Game.m_nNbPlayer ; ++i)
+		{
+			m_Players[i].LaunchStargate();
+		}
 	}
 	
 	//-------------------------------------------------------------------------------

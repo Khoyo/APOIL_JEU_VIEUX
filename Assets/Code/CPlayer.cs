@@ -77,6 +77,7 @@ public class CPlayer : CCharacter {
 	//-------------------------------------------------------------------------------
 	public CPlayer(Vector2 posInit, EIdPlayer eIdPlayer, SAnimationPlayer AnimPlayer)
 	{
+		Debug.Log ("CPLAYER");
 		m_Game = GameObject.Find("_Game").GetComponent<CGame>();
 		GameObject prefab = m_Game.prefabPlayer;
 		m_GameObject = GameObject.Instantiate(prefab) as GameObject;
@@ -119,8 +120,10 @@ public class CPlayer : CCharacter {
 		m_ConeVision.Init();
 		//m_spriteSheet.SetAnimation(m_AnimRepos);
 		m_CercleDiscretion.Init(this);
-		
+
+		PrepareStargate();
 		m_Game.getSoundEngine().setSwitch("Sol", "Metal02", m_GameObject);
+
 	}
 
 	//-------------------------------------------------------------------------------
@@ -151,8 +154,10 @@ public class CPlayer : CCharacter {
 				if(Input.GetKeyDown(KeyCode.A))
 				{
 					m_eState = (m_eState + 1);
+					
 					if (m_eState >= EState.e_State_nbState)
 						m_eState = EState.e_State_normal;
+
 				}
 			}
 			
@@ -188,6 +193,20 @@ public class CPlayer : CCharacter {
 		{
 			Respawn();
 		}
+	}
+	
+	void PrepareStargate()
+	{
+		Object.DontDestroyOnLoad(m_GameObject);
+	}
+	
+	
+	//Prepare player for a new level
+	public void LaunchStargate()
+	{
+		m_bIsAlive = true;
+		m_HeldObject = null;
+		m_bHaveObject = false;
 	}
 	
 	//-------------------------------------------------------------------------------
