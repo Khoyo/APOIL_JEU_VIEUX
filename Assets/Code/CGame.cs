@@ -75,11 +75,13 @@ public class CGame : MonoBehaviour
 	CSoundEngine m_SoundEngine;
 	GameObject[] m_pLevelIn;
 	
+	static int m_instanceCount = 0;
+	
 	//-------------------------------------------------------------------------------
 	///
 	//-------------------------------------------------------------------------------
 	public void Init()
-	{	
+	{		
 		//Make _Game (and CGame) persitent beetween scenes
 		Object.DontDestroyOnLoad(this);
 		
@@ -280,10 +282,18 @@ public class CGame : MonoBehaviour
 		m_Level.StartLevel();
 		Reset();	
 	}
+
+	public void GoToNextLevelOrRestart ()
+	{
+		if(IsWin())
+			GoToNextLevel();
+		else
+			RestartLevel();
+	}
 	
 	public void GoToNextLevel()
 	{
-		Debug.Log ("Exiting level "+Application.loadedLevel);
+		Debug.Log("Exiting level "+Application.loadedLevel);
 		if(Application.loadedLevel < Application.levelCount)
 			Application.LoadLevel(Application.loadedLevel+1);
 		StartLevel();
@@ -292,6 +302,9 @@ public class CGame : MonoBehaviour
 	
 	public void RestartLevel()
 	{
+		Debug.Log("Restarting level "+Application.loadedLevel);
+		Application.LoadLevel(Application.loadedLevel);
+		StartLevel();
 	}
 	
 	public int GetIdLevel()
@@ -332,6 +345,14 @@ public class CGame : MonoBehaviour
 	//-------------------------------------------------------------------------------
 	void Start()
 	{
+		if(m_instanceCount++ != 0){
+			//We are not the first CGame object :'( we need to abort !!
+			Debug.Log("Deleting redundant _Game");
+			Object.Destroy(gameObject);
+			gameObject.name = "_Game____todestroydonotuseseriouslyimeanit";
+			return;
+		}
+		
 		m_bInGame = false;
 		m_bGameStarted = false;
 		m_bWin = false;
@@ -356,6 +377,7 @@ public class CGame : MonoBehaviour
 			Process(Time.deltaTime);
 		}
 	}
+	
 	
 	//-------------------------------------------------------------------------------
 	/// 
