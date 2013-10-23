@@ -131,11 +131,11 @@ public class CMenu : MonoBehaviour{
 			
 			case EmenuState.e_menuState_movie:
 			{
-				
-				GUI.DrawTexture(new Rect(0, 0, 1280, 800), m_Texture_movie_intro);
-				if(m_fTempsVideoIntro == 0.0f)
+				if(m_Texture_movie_intro != null)
+					GUI.DrawTexture(new Rect(0, 0, 1280, 800), m_Texture_movie_intro);
+				if(m_Texture_movie_intro != null && m_fTempsVideoIntro == 0.0f)
 					m_Texture_movie_intro.Play();
-				if(m_Texture_movie_intro.isPlaying)
+				if(m_Texture_movie_intro != null && m_Texture_movie_intro.isPlaying)
 				{
 					m_fTempsVideoIntro += Time.deltaTime;
 				}
