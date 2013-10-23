@@ -27,19 +27,22 @@ public class CSpriteSheet // : MonoBehaviour
 	private Renderer m_myRenderer;
 	private int m_nIndex = 0;
 	
-	public CSpriteSheet(GameObject parent){
+	public CSpriteSheet(GameObject parent)
+	{
 		m_parent=parent;
 	}
 	
 	//-------------------------------------------------------------------------------
 	///	
 	//-------------------------------------------------------------------------------
-	public void Init () {
+	public void Init () 
+	{
 		m_bIsPlaying = false;
 		m_bIsForward = true;
 		m_bIsEnd = false;
 		m_myRenderer = m_parent.renderer;
 		m_fTemps = 0.0f;
+		m_nIndex = 1;
 		//game = GameObject.Find("_Game").GetComponent<CGame>();
 		m_endCondition = EEndCondition.e_Loop;
 	}
