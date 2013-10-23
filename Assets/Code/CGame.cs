@@ -177,7 +177,7 @@ public class CGame : MonoBehaviour
 	{
 		if(!m_bGameStarted)
 		{	
-			//Init();
+			Reset();
 			m_bGameStarted = true;
 		}
 		
@@ -293,11 +293,16 @@ public class CGame : MonoBehaviour
 	
 	public void GoToNextLevel()
 	{
-		Debug.Log("Exiting level "+Application.loadedLevel);
-		if(Application.loadedLevel < Application.levelCount)
-			Application.LoadLevel(Application.loadedLevel+1);
-		StartLevel();
+		Debug.Log ("Exiting level "+Application.loadedLevel);
 		
+		if(m_bNotUseMasterGame)
+			RestartLevel();
+		else 
+		{
+			if(Application.loadedLevel < Application.levelCount)
+				Application.LoadLevel(Application.loadedLevel+1);
+			StartLevel();
+		}
 	}
 	
 	public void RestartLevel()
