@@ -28,6 +28,7 @@ public class CPlayer : CCharacter {
 	
 	Camera m_CameraCone;
 	Vector2 m_posInit;
+	Vector2 m_posRespawn;
 	Vector2 m_DirectionRegard;
 	Vector2 m_DirectionDeplacement;
 	bool m_bMainCharacter;
@@ -112,6 +113,7 @@ public class CPlayer : CCharacter {
 	{	
 		base.Init();
 		SetPosition2D(m_posInit);
+		m_posRespawn = m_posInit;
 		//Appel a la main des scripts du gameObject
 		m_spriteSheet.Init();
 		m_ConeVision.Init();
@@ -184,7 +186,7 @@ public class CPlayer : CCharacter {
 		}
 		else 
 		{
-			m_GameObject.active = false;
+			Respawn();
 		}
 	}
 	
@@ -424,6 +426,18 @@ public class CPlayer : CCharacter {
 			m_spriteSheet.AnimationStart();
 			m_fTimerDead = 0.0f;
 		}
+	}
+	
+	//-------------------------------------------------------------------------------
+	///
+	//-------------------------------------------------------------------------------
+	public void Respawn()
+	{
+		m_bIsAlive = true;
+		SetPosition2D(m_posRespawn);
+		m_spriteSheet.setEndCondition(CSpriteSheet.EEndCondition.e_Loop);
+		m_spriteSheet.Reset();
+		m_spriteSheet.AnimationStart();
 	}
 	
 	public void ResetPosInit(Vector2 posInit)
