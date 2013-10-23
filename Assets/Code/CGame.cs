@@ -91,6 +91,7 @@ public class CGame : MonoBehaviour
 		GameObject levelObj;
 		if((levelObj = GameObject.Find("Level")) == null)
 			Debug.LogError("No object named Level in scene");
+		
 		m_Level.SetObjetLevel(levelObj.gameObject);
 		m_Level.Init();
 		
