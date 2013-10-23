@@ -3,6 +3,7 @@ using System.Collections;
 
 public class CElement
 {
+	protected CGame m_Game;
 	protected GameObject m_GameObject;
 	
 	//-------------------------------------------------------------------------------
@@ -18,7 +19,7 @@ public class CElement
 	//-------------------------------------------------------------------------------
 	public virtual void Init()
 	{	
-		
+		m_Game = GameObject.Find("_Game").GetComponent<CGame>();
 	}
 	
 	
