@@ -39,6 +39,8 @@ public class CMachine : CElement
 				action.Init();
 		}
 		
+		// appel a la main des script de l'objet
+		//m_ScriptMachine.Init();
 	}
 
 	//-------------------------------------------------------------------------------
@@ -66,6 +68,10 @@ public class CMachine : CElement
 			if(action != null)
 				action.Process();
 		}
+		
+		// appel a la main des script de l'objet
+		//m_ScriptMachine.Process();
+		m_ActiveZone.Process();
 	}
 	
 	public void Activate(CPlayer player){

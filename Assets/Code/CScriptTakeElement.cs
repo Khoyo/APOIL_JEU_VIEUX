@@ -43,22 +43,25 @@ public class CScriptTakeElement : MonoBehaviour
 	//-------------------------------------------------------------------------------
 	void OnTriggerStay(Collider other)
 	{	
-		// ramasser un objet
-		if(m_Game.m_nNbPlayer > 0 && other.gameObject == m_Game.getLevel().getPlayer(0).getGameObject() && CApoilInput.InputPlayer1.PickUpObject)	
+		if(m_Game != null)
 		{
-			m_Game.getLevel().getPlayer(0).PickUpObject(m_TakeElement);
-		}
-		if(m_Game.m_nNbPlayer > 1 && other.gameObject == m_Game.getLevel().getPlayer(1).getGameObject() && CApoilInput.InputPlayer2.PickUpObject)	
-		{
-			m_Game.getLevel().getPlayer(1).PickUpObject(m_TakeElement);
-		}
-		if(m_Game.m_nNbPlayer > 2 && other.gameObject == m_Game.getLevel().getPlayer(2).getGameObject() && CApoilInput.InputPlayer3.PickUpObject)	
-		{
-			m_Game.getLevel().getPlayer(2).PickUpObject(m_TakeElement);
-		}
-		if(m_Game.m_nNbPlayer > 3 && other.gameObject == m_Game.getLevel().getPlayer(3).getGameObject() && CApoilInput.InputPlayer4.PickUpObject)	
-		{
-			m_Game.getLevel().getPlayer(3).PickUpObject(m_TakeElement);
+			// ramasser un objet
+			if(m_Game.m_nNbPlayer > 0 && other.gameObject == m_Game.getLevel().getPlayer(0).getGameObject() && CApoilInput.InputPlayer1.PickUpObject)	
+			{
+				m_Game.getLevel().getPlayer(0).PickUpObject(m_TakeElement);
+			}
+			if(m_Game.m_nNbPlayer > 1 && other.gameObject == m_Game.getLevel().getPlayer(1).getGameObject() && CApoilInput.InputPlayer2.PickUpObject)	
+			{
+				m_Game.getLevel().getPlayer(1).PickUpObject(m_TakeElement);
+			}
+			if(m_Game.m_nNbPlayer > 2 && other.gameObject == m_Game.getLevel().getPlayer(2).getGameObject() && CApoilInput.InputPlayer3.PickUpObject)	
+			{
+				m_Game.getLevel().getPlayer(2).PickUpObject(m_TakeElement);
+			}
+			if(m_Game.m_nNbPlayer > 3 && other.gameObject == m_Game.getLevel().getPlayer(3).getGameObject() && CApoilInput.InputPlayer4.PickUpObject)	
+			{
+				m_Game.getLevel().getPlayer(3).PickUpObject(m_TakeElement);
+			}
 		}
 
 	}

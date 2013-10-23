@@ -30,7 +30,7 @@ public class CCercleDiscretion : MonoBehaviour {
 	}
 	
 	public void Process() {
-		m_fRadius = m_fBaseRadius*m_fCoeffState[(int)parent.getMoveModState()];
+		m_fRadius = m_fBaseRadius*m_fCoeffState[(int)parent.GetMoveModState()];
 		collider.radius = m_fRadius;
 	}
 	

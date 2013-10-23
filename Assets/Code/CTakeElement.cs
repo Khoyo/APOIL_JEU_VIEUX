@@ -18,6 +18,7 @@ public class CTakeElement : CElement {
 	}
 	
 	ETypeObject m_eTypeObject;
+	CScriptTakeElement m_ScriptTakeElement;
 	
 	//-------------------------------------------------------------------------------
 	///
@@ -32,8 +33,12 @@ public class CTakeElement : CElement {
 	public override void Init()
 	{	
 		base.Init();
-		m_GameObject.GetComponent<CScriptTakeElement>().SetTakeElement(this);
+		m_ScriptTakeElement = m_GameObject.GetComponent<CScriptTakeElement>();
+		m_ScriptTakeElement.SetTakeElement(this);
 		m_eTypeObject = m_GameObject.GetComponent<CScriptTakeElement>().GetTypeElement();
+		
+		// appel a la main des script de l'objet
+		//m_ScriptTakeElement.Init();	
 	}
 
 	//-------------------------------------------------------------------------------
@@ -50,6 +55,9 @@ public class CTakeElement : CElement {
 	public override void Process(float fDeltatime)
 	{
 		base.Process(fDeltatime);
+		
+		// appel a la main des script de l'objet
+		//m_ScriptTakeElement.Process();
 	}
 	
 	public ETypeObject GetTypeElement()
