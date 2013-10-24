@@ -16,19 +16,20 @@ public class CGame : MonoBehaviour
 	public Material m_materialPlayer1Repos;
 	public Material m_materialPlayer1Horizontal;
 	public Material m_materialPlayer1Vertical;
-	public Material m_materialPlayer1Die;
+	public Material m_materialPlayer1DieHeadCut;
+	public Material m_materialPlayer1DieFall;
 	public Material m_materialPlayer2Repos;
 	public Material m_materialPlayer2Horizontal;
 	public Material m_materialPlayer2Vertical;
-	public Material m_materialPlayer2Die;
+	public Material m_materialPlayer2DieHeadCut;
 	public Material m_materialPlayer3Repos;
 	public Material m_materialPlayer3Horizontal;
 	public Material m_materialPlayer3Vertical;
-	public Material m_materialPlayer3Die;
+	public Material m_materialPlayer3DieHeadCut;
 	public Material m_materialPlayer4Repos;
 	public Material m_materialPlayer4Horizontal;
 	public Material m_materialPlayer4Vertical;
-	public Material m_materialPlayer4Die;
+	public Material m_materialPlayer4DieHeadCut;
 	
 	// variables de LD
 	public bool m_bPadXBox = false;
@@ -54,6 +55,9 @@ public class CGame : MonoBehaviour
 	public int m_fPrecisionConeDeVision = 1; 
 	public float m_fMonsterTimeErrance = 2.0f;
 	public float m_fMonsterRadiusAlerte = 1.0f;
+	
+	public float m_fCameraDezoomMax = 800.0f;
+	public float m_fCameraDezoomMin = 400.0f;
 	
 	public bool m_BMute = false;
 	public string soundbankName = "Jeu_apoil.bnk";

@@ -8,8 +8,8 @@ public class CCamera
 	CGame m_Game;
 	Camera m_Camera;
 	
-	const float m_fSizeMax = 800.0f;
-	const float m_fSizeMin = 400.0f;
+	float m_fSizeMax;
+	float m_fSizeMin;
 	
 	//-------------------------------------------------------------------------------
 	///
@@ -20,6 +20,8 @@ public class CCamera
 		m_GameObject = GameObject.Find("Cameras");
 		m_CurrentRoom =  GameObject.Find("Salle1");
 		m_Camera = m_GameObject.transform.FindChild("RenderCamera").GetComponent<Camera>();
+		m_fSizeMax = m_Game.m_fCameraDezoomMax;
+		m_fSizeMin = m_Game.m_fCameraDezoomMin;
 	}
 	
 	//-------------------------------------------------------------------------------

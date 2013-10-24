@@ -6,7 +6,8 @@ public struct SAnimationPlayer
 	public CAnimation AnimRepos;
 	public CAnimation AnimHorizontal;
 	public CAnimation AnimVertical;
-	public CAnimation AnimDie;
+	public CAnimation AnimDieHeadCut;
+	public CAnimation AnimDieFall;
 }
 
 public class CPlayer : CCharacter {
@@ -29,11 +30,15 @@ public class CPlayer : CCharacter {
 	Camera m_CameraCone;
 	Vector2 m_posInit;
 	Vector2 m_posRespawn;
+	Vector2 m_posGoToDie;
+	Vector2 m_posOfDie;
 	Vector2 m_DirectionRegard;
 	Vector2 m_DirectionDeplacement;
 	bool m_bMainCharacter;
 	bool m_bHaveObject;
 	bool m_bIsAlive;
+	bool m_bHaveDirectionToDie;
+	bool m_bIsRespawn;
 	
 	CCercleDiscretion m_CercleDiscretion;
 	CTakeElement m_HeldObject;
@@ -99,6 +104,7 @@ public class CPlayer : CCharacter {
 		
 		m_HeldObject = null;
 		m_bHaveObject = false;
+		m_bIsRespawn = false;
 		m_bIsAlive = true;
 		m_fTimerDead = 0.0f;
 		
@@ -115,6 +121,8 @@ public class CPlayer : CCharacter {
 		base.Init();
 		SetPosition2D(m_posInit);
 		m_posRespawn = m_posInit;
+		m_posGoToDie = new Vector2(0,0);
+		m_posOfDie = new Vector2(0,0);
 		//Appel a la main des scripts du gameObject
 		m_spriteSheet.Init();
 		m_ConeVision.Init();
@@ -183,16 +191,11 @@ public class CPlayer : CCharacter {
 				m_ConeVision.Process();
 			
 			m_CercleDiscretion.Process();
-		}
-		else if (m_fTimerDead < m_fTimerDeadMax)
-		{
-			m_spriteSheet.Process();
-			m_fTimerDead += fDeltatime;
+			if(m_bIsRespawn)
+				m_bIsRespawn = false;
 		}
 		else 
-		{
-			Respawn();
-		}
+			GestionDie(fDeltatime);
 	}
 	
 	void PrepareStargate()
@@ -207,6 +210,39 @@ public class CPlayer : CCharacter {
 		m_bIsAlive = true;
 		m_HeldObject = null;
 		m_bHaveObject = false;
+	}
+	
+	//-------------------------------------------------------------------------------
+	///
+	//-------------------------------------------------------------------------------
+	void GestionDie(float fDeltatime)
+	{
+		Debug.Log (m_fTimerDead);
+		if (m_fTimerDead < m_fTimerDeadMax)
+		{
+			m_spriteSheet.Process();
+			m_fTimerDead += fDeltatime;
+			if(m_bHaveDirectionToDie)
+			{
+				float fX;
+				float fY;
+				if(m_fTimerDead < m_fTimerDeadMax / 2.0f)
+				{
+					fX = CApoilMath.InterpolationLinear(m_fTimerDead, 0.0f, m_fTimerDeadMax / 2.0f, m_posOfDie.x, m_posGoToDie.x);
+					fY = CApoilMath.InterpolationLinear(m_fTimerDead, 0.0f, m_fTimerDeadMax / 2.0f, m_posOfDie.y, m_posGoToDie.y);
+				}
+				else
+				{
+					fX = m_posGoToDie.x;
+					fY = m_posGoToDie.y;
+				}
+				SetPosition2D(new Vector2(fX, fY)); 
+			}
+		}
+		else 
+		{
+			Respawn();
+		}	
 	}
 	
 	//-------------------------------------------------------------------------------
@@ -433,13 +469,13 @@ public class CPlayer : CCharacter {
 	//-------------------------------------------------------------------------------
 	///
 	//-------------------------------------------------------------------------------
-	public void Die()
+	public void DieHeadCut()
 	{
 		if(m_bIsAlive)
 		{
 			DropElement();
 			m_bIsAlive = false;
-			m_spriteSheet.SetAnimation(m_AnimPlayer.AnimDie);
+			m_spriteSheet.SetAnimation(m_AnimPlayer.AnimDieHeadCut);
 			m_spriteSheet.setEndCondition(CSpriteSheet.EEndCondition.e_Stop);
 			m_spriteSheet.Reset();
 			m_spriteSheet.AnimationStart();
@@ -450,13 +486,36 @@ public class CPlayer : CCharacter {
 	//-------------------------------------------------------------------------------
 	///
 	//-------------------------------------------------------------------------------
+	public void DieFall(Vector2 posOfDie, Vector2 posToDie)
+	{
+		Debug.Log ("YOUYOU");
+		if(m_bIsAlive && !m_bIsRespawn)
+		{
+			DropElement();
+			m_bIsAlive = false;
+			m_spriteSheet.SetAnimation(m_AnimPlayer.AnimDieFall);
+			m_spriteSheet.setEndCondition(CSpriteSheet.EEndCondition.e_Stop);
+			m_spriteSheet.Reset();
+			m_spriteSheet.AnimationStart();
+			m_fTimerDead = 0.0f;
+			m_bHaveDirectionToDie = true;
+			m_posGoToDie = posToDie;
+			m_posOfDie = posOfDie;
+		}
+	}
+	
+	//-------------------------------------------------------------------------------
+	///
+	//-------------------------------------------------------------------------------
 	public void Respawn()
 	{
-		m_bIsAlive = true;
 		SetPosition2D(m_posRespawn);
+		m_bIsAlive = true;	
 		m_spriteSheet.setEndCondition(CSpriteSheet.EEndCondition.e_Loop);
 		m_spriteSheet.Reset();
 		m_spriteSheet.AnimationStart();
+		m_bHaveDirectionToDie = false;
+		m_bIsRespawn = true;
 	}
 	
 	public void ResetPosInit(Vector2 posInit)

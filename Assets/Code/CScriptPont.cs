@@ -22,13 +22,13 @@ public class CScriptPont : MonoBehaviour
 		m_Game = GameObject.Find("_Game").GetComponent<CGame>();
 		m_Game.getLevel().CreateElement<CPont>(gameObject);
 		m_eState = EState.e_NotBroken;
-
 	}
 	
 	// Update is called once per frame
 	void Update () 
 	{
-	
+		if(m_eState == EState.e_Broken)
+			m_Pont.GetSpriteSheet().SetVibration(false);
 	}
 	
  	void OnTriggerEnter(Collider other) 
@@ -63,8 +63,14 @@ public class CScriptPont : MonoBehaviour
 		{
 			if(other.gameObject == m_Game.getLevel().getPlayer(i).getGameObject())
 			{
+				Vector2 posOfDie = new Vector2(m_Game.getLevel().getPlayer(i).getGameObject().transform.position.x, m_Game.getLevel().getPlayer(i).getGameObject().transform.position.y);
+				Vector2 posToDie = new Vector2(gameObject.transform.position.x, gameObject.transform.position.y);
+
 				if(m_eState == EState.e_Broken)
-					m_Game.getLevel().getPlayer(i).Die();
+				{
+					CPlayer player = m_Game.getLevel().getPlayer(i);
+					m_Game.getLevel().getPlayer(i).DieFall(posOfDie, posToDie);
+				}
 			}
 		}
 	}
