@@ -3,9 +3,17 @@ using System.Collections;
 
 public class CScriptPont : MonoBehaviour 
 {
+	public enum EState
+	{
+		e_NotBroken,
+		e_Cracked,
+		e_Broken	
+	}
+	
 	CGame m_Game;
 	CPont m_Pont;
 	CSpriteSheet m_SpriteSheet;
+	EState m_eState;
 	
 	public Material m_material;
 	
@@ -14,6 +22,7 @@ public class CScriptPont : MonoBehaviour
 	{
 		m_Game = GameObject.Find("_Game").GetComponent<CGame>();
 		m_Game.getLevel().CreateElement<CPont>(gameObject);
+		m_eState = EState.e_NotBroken;
 
 	}
 	
@@ -23,10 +32,41 @@ public class CScriptPont : MonoBehaviour
 	
 	}
 	
- 	 void OnTriggerEnter(Collider other) 
+ 	void OnTriggerEnter(Collider other) 
 	{
-		Debug.Log("yo men!");
-		m_Pont.GetSpriteSheet().GoToNextFram();
+		for(int i = 0 ; i < m_Game.m_nNbPlayer ; ++i)
+		{
+			if(other.gameObject == m_Game.getLevel().getPlayer(i).getGameObject())
+			{
+				m_Pont.GetSpriteSheet().GoToNextFram();
+				switch(m_eState)
+				{
+					case EState.e_NotBroken :
+					{
+						m_eState = EState.e_Cracked;
+						break;
+					}
+					case EState.e_Cracked :
+					{
+						m_eState = EState.e_Broken;
+						break;
+					}
+				}
+			}
+		}
+		
+	}
+	
+	void OnTriggerStay(Collider other) 
+	{
+		for(int i = 0 ; i < m_Game.m_nNbPlayer ; ++i)
+		{
+			if(other.gameObject == m_Game.getLevel().getPlayer(i).getGameObject())
+			{
+				if(m_eState == EState.e_Broken)
+					m_Game.getLevel().getPlayer(i).Respawn();
+			}
+		}
 	}
 	
 	//-------------------------------------------------------------------------------
@@ -40,5 +80,15 @@ public class CScriptPont : MonoBehaviour
 	public Material GetMaterial()
 	{
 		return m_material;	
+	}
+	
+	public void SetState(EState eState)
+	{
+		m_eState = eState;	
+	}
+	
+	public EState GetState()
+	{
+		return m_eState;	
 	}
 }
