@@ -37,15 +37,10 @@ public class CScriptZoneOpenDoor : MonoBehaviour
 				
 				float fDotProduct = Vector3.Dot(DirectionRegard.normalized, DirectionDetecteur.normalized);
 				
-				Color col = Color.white;
 				if(fDotProduct < Mathf.Cos(CApoilMath.ConvertDegreeToRadian((fAngle/2.0f))))
 				{
 					bCanOpen = false;
-					col = Color.red;
 				}
-								
-				Debug.DrawRay(PosPlayer, 100*DirectionRegard.normalized,col);
-				Debug.DrawRay(PosPlayer, 100*DirectionDetecteur.normalized,col);
 			}
 			
 			if(other.gameObject == m_Game.getLevel().getPlayer(i).getGameObject() && bCanOpen)
