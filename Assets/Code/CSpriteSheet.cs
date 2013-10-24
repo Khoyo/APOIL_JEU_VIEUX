@@ -6,6 +6,7 @@ public class CSpriteSheet // : MonoBehaviour
 	bool m_bIsPlaying;
 	bool m_bIsForward;
 	bool m_bIsEnd;
+	bool m_bVibration;
 	int m_nColumns = 1;
 	int m_nRows = 1;	
 	float m_fFPS = 1.0f;
@@ -40,6 +41,7 @@ public class CSpriteSheet // : MonoBehaviour
 		m_bIsPlaying = false;
 		m_bIsForward = true;
 		m_bIsEnd = false;
+		m_bVibration = false;
 		m_myRenderer = m_parent.renderer;
 		m_fTemps = 0.0f;
 		m_nIndex = 1;
@@ -76,11 +78,9 @@ public class CSpriteSheet // : MonoBehaviour
 	//-------------------------------------------------------------------------------
 	public void Process () 
 	{
-		
+		m_fTemps += 1.0f/m_fFPS;
 		if(m_endCondition != EEndCondition.e_FramPerFram)
 		{
-			m_fTemps += 1.0f/m_fFPS;
-			
 			if (m_fTemps > 1.0f && m_bIsPlaying)
 			{
 				// Calculate index
@@ -133,6 +133,11 @@ public class CSpriteSheet // : MonoBehaviour
 
 		Vector2 offset = new Vector2(	((float)m_nIndex / m_nColumns - (m_nIndex / m_nColumns)), //x index
                                       1-	((m_nIndex / m_nColumns) / (float)m_nRows));    //y index
+		
+		if(m_bVibration)
+		{
+			offset.x = Mathf.Cos(100.0f * m_fTemps) / 50.0f;
+		}
 		
 		Vector2 textureSize = new Vector2(1f / m_nColumns, 1f / m_nRows);
         // Reset the y offset, if needed
@@ -195,5 +200,10 @@ public class CSpriteSheet // : MonoBehaviour
 	public bool IsEnd()
 	{
 		return ((m_endCondition == EEndCondition.e_Stop) && m_bIsEnd);
+	}
+	
+	public void SetVibration(bool bOn)
+	{
+		m_bVibration = bOn;	
 	}
 }

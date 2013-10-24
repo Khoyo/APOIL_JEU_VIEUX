@@ -12,7 +12,6 @@ public class CScriptPont : MonoBehaviour
 	
 	CGame m_Game;
 	CPont m_Pont;
-	CSpriteSheet m_SpriteSheet;
 	EState m_eState;
 	
 	public Material m_material;
@@ -44,6 +43,7 @@ public class CScriptPont : MonoBehaviour
 					case EState.e_NotBroken :
 					{
 						m_eState = EState.e_Cracked;
+						m_Pont.GetSpriteSheet().SetVibration(true);
 						break;
 					}
 					case EState.e_Cracked :
@@ -64,7 +64,7 @@ public class CScriptPont : MonoBehaviour
 			if(other.gameObject == m_Game.getLevel().getPlayer(i).getGameObject())
 			{
 				if(m_eState == EState.e_Broken)
-					m_Game.getLevel().getPlayer(i).Respawn();
+					m_Game.getLevel().getPlayer(i).Die();
 			}
 		}
 	}

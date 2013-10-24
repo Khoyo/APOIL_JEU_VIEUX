@@ -22,7 +22,7 @@ public class CPont : CElement
 		m_ScriptPont = m_GameObject.GetComponent<CScriptPont>();
 		m_ScriptPont.SetPontElement(this);
 		
-		CAnimation anim = new CAnimation(m_ScriptPont.GetMaterial(), 1, 3, 0.0f);
+		CAnimation anim = new CAnimation(m_ScriptPont.GetMaterial(), 1, 3, 60.0f);
 		
 		m_SpriteSheet = new CSpriteSheet(m_GameObject);
 		
