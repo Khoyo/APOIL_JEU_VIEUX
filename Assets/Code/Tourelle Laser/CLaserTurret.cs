@@ -32,7 +32,7 @@ public class CLaserTurret : CElement
 			saw.Init();
 			saw.getGameObject().active = true;
 			saw.getGameObject().transform.position = m_GameObject.transform.position;
-			saw.getGameObject().rigidbody.velocity = (tracked.transform.position - m_GameObject.transform.position) ;  
+			saw.getGameObject().rigidbody.velocity = (tracked.transform.position - m_GameObject.transform.position)*2 ;  
 			m_fLastFired = Time.time;
 		}
 		
