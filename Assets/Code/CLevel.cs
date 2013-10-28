@@ -136,29 +136,34 @@ public class CLevel
 		
 		SAnimationPlayer[] AnimPlayer = new SAnimationPlayer[4];
 		
-		AnimPlayer[0].AnimRepos = new CAnimation(m_Game.m_materialPlayer1Repos, 1, 1, 1.0f);
-		AnimPlayer[0].AnimHorizontal = new CAnimation(m_Game.m_materialPlayer1Horizontal, 7, 4, 0.5f);
-		AnimPlayer[0].AnimVertical = new CAnimation(m_Game.m_materialPlayer1Vertical, 6, 1, 2.0f);
-		AnimPlayer[0].AnimDieHeadCut = new CAnimation(m_Game.m_materialPlayer1DieHeadCut, 3, 2, 1.0f);
-		AnimPlayer[0].AnimDieFall= new CAnimation(m_Game.m_materialPlayer1DieFall, 3, 2, 3.0f);
-		
-		AnimPlayer[1].AnimRepos = new CAnimation(m_Game.m_materialPlayer2Repos, 1, 1, 1.0f);
-		AnimPlayer[1].AnimHorizontal = new CAnimation(m_Game.m_materialPlayer2Horizontal, 7, 4, 0.5f);
-		AnimPlayer[1].AnimVertical = new CAnimation(m_Game.m_materialPlayer2Vertical, 6, 1, 2.0f);
-		AnimPlayer[1].AnimDieHeadCut = new CAnimation(m_Game.m_materialPlayer2DieHeadCut, 3, 2, 1.0f);
-		AnimPlayer[1].AnimDieFall= new CAnimation(m_Game.m_materialPlayer1DieFall, 3, 2, 3.0f);
-		
-		AnimPlayer[2].AnimRepos = new CAnimation(m_Game.m_materialPlayer3Repos, 1, 1, 1.0f);
-		AnimPlayer[2].AnimHorizontal = new CAnimation(m_Game.m_materialPlayer3Horizontal, 7, 4, 0.5f);
-		AnimPlayer[2].AnimVertical = new CAnimation(m_Game.m_materialPlayer3Vertical, 6, 1, 2.0f);
-		AnimPlayer[2].AnimDieHeadCut = new CAnimation(m_Game.m_materialPlayer3DieHeadCut, 3, 2, 1.0f);
-		AnimPlayer[2].AnimDieFall= new CAnimation(m_Game.m_materialPlayer1DieFall, 3, 2, 3.0f);
-		
-		AnimPlayer[3].AnimRepos = new CAnimation(m_Game.m_materialPlayer4Repos, 1, 1, 1.0f);
-		AnimPlayer[3].AnimHorizontal = new CAnimation(m_Game.m_materialPlayer4Horizontal, 7, 4, 0.5f);
-		AnimPlayer[3].AnimVertical = new CAnimation(m_Game.m_materialPlayer4Vertical, 6, 1, 2.0f);
-		AnimPlayer[3].AnimDieHeadCut = new CAnimation(m_Game.m_materialPlayer4DieHeadCut, 3, 2, 1.0f);
-		AnimPlayer[3].AnimDieFall= new CAnimation(m_Game.m_materialPlayer1DieFall, 3, 2, 3.0f);
+		for (int i = 0 ; i < 4 ; ++i)
+		{
+			float fFPS = 4.0f;
+			AnimPlayer[i].AnimRepos = new CAnimation(m_Game.m_materialPlayer1Repos, 4, 1, fFPS);
+			
+			AnimPlayer[i].AnimUpUp = new CAnimation(	m_Game.m_materialPlayer1UpUp,	4, 1, fFPS);
+			AnimPlayer[i].AnimUpDown = new CAnimation(	m_Game.m_materialPlayer1UpDown,	4, 1, fFPS);
+			AnimPlayer[i].AnimUpLeft = new CAnimation(	m_Game.m_materialPlayer1UpLeft, 4, 1, fFPS);
+			AnimPlayer[i].AnimUpRight= new CAnimation(	m_Game.m_materialPlayer1UpRight, 4, 1, fFPS);
+			
+			AnimPlayer[i].AnimDownUp = new CAnimation(m_Game.m_materialPlayer1DownUp, 4, 1, fFPS);
+			AnimPlayer[i].AnimDownDown = new CAnimation(m_Game.m_materialPlayer1DownDown, 4, 1, fFPS);
+			AnimPlayer[i].AnimDownLeft = new CAnimation(m_Game.m_materialPlayer1DownLeft, 4, 1, fFPS);
+			AnimPlayer[i].AnimDownRight = new CAnimation(m_Game.m_materialPlayer1DownRight, 4, 1, fFPS);
+			
+			AnimPlayer[i].AnimLeftUp = new CAnimation(m_Game.m_materialPlayer1LeftUp, 4, 1, fFPS);
+			AnimPlayer[i].AnimLeftDown = new CAnimation(m_Game.m_materialPlayer1LeftDown, 4, 1, fFPS);
+			AnimPlayer[i].AnimLeftLeft = new CAnimation(m_Game.m_materialPlayer1LeftLeft, 4, 1, fFPS);
+			AnimPlayer[i].AnimLeftRight = new CAnimation(m_Game.m_materialPlayer1LeftRight, 4, 1, fFPS);
+			
+			AnimPlayer[i].AnimRightUp = new CAnimation(m_Game.m_materialPlayer1RightUp, 4, 1, fFPS);
+			AnimPlayer[i].AnimRightDown = new CAnimation(m_Game.m_materialPlayer1RightDown, 4, 1, fFPS);
+			AnimPlayer[i].AnimRightLeft = new CAnimation(m_Game.m_materialPlayer1RightLeft, 4, 1, fFPS);
+			AnimPlayer[i].AnimRightRight = new CAnimation(m_Game.m_materialPlayer1RightRight, 4, 1, fFPS);
+			
+			AnimPlayer[i].AnimDieHeadCut = new CAnimation(	m_Game.m_materialPlayer1DieHeadCut, 3, 2, 1.0f);
+			AnimPlayer[i].AnimDieFall = new CAnimation(	m_Game.m_materialPlayer1DieFall, 3, 2, 3.0f);
+		}
 		
 		for(int i = 0 ; i < m_Game.m_nNbPlayer ; ++i)
 		{

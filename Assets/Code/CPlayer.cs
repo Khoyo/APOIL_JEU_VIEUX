@@ -1,11 +1,30 @@
 using UnityEngine;
 using System.Collections;
 
-public struct SAnimationPlayer
+public struct SAnimationPlayer //AnimAB A = mouvement de deplacement, B = mouvement du regard
 {
 	public CAnimation AnimRepos;
-	public CAnimation AnimHorizontal;
-	public CAnimation AnimVertical;
+	
+	public CAnimation AnimUpUp;
+	public CAnimation AnimUpDown;
+	public CAnimation AnimUpLeft;
+	public CAnimation AnimUpRight;
+	
+	public CAnimation AnimDownUp;
+	public CAnimation AnimDownDown;
+	public CAnimation AnimDownLeft;
+	public CAnimation AnimDownRight;
+	
+	public CAnimation AnimLeftUp;
+	public CAnimation AnimLeftDown;
+	public CAnimation AnimLeftLeft;
+	public CAnimation AnimLeftRight;
+	
+	public CAnimation AnimRightUp;
+	public CAnimation AnimRightDown;
+	public CAnimation AnimRightLeft;
+	public CAnimation AnimRightRight;
+	
 	public CAnimation AnimDieHeadCut;
 	public CAnimation AnimDieFall;
 }
@@ -343,38 +362,38 @@ public class CPlayer : CCharacter {
 			if (m_PlayerInput.MoveUp) 
 			{ 
 				velocity += new Vector3(0,1,0); 
-				m_spriteSheet.SetAnimation(m_AnimPlayer.AnimVertical);
+				m_spriteSheet.SetAnimation(m_AnimPlayer.AnimUpUp);
 				m_spriteSheet.AnimationStart();
 				m_eMoveModState = EMoveModState.e_MoveModState_marche;
 			}
 			if (m_PlayerInput.MoveDown) 
 			{ 
 				velocity += new Vector3(0,-1,0); 
-				m_spriteSheet.SetAnimation(m_AnimPlayer.AnimVertical);
+				m_spriteSheet.SetAnimation(m_AnimPlayer.AnimDownDown);
 				m_spriteSheet.AnimationStart();
 				m_eMoveModState = EMoveModState.e_MoveModState_marche;
 			}
 			if (m_PlayerInput.MoveLeft) 
 			{
 				velocity += new Vector3(-1,0,0); 
-				m_spriteSheet.SetAnimation(m_AnimPlayer.AnimHorizontal);
+				m_spriteSheet.SetAnimation(m_AnimPlayer.AnimLeftLeft);
 				m_spriteSheet.AnimationStart();
-				flipLeft();
+				//flipLeft();
 				m_eMoveModState = EMoveModState.e_MoveModState_marche;
 				
 			}
 			if (m_PlayerInput.MoveRight) 
 			{ 
 				velocity += new Vector3(1,0,0); 
-				m_spriteSheet.SetAnimation(m_AnimPlayer.AnimHorizontal);
+				m_spriteSheet.SetAnimation(m_AnimPlayer.AnimRightRight);
 				m_spriteSheet.AnimationStart();
-				flipRight();
+				//flipRight();
 				m_eMoveModState = EMoveModState.e_MoveModState_marche;
 			}
 			if(!m_PlayerInput.MoveUp && !m_PlayerInput.MoveDown && !m_PlayerInput.MoveLeft && !m_PlayerInput.MoveRight) 
 			{
 				m_spriteSheet.SetAnimation(m_AnimPlayer.AnimRepos);
-				m_spriteSheet.AnimationStop();
+				m_spriteSheet.AnimationStart();
 				m_eMoveModState = EMoveModState.e_MoveModState_attente;
 				m_GameObject.rigidbody.velocity = Vector3.zero;
 			}

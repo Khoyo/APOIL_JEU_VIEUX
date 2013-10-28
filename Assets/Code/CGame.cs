@@ -14,22 +14,33 @@ public class CGame : MonoBehaviour
 	
 	// materials
 	public Material m_materialPlayer1Repos;
-	public Material m_materialPlayer1Horizontal;
-	public Material m_materialPlayer1Vertical;
+	
+	public Material m_materialPlayer1UpUp;
+	public Material m_materialPlayer1UpDown;
+	public Material m_materialPlayer1UpLeft;
+	public Material m_materialPlayer1UpRight;
+
+	public Material m_materialPlayer1DownUp;
+	public Material m_materialPlayer1DownDown;
+	public Material m_materialPlayer1DownLeft;
+	public Material m_materialPlayer1DownRight;
+		
+	public Material m_materialPlayer1LeftUp;
+	public Material m_materialPlayer1LeftDown;
+	public Material m_materialPlayer1LeftLeft;
+	public Material m_materialPlayer1LeftRight;
+	
+	public Material m_materialPlayer1RightUp;
+	public Material m_materialPlayer1RightDown;
+	public Material m_materialPlayer1RightLeft;
+	public Material m_materialPlayer1RightRight;
+	
 	public Material m_materialPlayer1DieHeadCut;
 	public Material m_materialPlayer1DieFall;
+	
 	public Material m_materialPlayer2Repos;
-	public Material m_materialPlayer2Horizontal;
-	public Material m_materialPlayer2Vertical;
-	public Material m_materialPlayer2DieHeadCut;
 	public Material m_materialPlayer3Repos;
-	public Material m_materialPlayer3Horizontal;
-	public Material m_materialPlayer3Vertical;
-	public Material m_materialPlayer3DieHeadCut;
 	public Material m_materialPlayer4Repos;
-	public Material m_materialPlayer4Horizontal;
-	public Material m_materialPlayer4Vertical;
-	public Material m_materialPlayer4DieHeadCut;
 	
 	// variables de LD
 	public bool m_bPadXBox = false;
