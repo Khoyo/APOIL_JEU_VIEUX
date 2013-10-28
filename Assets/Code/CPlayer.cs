@@ -378,7 +378,6 @@ public class CPlayer : CCharacter {
 				velocity += new Vector3(-1,0,0); 
 				m_spriteSheet.SetAnimation(m_AnimPlayer.AnimLeftLeft);
 				m_spriteSheet.AnimationStart();
-				//flipLeft();
 				m_eMoveModState = EMoveModState.e_MoveModState_marche;
 				
 			}
@@ -387,7 +386,6 @@ public class CPlayer : CCharacter {
 				velocity += new Vector3(1,0,0); 
 				m_spriteSheet.SetAnimation(m_AnimPlayer.AnimRightRight);
 				m_spriteSheet.AnimationStart();
-				//flipRight();
 				m_eMoveModState = EMoveModState.e_MoveModState_marche;
 			}
 			if(!m_PlayerInput.MoveUp && !m_PlayerInput.MoveDown && !m_PlayerInput.MoveLeft && !m_PlayerInput.MoveRight) 
