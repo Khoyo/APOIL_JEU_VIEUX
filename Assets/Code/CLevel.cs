@@ -62,7 +62,7 @@ public class CLevel
 		for(int i = 0 ; i < m_Game.m_nNbPlayer ; ++i)
 			m_Players[i].Process(fDeltatime);
 		
-		GestionCameraTwoPlayers();
+		GestionCameraFromPlayers();
 		
 		if(Input.GetKey(KeyCode.L) && m_bTimerLightSwitch <= 0){
 			m_Game.m_bLightIsOn = !m_Game.m_bLightIsOn;
@@ -230,29 +230,39 @@ public class CLevel
 	//-------------------------------------------------------------------------------
 	///
 	//-------------------------------------------------------------------------------
-	public void GestionCameraTwoPlayers()
+	public void GestionCameraFromPlayers()
 	{
-		Vector2 posPlayer1 = new Vector2(m_Players[0].getGameObject().transform.position.x, m_Players[0].getGameObject().transform.position.y);
-		Vector2 posPlayer2 = new Vector2(m_Players[1].getGameObject().transform.position.x, m_Players[1].getGameObject().transform.position.y);
-		Vector2 posCenter = new Vector2(0,0);
-		float fSize = 400.0f;
-		if(m_Players[0].IsAlive() && m_Players[1].IsAlive()) 
+		if(m_Game.m_nNbPlayer == 1)
 		{
-			posCenter = (posPlayer2 + posPlayer1)/2;
-			fSize = (posPlayer1 - posPlayer2).magnitude;
+			Vector2 posPlayer1 = new Vector2(m_Players[0].getGameObject().transform.position.x, m_Players[0].getGameObject().transform.position.y);
+			m_Game.getCamera().SetPosition(posPlayer1);
+			m_Game.getCamera().SetFactorScale(m_Game.m_fCameraDezoomMin);
 		}
-		else if(m_Players[0].IsAlive() && !m_Players[1].IsAlive())
+		
+		if(m_Game.m_nNbPlayer == 2)
 		{
-			posCenter = posPlayer1;
-			fSize = 400.0f;
+			Vector2 posPlayer1 = new Vector2(m_Players[0].getGameObject().transform.position.x, m_Players[0].getGameObject().transform.position.y);
+			Vector2 posPlayer2 = new Vector2(m_Players[1].getGameObject().transform.position.x, m_Players[1].getGameObject().transform.position.y);
+			Vector2 posCenter = new Vector2(0,0);
+			float fSize = 400.0f;
+			if(m_Players[0].IsAlive() && m_Players[1].IsAlive()) 
+			{
+				posCenter = (posPlayer2 + posPlayer1)/2;
+				fSize = (posPlayer1 - posPlayer2).magnitude;
+			}
+			else if(m_Players[0].IsAlive() && !m_Players[1].IsAlive())
+			{
+				posCenter = posPlayer1;
+				fSize = 400.0f;
+			}
+			else if(!m_Players[0].IsAlive() && m_Players[1].IsAlive())
+			{
+				posCenter = posPlayer2;
+				fSize = 400.0f;
+			}
+			m_Game.getCamera().SetPosition(posCenter);
+			m_Game.getCamera().SetFactorScale(fSize);
 		}
-		else if(!m_Players[0].IsAlive() && m_Players[1].IsAlive())
-		{
-			posCenter = posPlayer2;
-			fSize = 400.0f;
-		}
-		m_Game.getCamera().SetPosition(posCenter);
-		m_Game.getCamera().SetFactorScale(fSize);
 
 	}
 	
