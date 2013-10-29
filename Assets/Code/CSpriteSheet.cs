@@ -184,6 +184,11 @@ public class CSpriteSheet // : MonoBehaviour
 		m_bIsEnd = true;
 	}
 	
+	public void SetVelocity(float fFPS)
+	{
+		m_fFPS = fFPS;
+	}
+	
 	public void SetDirection(bool forward)
 	{
 		m_bIsForward = forward;
