@@ -7,6 +7,10 @@ public struct SPlayerInput
 	public bool MoveRight;
 	public bool MoveUp;
 	public bool MoveDown;
+	public bool LookLeft;
+	public bool LookRight;
+	public bool LookUp;
+	public bool LookDown;
 	public bool WalkFast;
 	public bool WalkSlow;
 	public bool PickUpObject;
@@ -72,6 +76,11 @@ public class CApoilInput
 		InputPlayer.MoveDown = (Input.GetAxis(playerName+"_MoveVertical")) > fTolerance;
 		InputPlayer.MoveLeft = (Input.GetAxis(playerName+"_MoveHorizontal")) < -fTolerance;
 		InputPlayer.MoveRight = (Input.GetAxis(playerName+"_MoveHorizontal")) > fTolerance;
+		
+		InputPlayer.LookUp = (Input.GetAxis(playerName+"_DirectionHorizontal")) < -fTolerance;
+		InputPlayer.LookDown = (Input.GetAxis(playerName+"_DirectionHorizontal")) > fTolerance;
+		InputPlayer.LookLeft = (Input.GetAxis(playerName+"_DirectionVertical")) < -fTolerance;
+		InputPlayer.LookRight = (Input.GetAxis(playerName+"_DirectionVertical")) > fTolerance;
 		
 		InputPlayer.DirectionHorizontal = Input.GetAxis(playerName+"_DirectionHorizontal");
 		InputPlayer.DirectionVertical = Input.GetAxis(playerName+"_DirectionVertical");
