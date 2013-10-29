@@ -10,6 +10,7 @@ public class CSpriteSheet // : MonoBehaviour
 	int m_nColumns = 1;
 	int m_nRows = 1;	
 	float m_fFPS = 1.0f;
+	float m_fCoeffVelocity;
 	float m_fTemps;
 	Vector2 m_Size;
 	string[] m_sounds;
@@ -47,6 +48,7 @@ public class CSpriteSheet // : MonoBehaviour
 		m_nIndex = 1;
 		m_Game = GameObject.Find("_Game").GetComponent<CGame>();
 		m_endCondition = EEndCondition.e_Loop;
+		m_fCoeffVelocity = 1.0f;
 	}
 	
 	//-------------------------------------------------------------------------------
@@ -56,6 +58,7 @@ public class CSpriteSheet // : MonoBehaviour
 	{
 		m_fTemps = 0.0f;
 		m_nIndex = 1;
+		m_fCoeffVelocity = 1.0f;
 	}
 	
 	//-------------------------------------------------------------------------------
@@ -65,6 +68,7 @@ public class CSpriteSheet // : MonoBehaviour
 	{
 		m_fTemps = 0.0f;
 		m_nIndex = m_nRows * m_nColumns - 1;
+		m_fCoeffVelocity = 1.0f;
 	}
 	
 	public void GoToNextFram()
@@ -78,7 +82,7 @@ public class CSpriteSheet // : MonoBehaviour
 	//-------------------------------------------------------------------------------
 	public void Process () 
 	{
-		m_fTemps += 1.0f/m_fFPS;
+		m_fTemps += 1.0f/(m_fFPS*m_fCoeffVelocity);
 		if(m_endCondition != EEndCondition.e_FramPerFram)
 		{
 			if (m_fTemps > 1.0f && m_bIsPlaying)
@@ -184,9 +188,9 @@ public class CSpriteSheet // : MonoBehaviour
 		m_bIsEnd = true;
 	}
 	
-	public void SetVelocity(float fFPS)
+	public void SetCoeffVelocity(float fCoeff)
 	{
-		m_fFPS = fFPS;
+		m_fCoeffVelocity = fCoeff;
 	}
 	
 	public void SetDirection(bool forward)

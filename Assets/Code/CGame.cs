@@ -70,6 +70,8 @@ public class CGame : MonoBehaviour
 	public float m_fCameraDezoomMax = 800.0f;
 	public float m_fCameraDezoomMin = 400.0f;
 	
+	public float m_fTimerDestructionPont = 2.0f;
+	
 	public bool m_BMute = false;
 	public string soundbankName = "Jeu_apoil.bnk";
 	public bool m_bLightIsOn = true;
@@ -298,7 +300,7 @@ public class CGame : MonoBehaviour
 
 	public void GoToNextLevelOrRestart ()
 	{
-		if(IsWin())
+		if(IsWin() && !m_bNotUseMasterGame)
 			GoToNextLevel();
 		else
 			RestartLevel();

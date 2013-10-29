@@ -280,16 +280,19 @@ public class CPlayer : CCharacter {
 			case EMoveModState.e_MoveModState_discret:
 			{
 				fVitesseAttitude = m_Game.m_fCoeffSlowWalk;
+				m_spriteSheet.SetCoeffVelocity(1.5f);
 				break;
 			}
 			case EMoveModState.e_MoveModState_marche:
 			{
 				fVitesseAttitude = m_Game.m_fCoeffNormalWalk;
+				m_spriteSheet.SetCoeffVelocity(1.0f);
 				break;
 			}
 			case EMoveModState.e_MoveModState_cours	:
 			{
 				fVitesseAttitude = m_Game.m_fCoeffRunWalk;
+				m_spriteSheet.SetCoeffVelocity(0.5f);
 				break;
 			}
 			default: fVitesseAttitude = 1.0f; break;

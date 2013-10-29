@@ -13,6 +13,7 @@ public class CScriptPont : MonoBehaviour
 	CGame m_Game;
 	CPont m_Pont;
 	EState m_eState;
+	float m_fTimerDestruction;
 	
 	public Material m_material;
 	
@@ -22,16 +23,27 @@ public class CScriptPont : MonoBehaviour
 		m_Game = GameObject.Find("_Game").GetComponent<CGame>();
 		m_Game.getLevel().CreateElement<CPont>(gameObject);
 		m_eState = EState.e_NotBroken;
+		m_fTimerDestruction = 0.0f;
 	}
 	
 	public void Reset()
 	{
 		m_eState = EState.e_NotBroken;
+		m_fTimerDestruction = 0.0f;
 	}
 	
 	// Update is called once per frame
 	void Update () 
 	{
+		if(m_eState == EState.e_Cracked)
+			if(m_fTimerDestruction < m_Game.m_fTimerDestructionPont)
+				m_fTimerDestruction += Time.deltaTime;
+			else
+			{
+				m_eState = EState.e_Broken;
+				m_Pont.GetSpriteSheet().GoToNextFram();
+			}
+		
 		if(m_eState == EState.e_Broken)
 			m_Pont.GetSpriteSheet().SetVibration(false);
 	}
