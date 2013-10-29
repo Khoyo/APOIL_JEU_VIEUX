@@ -36,8 +36,7 @@ public class CLevel
 			m_Players[i].Init();
 		
 		foreach(CElement elem in m_pElement)
-			elem.Init();
-		
+			elem.Init();	
 	}
 	
 	//-------------------------------------------------------------------------------
@@ -52,6 +51,8 @@ public class CLevel
 		
 		foreach(CElement elem in m_pElement)
 			elem.Reset();
+		
+		SetPlayerPosition();
 	}
 	
 	//-------------------------------------------------------------------------------
@@ -121,19 +122,7 @@ public class CLevel
 	///
 	//-------------------------------------------------------------------------------
 	public void CreatePlayers()
-	{
-		Vector3 pos3D = m_ObjetLevel.transform.FindChild("LevelIn").position;
-		Vector2 posInit = new Vector2 (pos3D.x, pos3D.y);
-		float fSizePlayer = 100.0f;
-		Vector2[] posPlayer = new Vector2[4];
-		posPlayer[0] = new Vector2(pos3D.x - fSizePlayer / 2.0f, pos3D.y - fSizePlayer / 2.0f);
-		posPlayer[1] = new Vector2(pos3D.x + fSizePlayer / 2.0f, pos3D.y - fSizePlayer / 2.0f);
-		posPlayer[2] = new Vector2(pos3D.x + fSizePlayer / 2.0f, pos3D.y + fSizePlayer / 2.0f);
-		posPlayer[3] = new Vector2(pos3D.x - fSizePlayer / 2.0f, pos3D.y + fSizePlayer / 2.0f);
-		//Vector2 posInit = new Vector2 (0,0);
-		int nNbPlayer = m_Game.m_nNbPlayer;
-		
-		
+	{	
 		SAnimationPlayer[] AnimPlayer = new SAnimationPlayer[4];
 		
 		for (int i = 0 ; i < 4 ; ++i)
@@ -169,9 +158,10 @@ public class CLevel
 		{
 			
 			CPlayer.EIdPlayer eIdPlayer = SetIdPlayer(i);
-			m_Players[i] = new CPlayer(posPlayer[i], eIdPlayer, AnimPlayer[i]);
+			m_Players[i] = new CPlayer(new Vector2(0,0), eIdPlayer, AnimPlayer[i]);
 		}
 		
+		SetPlayerPosition();
 	}
 	
 	public void SetPlayerPosition()
@@ -186,17 +176,16 @@ public class CLevel
 		posPlayer[3] = new Vector2(pos3D.x - fSizePlayer / 2.0f, pos3D.y + fSizePlayer / 2.0f);
 		//Vector2 posInit = new Vector2 (0,0);
 		int nNbPlayer = m_Game.m_nNbPlayer;
-		
+			
 		for(int i = 0 ; i < m_Game.m_nNbPlayer ; ++i)
 		{
 			m_Players[i].SetPosition2D(posPlayer[i]);
+			m_Players[i].ResetPosInit(posPlayer[i]);
 		}
 	}
 	
 	public void StartLevel()
 	{
-		SetPlayerPosition();
-		
 		for(int i = 0 ; i < m_Game.m_nNbPlayer ; ++i)
 		{
 			m_Players[i].LaunchStargate();

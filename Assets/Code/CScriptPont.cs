@@ -24,6 +24,11 @@ public class CScriptPont : MonoBehaviour
 		m_eState = EState.e_NotBroken;
 	}
 	
+	public void Reset()
+	{
+		m_eState = EState.e_NotBroken;
+	}
+	
 	// Update is called once per frame
 	void Update () 
 	{

@@ -236,7 +236,6 @@ public class CPlayer : CCharacter {
 	//-------------------------------------------------------------------------------
 	void GestionDie(float fDeltatime)
 	{
-		Debug.Log (m_fTimerDead);
 		if (m_fTimerDead < m_fTimerDeadMax)
 		{
 			m_spriteSheet.Process();
@@ -543,7 +542,6 @@ public class CPlayer : CCharacter {
 	//-------------------------------------------------------------------------------
 	public void DieFall(Vector2 posOfDie, Vector2 posToDie)
 	{
-		Debug.Log ("YOUYOU");
 		if(m_bIsAlive && !m_bIsRespawn)
 		{
 			DropElement();

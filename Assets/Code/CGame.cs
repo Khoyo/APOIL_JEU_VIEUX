@@ -130,6 +130,7 @@ public class CGame : MonoBehaviour
 		m_bInGame = true;
 	}
 	
+	
 	//-------------------------------------------------------------------------------
 	///
 	//-------------------------------------------------------------------------------
@@ -277,10 +278,7 @@ public class CGame : MonoBehaviour
 			
 			menu.SetTexturePlayerWin(TexturePlayerWin);
 		}
-		else
-		{
-			
-		}
+
 		menu.SetMenuState(CMenu.EmenuState.e_menuState_menuWinLoose);
 	}
 	
@@ -310,14 +308,9 @@ public class CGame : MonoBehaviour
 	{
 		Debug.Log ("Exiting level "+Application.loadedLevel);
 		
-		if(m_bNotUseMasterGame)
-			RestartLevel();
-		else 
-		{
-			if(Application.loadedLevel < Application.levelCount)
-				Application.LoadLevel(Application.loadedLevel+1);
-			StartLevel();
-		}
+		if(Application.loadedLevel < Application.levelCount)
+			Application.LoadLevel(Application.loadedLevel+1);
+		StartLevel();
 	}
 	
 	public void RestartLevel()
@@ -396,8 +389,7 @@ public class CGame : MonoBehaviour
 		{
 			Process(Time.deltaTime);
 		}
-	}
-	
+	}	
 	
 	//-------------------------------------------------------------------------------
 	/// 

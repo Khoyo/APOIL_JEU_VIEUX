@@ -13,7 +13,7 @@ public class CSpriteSheet // : MonoBehaviour
 	float m_fTemps;
 	Vector2 m_Size;
 	string[] m_sounds;
-	CGame game;
+	CGame m_Game;
 	
 	public enum EEndCondition{
 		e_Loop,
@@ -45,7 +45,7 @@ public class CSpriteSheet // : MonoBehaviour
 		m_myRenderer = m_parent.renderer;
 		m_fTemps = 0.0f;
 		m_nIndex = 1;
-		//game = GameObject.Find("_Game").GetComponent<CGame>();
+		m_Game = GameObject.Find("_Game").GetComponent<CGame>();
 		m_endCondition = EEndCondition.e_Loop;
 	}
 	
@@ -55,7 +55,7 @@ public class CSpriteSheet // : MonoBehaviour
 	public void Reset()
 	{
 		m_fTemps = 0.0f;
-		m_nIndex = 0;
+		m_nIndex = 1;
 	}
 	
 	//-------------------------------------------------------------------------------
@@ -123,7 +123,7 @@ public class CSpriteSheet // : MonoBehaviour
 				
 				//Play sound if necessary
 				if(m_sounds[m_nIndex] != "" && m_sounds[m_nIndex] != null)
-					game.getSoundEngine().postEvent(m_sounds[m_nIndex], m_parent);
+					m_Game.getSoundEngine().postEvent(m_sounds[m_nIndex], m_parent);
 				
 				m_fTemps = 0.0f;
 				

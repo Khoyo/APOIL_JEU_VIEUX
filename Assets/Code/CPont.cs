@@ -38,6 +38,7 @@ public class CPont : CElement
 	{
 		base.Reset();
 		m_SpriteSheet.Reset();
+		m_ScriptPont.Reset();
 	}
 
 	//-------------------------------------------------------------------------------
