@@ -136,7 +136,8 @@ public class CSpriteSheet // : MonoBehaviour
 		
 		if(m_bVibration)
 		{
-			offset.x = Mathf.Cos(100.0f * m_fTemps) / 50.0f;
+			offset.y = Mathf.Cos(100.0f * m_fTemps) / 50.0f;
+			//offset.y = Mathf.Sin(100.0f * m_fTemps) / 50.0f;
 		}
 		
 		Vector2 textureSize = new Vector2(1f / m_nColumns, 1f / m_nRows);
