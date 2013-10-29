@@ -300,7 +300,7 @@ public class CGame : MonoBehaviour
 
 	public void GoToNextLevelOrRestart ()
 	{
-		if(IsWin() && !m_bNotUseMasterGame)
+		if(IsWin())
 			GoToNextLevel();
 		else
 			RestartLevel();
@@ -308,9 +308,13 @@ public class CGame : MonoBehaviour
 	
 	public void GoToNextLevel()
 	{
-		Debug.Log ("Exiting level "+Application.loadedLevel);
+		Debug.Log ("Exiting level " + Application.loadedLevel);
 		
-		if(Application.loadedLevel < Application.levelCount)
+		if(m_bNotUseMasterGame)
+		{
+			Application.LoadLevel(Application.loadedLevel);
+		}
+		else if(Application.loadedLevel < Application.levelCount)
 			Application.LoadLevel(Application.loadedLevel+1);
 		StartLevel();
 	}
@@ -383,7 +387,7 @@ public class CGame : MonoBehaviour
 	}
 	
 	//-------------------------------------------------------------------------------
-	/// Unity
+	///		Unity
 	//-------------------------------------------------------------------------------
 	void Update()
 	{
@@ -391,7 +395,17 @@ public class CGame : MonoBehaviour
 		{
 			Process(Time.deltaTime);
 		}
-	}	
+	}
+	
+	//-------------------------------------------------------------------------------
+	/// 	Unity
+	//-------------------------------------------------------------------------------
+	void OnLevelWasLoaded(int level) 
+	{
+		//Start();
+		//Reset();
+		//StartLevel();
+    }
 	
 	//-------------------------------------------------------------------------------
 	/// 

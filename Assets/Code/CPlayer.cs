@@ -108,8 +108,8 @@ public class CPlayer : CCharacter {
 		SetPosition2D(posInit);
 		m_posInit = posInit;
 		
-		m_ConeVision = m_GameObject.GetComponent<CConeVision>();
-		m_CameraCone = m_Game.m_CameraCone;
+		//m_ConeVision = m_GameObject.GetComponent<CConeVision>();
+		//m_CameraCone = m_Game.m_CameraCone;
 		
 		m_fSpeed = m_Game.m_fSpeedPlayer;
 		m_spriteSheet = new CSpriteSheet(m_GameObject); //m_GameObject.GetComponent<CSpriteSheet>();	
@@ -144,7 +144,7 @@ public class CPlayer : CCharacter {
 		m_posOfDie = new Vector2(0,0);
 		//Appel a la main des scripts du gameObject
 		m_spriteSheet.Init();
-		m_ConeVision.Init();
+		//m_ConeVision.Init();
 		//m_spriteSheet.SetAnimation(m_AnimRepos);
 		m_CercleDiscretion.Init(this);
 
@@ -206,8 +206,9 @@ public class CPlayer : CCharacter {
 		
 			//Appel a la main des scripts du gameObject
 			m_spriteSheet.Process();
-			if(m_bMainCharacter)
-				m_ConeVision.Process();
+		
+			/*if(m_bMainCharacter)
+				m_ConeVision.Process();*/
 			
 			m_CercleDiscretion.Process();
 			if(m_bIsRespawn)
