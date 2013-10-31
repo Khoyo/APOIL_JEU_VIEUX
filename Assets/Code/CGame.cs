@@ -71,6 +71,7 @@ public class CGame : MonoBehaviour
 	public float m_fCameraDezoomMin = 400.0f;
 	
 	public float m_fTimerDestructionPont = 2.0f;
+	public int m_nNbImpactMaxCaisse = 2;
 	
 	public bool m_BMute = false;
 	public string soundbankName = "Jeu_apoil.bnk";
