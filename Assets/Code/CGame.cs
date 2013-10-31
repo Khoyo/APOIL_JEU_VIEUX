@@ -71,7 +71,7 @@ public class CGame : MonoBehaviour
 	public float m_fCameraDezoomMin = 400.0f;
 	
 	public float m_fTimerDestructionPont = 2.0f;
-	public int m_nNbImpactMaxCaisse = 2;
+	public int m_nNbImpactMaxCaisse = 4;
 	
 	public bool m_BMute = false;
 	public string soundbankName = "Jeu_apoil.bnk";
@@ -154,6 +154,8 @@ public class CGame : MonoBehaviour
 			//Debug
 			if(Input.GetKey(KeyCode.F8))
 				RestartLevel();
+			if(Input.GetKey(KeyCode.A))
+				Reset();
 			if(Input.GetKey(KeyCode.F9))
 				FinishLevel(true, CPlayer.EIdPlayer.e_IdPlayer_Player1);
 			if(Input.GetKey(KeyCode.F10))
