@@ -29,6 +29,12 @@ public class CApoilInput
 
 	public static Vector2 MousePosition;
 	
+	//Debug
+	public static bool DebugF9;
+	public static bool DebugF10;
+	public static bool DebugF11;
+	public static bool DebugF12;
+	
 	static CGame m_Game = GameObject.Find("_Game").GetComponent<CGame>();
 
 	//-------------------------------------------------------------------------------
@@ -65,6 +71,11 @@ public class CApoilInput
 			InputPlayer1.DirectionHorizontal = 0.0f;
 			InputPlayer1.DirectionVertical = 0.0f;
 		}
+		
+		DebugF9 = Input.GetKey(KeyCode.F9);
+		DebugF10 = Input.GetKey(KeyCode.F10);
+		DebugF11 = Input.GetKey(KeyCode.F11);
+		DebugF12 = Input.GetKey(KeyCode.F12);
 	}
 	
 	//-------------------------------------------------------------------------------

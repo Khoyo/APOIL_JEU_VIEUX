@@ -152,13 +152,13 @@ public class CGame : MonoBehaviour
 				Application.Quit();
 			
 			//Debug
-			if(Input.GetKey(KeyCode.F8))
+			if(CApoilInput.DebugF9)
 				RestartLevel();
-			if(Input.GetKey(KeyCode.A))
+			if(CApoilInput.DebugF10)
 				Reset();
-			if(Input.GetKey(KeyCode.F9))
+			if(CApoilInput.DebugF11)
 				FinishLevel(true, CPlayer.EIdPlayer.e_IdPlayer_Player1);
-			if(Input.GetKey(KeyCode.F10))
+			if(CApoilInput.DebugF12)
 				FinishLevel(false, CPlayer.EIdPlayer.e_IdPlayer_Player1);
 		}
 		
