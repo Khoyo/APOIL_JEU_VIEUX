@@ -31,7 +31,7 @@ public class CScriptCaisse : MonoBehaviour {
 		{
 			if(other.gameObject == m_Game.getLevel().getPlayer(i).getGameObject())
 			{
-				gameObject.transform.Translate(new Vector3(10,10,0));
+				//gameObject.transform.Translate(new Vector3(10,10,0));
 			}
 			else if(other.gameObject.CompareTag("Laser"))
 			{
