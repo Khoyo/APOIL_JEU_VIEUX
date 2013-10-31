@@ -544,7 +544,7 @@ public class CPlayer : CCharacter {
 	//-------------------------------------------------------------------------------
 	///
 	//-------------------------------------------------------------------------------
-	public void DieFall(Vector2 posOfDie, Vector2 posToDie)
+	public void DieFall(Vector2 posOfDie, Vector2 posToDie, Vector2 posRespawn)
 	{
 		if(m_bIsAlive && !m_bIsRespawn)
 		{
@@ -557,7 +557,8 @@ public class CPlayer : CCharacter {
 			m_fTimerDead = 0.0f;
 			m_bHaveDirectionToDie = true;
 			m_posGoToDie = posToDie;
-			m_posOfDie = posOfDie;
+			m_posOfDie 	 = posOfDie;
+			SetPosRespawn(posRespawn);
 		}
 	}
 	
@@ -615,6 +616,11 @@ public class CPlayer : CCharacter {
 	public bool IsAlive()
 	{
 		return (m_bIsAlive || m_GameObject.active);
+	}	
+	
+	public void SetPosRespawn(Vector2 pos)
+	{
+		m_posRespawn = pos;
 	}	
 	
 }
