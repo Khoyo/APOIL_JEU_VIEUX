@@ -31,9 +31,7 @@ public class CCaisse : CElement
 		
 		m_SpriteSheet = new CSpriteSheet(m_GameObject);
 		m_Game = GameObject.Find("_Game").GetComponent<CGame>();
-		
-		
-		
+			
 		m_SpriteSheet.Init();
 		m_SpriteSheet.SetAnimation(anim);
 		m_SpriteSheet.setEndCondition(CSpriteSheet.EEndCondition.e_FramPerFram);

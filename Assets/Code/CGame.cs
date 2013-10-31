@@ -148,7 +148,7 @@ public class CGame : MonoBehaviour
 			CheckLooseGame();		
 			
 			//Quit on Escape
-			if(Input.GetKey(KeyCode.Escape))
+			if(CApoilInput.Quit)
 				Application.Quit();
 			
 			//Debug

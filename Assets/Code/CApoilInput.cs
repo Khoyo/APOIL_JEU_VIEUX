@@ -28,6 +28,7 @@ public class CApoilInput
 	public static SPlayerInput InputPlayer4;
 
 	public static Vector2 MousePosition;
+	public static bool Quit;
 	
 	//Debug
 	public static bool DebugF9;
@@ -71,6 +72,8 @@ public class CApoilInput
 			InputPlayer1.DirectionHorizontal = 0.0f;
 			InputPlayer1.DirectionVertical = 0.0f;
 		}
+		
+		Quit = Input.GetKey(KeyCode.Escape);
 		
 		DebugF9 = Input.GetKey(KeyCode.F9);
 		DebugF10 = Input.GetKey(KeyCode.F10);
