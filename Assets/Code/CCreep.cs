@@ -61,7 +61,7 @@ public class CCreep : CElement
 		{
 			m_fTimerParasite += fDeltatime;
 			SetPosition2D(m_PlayerParasitized.GetPosition2D());
-			if(m_fTimerParasite > m_Game.m_fTimerParasite)
+			if(m_fTimerParasite > m_Game.m_fCreepTimerParasiteMax)
 				LeavePlayer();
 		}
 	}
@@ -77,13 +77,15 @@ public class CCreep : CElement
 	public void SetPlayerParasitized(CPlayer player)
 	{
 		m_PlayerParasitized = player;
+		m_PlayerParasitized.SetCreepOnPlayer(this);
 		m_bIsOnPlayer = true;
 		m_fTimerParasite = 0.0f;
 	}	
 	
 	public void LeavePlayer()
 	{
-		m_PlayerParasitized = null;
+		m_PlayerParasitized.CreepLeavePlayer();
+		m_PlayerParasitized = null;		
 		m_bIsOnPlayer = false;
 	}
 		

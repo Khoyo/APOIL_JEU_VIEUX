@@ -62,6 +62,8 @@ public class CPlayer : CCharacter {
 	CCercleDiscretion m_CercleDiscretion;
 	CTakeElement m_HeldObject;
 	SPlayerInput m_PlayerInput;
+	CCreep m_CreepOnPlayer;
+	float m_fCoeffVelocityCreep;
 	
 	public enum EMoveModState // mode de deplacement
 	{
@@ -126,6 +128,8 @@ public class CPlayer : CCharacter {
 		m_bIsRespawn = false;
 		m_bIsAlive = true;
 		m_fTimerDead = 0.0f;
+		m_CreepOnPlayer = null;
+		m_fCoeffVelocityCreep = 1.0f;
 		
 		m_Torche = m_GameObject.transform.FindChild("Torche").gameObject;
 		
@@ -302,7 +306,7 @@ public class CPlayer : CCharacter {
 		float fCoeffDirection = Vector2.Dot(m_DirectionRegard, m_DirectionDeplacement);
 		fCoeffDirection = m_Game.m_fCoeffReverseWalk + (1.0f - m_Game.m_fCoeffReverseWalk)*(fCoeffDirection + 1)/2;
 		
-		m_fSpeed = m_Game.m_fSpeedPlayer * fVitesseEtat * fVitesseAttitude * fCoeffDirection;
+		m_fSpeed = m_Game.m_fSpeedPlayer * fVitesseEtat * fVitesseAttitude * fCoeffDirection * m_fCoeffVelocityCreep;
 	}
 	
 	//-------------------------------------------------------------------------------
@@ -621,6 +625,17 @@ public class CPlayer : CCharacter {
 	public void SetPosRespawn(Vector2 pos)
 	{
 		m_posRespawn = pos;
-	}	
+	}
 	
+	public void SetCreepOnPlayer(CCreep creep)
+	{
+		m_CreepOnPlayer = creep;
+		m_fCoeffVelocityCreep = m_Game.m_fCreepCoeffRalentissement;
+	}
+	
+	public void CreepLeavePlayer()
+	{
+		m_CreepOnPlayer = null;
+		m_fCoeffVelocityCreep = 1.0f;
+	}
 }
