@@ -82,7 +82,7 @@ public class CCreep : CElement
 			if(m_fTimerParasite > m_Game.m_fCreepTimerParasiteMax)
 				LeavePlayer();
 		}
-		else 
+		else  
 		{
 			Vector3 velocity = new Vector3(0,0,0);
 			if(m_bFollowPlayer)
@@ -91,7 +91,9 @@ public class CCreep : CElement
 			}
 			else
 			{
-				
+				Vector2 rand = Random.insideUnitCircle;
+				velocity.x = rand.x;
+				velocity.y = rand.y;
 			}
 			
 			m_GameObject.transform.position += m_fVelocity * velocity * fDeltatime;
