@@ -223,15 +223,15 @@ public class CLevel
 	{
 		if(m_Game.m_nNbPlayer == 1)
 		{
-			Vector2 posPlayer1 = new Vector2(m_Players[0].getGameObject().transform.position.x, m_Players[0].getGameObject().transform.position.y);
+			Vector2 posPlayer1 = new Vector2(m_Players[0].GetGameObject().transform.position.x, m_Players[0].GetGameObject().transform.position.y);
 			m_Game.getCamera().SetPosition(posPlayer1);
 			m_Game.getCamera().SetFactorScale(m_Game.m_fCameraDezoomMin);
 		}
 		
 		if(m_Game.m_nNbPlayer == 2)
 		{
-			Vector2 posPlayer1 = new Vector2(m_Players[0].getGameObject().transform.position.x, m_Players[0].getGameObject().transform.position.y);
-			Vector2 posPlayer2 = new Vector2(m_Players[1].getGameObject().transform.position.x, m_Players[1].getGameObject().transform.position.y);
+			Vector2 posPlayer1 = new Vector2(m_Players[0].GetGameObject().transform.position.x, m_Players[0].GetGameObject().transform.position.y);
+			Vector2 posPlayer2 = new Vector2(m_Players[1].GetGameObject().transform.position.x, m_Players[1].GetGameObject().transform.position.y);
 			Vector2 posCenter = new Vector2(0,0);
 			float fSize = 400.0f;
 			if(m_Players[0].IsAlive() && m_Players[1].IsAlive()) 

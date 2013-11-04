@@ -6,13 +6,18 @@ public class CCreep : CElement
 	CScriptCreep m_ScriptCreep;
 	CSpriteSheet m_SpriteSheet;
 	CGame m_Game;
+	CPlayer m_PlayerParasitized;
+	bool m_bIsOnPlayer;
+	float m_fTimerParasite;
 
 	//-------------------------------------------------------------------------------
 	///
 	//-------------------------------------------------------------------------------	
 	public CCreep()
 	{
-
+		m_PlayerParasitized = null;
+		m_bIsOnPlayer = false;
+		m_fTimerParasite = 0.0f;
 	}
 	
 	//-------------------------------------------------------------------------------
@@ -52,6 +57,13 @@ public class CCreep : CElement
 	{
 		base.Process(fDeltatime);
 		m_SpriteSheet.Process();
+		if(m_bIsOnPlayer)
+		{
+			m_fTimerParasite += fDeltatime;
+			SetPosition2D(m_PlayerParasitized.GetPosition2D());
+			if(m_fTimerParasite > m_Game.m_fTimerParasite)
+				LeavePlayer();
+		}
 	}
 	
 	//-------------------------------------------------------------------------------
@@ -60,5 +72,23 @@ public class CCreep : CElement
 	public CSpriteSheet GetSpriteSheet()
 	{
 		return m_SpriteSheet;	
+	}
+	
+	public void SetPlayerParasitized(CPlayer player)
+	{
+		m_PlayerParasitized = player;
+		m_bIsOnPlayer = true;
+		m_fTimerParasite = 0.0f;
+	}	
+	
+	public void LeavePlayer()
+	{
+		m_PlayerParasitized = null;
+		m_bIsOnPlayer = false;
+	}
+		
+	public bool IsOnPlayer()
+	{
+		return m_bIsOnPlayer;
 	}
 }

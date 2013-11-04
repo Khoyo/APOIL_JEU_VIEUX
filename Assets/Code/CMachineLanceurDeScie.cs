@@ -20,7 +20,7 @@ public class CMachineLanceurDeScie : MonoBehaviour, IMachineAction
 			m_Scies[i] = new CScie();
 			m_Scies[i].m_number = m_ScieNumber++;
 			m_Scies[i].Init();
-			m_Scies[i].getGameObject().active = false;
+			m_Scies[i].GetGameObject().active = false;
 			
 		}
 		
@@ -30,9 +30,9 @@ public class CMachineLanceurDeScie : MonoBehaviour, IMachineAction
 	{
 		if((Time.time-m_Delay) > m_timeOfLastLaunch){
 			CScie saw = GetNewSaw();
-			saw.getGameObject().active = true;
-			saw.getGameObject().transform.position = transform.position + gameObject.transform.rotation * new Vector3(150, 0, 0);;
-			saw.getGameObject().rigidbody.velocity = gameObject.transform.rotation * new Vector3(2500,0,0);
+			saw.GetGameObject().active = true;
+			saw.GetGameObject().transform.position = transform.position + gameObject.transform.rotation * new Vector3(150, 0, 0);;
+			saw.GetGameObject().rigidbody.velocity = gameObject.transform.rotation * new Vector3(2500,0,0);
 		
 			m_timeOfLastLaunch = Time.time;
 		}
@@ -43,7 +43,7 @@ public class CMachineLanceurDeScie : MonoBehaviour, IMachineAction
 		int min = m_ScieNumber;
 		int index_min = 0;
 		for(int i = 0; i<m_MaxScie; i++){
-			if(!m_Scies[i].getGameObject().active){
+			if(!m_Scies[i].GetGameObject().active){
 				return m_Scies[i];
 			}
 			if(m_Scies[i].m_number < min){

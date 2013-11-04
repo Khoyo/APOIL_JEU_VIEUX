@@ -73,6 +73,8 @@ public class CGame : MonoBehaviour
 	public float m_fTimerDestructionPont = 2.0f;
 	public int m_nNbImpactMaxCaisse = 4;
 	
+	public float m_fTimerParasite = 4.0f;
+	
 	public bool m_BMute = false;
 	public string soundbankName = "Jeu_apoil.bnk";
 	public bool m_bLightIsOn = true;

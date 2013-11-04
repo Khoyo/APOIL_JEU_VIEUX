@@ -45,7 +45,7 @@ public class CScriptScie : MonoBehaviour {
 			}
 			for(int i = 0 ; i < m_Game.m_nNbPlayer ; ++i)
 			{
-				if(collision.gameObject == m_Game.getLevel().getPlayer(i).getGameObject())
+				if(collision.gameObject == m_Game.getLevel().getPlayer(i).GetGameObject())
 				{
 					gameObject.active = false;
 					m_Game.getLevel().getPlayer(i).DieHeadCut();

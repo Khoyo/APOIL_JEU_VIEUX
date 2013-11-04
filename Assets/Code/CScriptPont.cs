@@ -53,7 +53,7 @@ public class CScriptPont : MonoBehaviour
 	{
 		for(int i = 0 ; i < m_Game.m_nNbPlayer ; ++i)
 		{
-			if(other.gameObject == m_Game.getLevel().getPlayer(i).getGameObject())
+			if(other.gameObject == m_Game.getLevel().getPlayer(i).GetGameObject())
 			{
 				m_Pont.GetSpriteSheet().GoToNextFram();
 				switch(m_eState)
@@ -79,15 +79,15 @@ public class CScriptPont : MonoBehaviour
 	{
 		for(int i = 0 ; i < m_Game.m_nNbPlayer ; ++i)
 		{
-			if(other.gameObject == m_Game.getLevel().getPlayer(i).getGameObject() && m_Game.getLevel().getPlayer(i).IsAlive())
+			if(other.gameObject == m_Game.getLevel().getPlayer(i).GetGameObject() && m_Game.getLevel().getPlayer(i).IsAlive())
 			{
-				Vector2 posOfDie = new Vector2(m_Game.getLevel().getPlayer(i).getGameObject().transform.position.x, m_Game.getLevel().getPlayer(i).getGameObject().transform.position.y);
+				Vector2 posOfDie = new Vector2(m_Game.getLevel().getPlayer(i).GetGameObject().transform.position.x, m_Game.getLevel().getPlayer(i).GetGameObject().transform.position.y);
 				Vector2 posToDie = new Vector2(gameObject.transform.position.x, gameObject.transform.position.y);
 				
 				if(m_eState == EState.e_Broken)
 				{
-					float fDistToBorder1 = (m_Game.getLevel().getPlayer(i).getGameObject().transform.position - m_Pont.GetSubObject1().transform.position).magnitude;
-					float fDistToBorder2 = (m_Game.getLevel().getPlayer(i).getGameObject().transform.position - m_Pont.GetSubObject2().transform.position).magnitude;
+					float fDistToBorder1 = (m_Game.getLevel().getPlayer(i).GetGameObject().transform.position - m_Pont.GetSubObject1().transform.position).magnitude;
+					float fDistToBorder2 = (m_Game.getLevel().getPlayer(i).GetGameObject().transform.position - m_Pont.GetSubObject2().transform.position).magnitude;
 					
 					Vector2 posRespawn;
 					if(fDistToBorder1 < fDistToBorder2)

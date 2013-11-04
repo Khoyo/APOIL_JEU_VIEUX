@@ -30,9 +30,9 @@ public class CLaserTurret : CElement
 			//First, fire in it's direction ^^
 			CScie saw = new CScie();
 			saw.Init();
-			saw.getGameObject().active = true;
-			saw.getGameObject().transform.position = m_GameObject.transform.position;
-			saw.getGameObject().rigidbody.velocity = (tracked.transform.position - m_GameObject.transform.position)*2 ;  
+			saw.GetGameObject().active = true;
+			saw.GetGameObject().transform.position = m_GameObject.transform.position;
+			saw.GetGameObject().rigidbody.velocity = (tracked.transform.position - m_GameObject.transform.position)*2 ;  
 			m_fLastFired = Time.time;
 		}
 		
@@ -45,7 +45,7 @@ public class CLaserTurret : CElement
 		
 		for(int i = 0 ; i < m_Game.m_nNbPlayer ; ++i)
 		{
-			if(other.gameObject ==  m_Game.getLevel().getPlayer(i).getGameObject())
+			if(other.gameObject ==  m_Game.getLevel().getPlayer(i).GetGameObject())
 			{
 				tracked = other.gameObject;
 				Debug.Log ("Started tracking");

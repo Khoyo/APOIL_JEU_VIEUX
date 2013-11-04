@@ -29,7 +29,7 @@ public class CScriptCaisse : MonoBehaviour {
 	{
 		for(int i = 0 ; i < m_Game.m_nNbPlayer ; ++i)
 		{
-			if(other.gameObject == m_Game.getLevel().getPlayer(i).getGameObject())
+			if(other.gameObject == m_Game.getLevel().getPlayer(i).GetGameObject())
 			{
 				//gameObject.transform.Translate(new Vector3(10,10,0));
 			}
