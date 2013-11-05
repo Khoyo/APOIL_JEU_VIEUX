@@ -58,6 +58,7 @@ public class CPlayer : CCharacter {
 	bool m_bIsAlive;
 	bool m_bHaveDirectionToDie;
 	bool m_bIsRespawn;
+	bool m_bResetSubElements;
 	
 	CCercleDiscretion m_CercleDiscretion;
 	CTakeElement m_YounesSuceDesBites;
@@ -126,6 +127,7 @@ public class CPlayer : CCharacter {
 		m_bHaveObject = false;
 		m_bIsRespawn = false;
 		m_bIsAlive = true;
+		m_bResetSubElements = false;
 		m_fTimerDead = 0.0f;
 		
 		m_Torche = m_GameObject.transform.FindChild("Torche").gameObject;
@@ -163,6 +165,7 @@ public class CPlayer : CCharacter {
 		SetPosition2D(m_posInit);
 		m_GameObject.active = true;
 		m_bIsAlive = true;
+		m_bResetSubElements = false;
 	}
 
 	//-------------------------------------------------------------------------------
@@ -543,6 +546,7 @@ public class CPlayer : CCharacter {
 			m_spriteSheet.Reset();
 			m_spriteSheet.AnimationStart();
 			m_fTimerDead = 0.0f;
+			m_bResetSubElements = true;
 		}
 	}
 	
@@ -564,6 +568,7 @@ public class CPlayer : CCharacter {
 			m_posGoToDie = posToDie;
 			m_posOfDie 	 = posOfDie;
 			SetPosRespawn(posRespawn);
+			m_bResetSubElements = true;
 		}
 	}
 	
@@ -579,6 +584,8 @@ public class CPlayer : CCharacter {
 		m_spriteSheet.AnimationStart();
 		m_bHaveDirectionToDie = false;
 		m_bIsRespawn = true;
+		m_bResetSubElements = false;
+		m_nNbCreepOnPlayer = 0;
 	}
 	
 	public void ResetPosInit(Vector2 posInit)
@@ -637,5 +644,10 @@ public class CPlayer : CCharacter {
 	{
 		if(m_nNbCreepOnPlayer > 0)
 			--m_nNbCreepOnPlayer;
+	}
+	
+	public bool IsResetSubElements()
+	{
+		return m_bResetSubElements;	
 	}
 }

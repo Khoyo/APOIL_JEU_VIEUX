@@ -87,6 +87,10 @@ public class CCreep : CElement
 		base.Process(fDeltatime);
 		m_SpriteSheet.Process();
 		
+		if(m_PlayerParasitized != null)
+			if(m_PlayerParasitized.IsResetSubElements())
+				Reset();
+		
 		Vector3 velocity = new Vector3(0,0,0);
 		switch(m_eState)
 		{
