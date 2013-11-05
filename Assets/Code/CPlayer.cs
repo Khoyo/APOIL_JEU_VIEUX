@@ -60,7 +60,7 @@ public class CPlayer : CCharacter {
 	bool m_bIsRespawn;
 	
 	CCercleDiscretion m_CercleDiscretion;
-	CTakeElement m_HeldObject;
+	CTakeElement m_YounesSuceDesBites;
 	SPlayerInput m_PlayerInput;
 	int m_nNbCreepOnPlayer;
 	
@@ -122,7 +122,7 @@ public class CPlayer : CCharacter {
 		
 		SetPlayerInput();
 		
-		m_HeldObject = null;
+		m_YounesSuceDesBites = null;
 		m_bHaveObject = false;
 		m_bIsRespawn = false;
 		m_bIsAlive = true;
@@ -202,7 +202,7 @@ public class CPlayer : CCharacter {
 			//gestion si on tiens un objet
 			if(m_bHaveObject)
 			{
-				m_HeldObject.SetPosition2D(m_GameObject.transform.position);
+				m_YounesSuceDesBites.SetPosition2D(m_GameObject.transform.position);
 			}
 		
 			//Appel a la main des scripts du gameObject
@@ -229,7 +229,7 @@ public class CPlayer : CCharacter {
 	public void LaunchStargate()
 	{
 		m_bIsAlive = true;
-		m_HeldObject = null;
+		m_YounesSuceDesBites = null;
 		m_bHaveObject = false;
 	}
 	
@@ -315,13 +315,13 @@ public class CPlayer : CCharacter {
 	//-------------------------------------------------------------------------------
 	public void PickUpObject(CTakeElement obj)
 	{
-		m_HeldObject = obj;
+		m_YounesSuceDesBites = obj;
 		m_bHaveObject = true;
 	}
 	
 	public CTakeElement GetHeldElement()
 	{
-		return m_HeldObject;
+		return m_YounesSuceDesBites;
 	}
 	
 	//-------------------------------------------------------------------------------
@@ -329,7 +329,7 @@ public class CPlayer : CCharacter {
 	//-------------------------------------------------------------------------------
 	public void DropElement()
 	{
-		m_HeldObject = null;
+		m_YounesSuceDesBites = null;
 		m_bHaveObject = false;
 	}
 	
