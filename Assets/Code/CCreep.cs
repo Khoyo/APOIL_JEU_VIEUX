@@ -18,7 +18,7 @@ public class CCreep : CElement
 	CPlayer m_PlayerParasitized;
 	bool m_bIsOnPlayer;
 	bool m_bCanParasitizedPlayer;
-	bool m_bFollowPlayer;
+	bool m_bIsOnLight;
 	float m_fTimerParasite;
 	float m_fTimerTakePlayer;
 	const float m_fTimerTakePlayerMax = 1.0f;
@@ -128,6 +128,8 @@ public class CCreep : CElement
 					m_bCanParasitizedPlayer = true;
 				if(m_fTimerParasite > m_Game.m_fCreepTimerParasiteMax)
 					LeavePlayer();
+				if(m_bIsOnLight)
+					LeavePlayer();
 				break;	
 			}
 		}
@@ -193,5 +195,10 @@ public class CCreep : CElement
 	public CPlayer GetParasitizedPlayer()
 	{
 		return m_PlayerParasitized;
+	}
+	
+	public void SetIsOnLight(bool bIsOnLight)
+	{
+		m_bIsOnLight = bIsOnLight;	
 	}
 }

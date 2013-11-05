@@ -306,9 +306,7 @@ public class CPlayer : CCharacter {
 		float fCoeffVelocityCreep = m_Game.m_fCreepCoeffRalentissement * (1.0f/(float)m_nNbCreepOnPlayer);
 		if(m_nNbCreepOnPlayer == 0)
 			fCoeffVelocityCreep = 1.0f;
-		
-		Debug.Log(fCoeffVelocityCreep);
-		
+				
 		m_fSpeed = m_Game.m_fSpeedPlayer * fVitesseEtat * fVitesseAttitude * fCoeffDirection * fCoeffVelocityCreep;
 	}
 	
