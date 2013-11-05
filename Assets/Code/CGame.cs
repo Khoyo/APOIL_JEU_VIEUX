@@ -411,17 +411,9 @@ public class CGame : MonoBehaviour
 	/// 	Unity
 	//-------------------------------------------------------------------------------
 	void OnLevelWasLoaded(int level) 
-	{
-		//Start();
-		//Reset();
-		//StartLevel();
-		
+	{	
 		if(!m_bStartCalled)
 			return;
-		
-		Debug.Log ("OnLevelWasLoaded Called, with argument: "+level);
-		Debug.Log(Time.time+", "+Time.frameCount+" obj: "+this);
-		
 		StartLevel();
 		
     }
