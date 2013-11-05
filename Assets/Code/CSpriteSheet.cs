@@ -15,6 +15,7 @@ public class CSpriteSheet // : MonoBehaviour
 	Vector2 m_Size;
 	string[] m_sounds;
 	CGame m_Game;
+	const float m_fFixFPS = 30.0f;
 	
 	public enum EEndCondition{
 		e_Loop,
@@ -82,10 +83,11 @@ public class CSpriteSheet // : MonoBehaviour
 	//-------------------------------------------------------------------------------
 	public void Process () 
 	{
-		m_fTemps += 1.0f/(m_fFPS*m_fCoeffVelocity);
+		float fDeltatime = Time.deltaTime;
+		m_fTemps += fDeltatime;
 		if(m_endCondition != EEndCondition.e_FramPerFram)
 		{
-			if (m_fTemps > 1.0f && m_bIsPlaying)
+			if (m_fTemps > m_fFPS*m_fCoeffVelocity/m_fFixFPS && m_bIsPlaying)
 			{
 				// Calculate index
 				if(m_bIsForward){
