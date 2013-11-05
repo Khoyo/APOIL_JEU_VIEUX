@@ -99,7 +99,7 @@ public class CGame : MonoBehaviour
 	GameObject[] m_pLevelIn;
 	
 	static int m_instanceCount = 0;
-	
+	bool m_bStartCalled = false;
 	//-------------------------------------------------------------------------------
 	///
 	//-------------------------------------------------------------------------------
@@ -324,14 +324,14 @@ public class CGame : MonoBehaviour
 		}
 		else if(Application.loadedLevel < Application.levelCount)
 			Application.LoadLevel(Application.loadedLevel+1);
-		StartLevel();
+		
 	}
 	
 	public void RestartLevel()
 	{
 		Debug.Log("Restarting level "+Application.loadedLevel);
 		Application.LoadLevel(Application.loadedLevel);
-		StartLevel();
+		
 	}
 	
 	public int GetIdLevel()
@@ -372,6 +372,7 @@ public class CGame : MonoBehaviour
 	//-------------------------------------------------------------------------------
 	void Start()
 	{
+		m_bStartCalled =true;
 		if(m_instanceCount++ != 0){
 			//We are not the first CGame object :'( we need to abort !!
 			Debug.Log("Deleting redundant _Game");
@@ -405,14 +406,16 @@ public class CGame : MonoBehaviour
 		}
 	}
 	
+
 	//-------------------------------------------------------------------------------
 	/// 	Unity
 	//-------------------------------------------------------------------------------
 	void OnLevelWasLoaded(int level) 
-	{
-		//Start();
-		//Reset();
-		//StartLevel();
+	{	
+		if(!m_bStartCalled)
+			return;
+		StartLevel();
+		
     }
 	
 	//-------------------------------------------------------------------------------
