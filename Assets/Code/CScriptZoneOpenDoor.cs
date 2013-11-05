@@ -31,7 +31,7 @@ public class CScriptZoneOpenDoor : MonoBehaviour
 		{
 			if(!m_Game.LightIsOn())
 			{
-				Vector3 PosPlayer = m_Game.getLevel().getPlayer(i).getGameObject().transform.position;
+				Vector3 PosPlayer = m_Game.getLevel().getPlayer(i).GetGameObject().transform.position;
 				Vector3 DirectionRegard = m_Game.getLevel().getPlayer(i).GetDirectionRegard();
 				Vector3 DirectionDetecteur = gameObject.transform.parent.gameObject.transform.FindChild("Detecteur").position - PosPlayer;
 				
@@ -43,7 +43,7 @@ public class CScriptZoneOpenDoor : MonoBehaviour
 				}
 			}
 			
-			if(other.gameObject == m_Game.getLevel().getPlayer(i).getGameObject() && bCanOpen)
+			if(other.gameObject == m_Game.getLevel().getPlayer(i).GetGameObject() && bCanOpen)
 			{
 				gameObject.transform.parent.gameObject.GetComponent<CMachinePorte>().Open();	
 				gameObject.transform.parent.gameObject.GetComponent<CMachinePorte>().BlockClose();

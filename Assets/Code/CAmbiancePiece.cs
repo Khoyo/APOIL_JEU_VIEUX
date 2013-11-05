@@ -28,7 +28,7 @@ public class CAmbiancePiece : MonoBehaviour {
 	
 	public void switchGround(){
 		if(solSwitch != "")
-			m_Game.getSoundEngine().setSwitch("Sol", solSwitch, m_Game.getLevel().getPlayer(0).getGameObject());
+			m_Game.getSoundEngine().setSwitch("Sol", solSwitch, m_Game.getLevel().getPlayer(0).GetGameObject());
 	}
 	
 	public void StopAmbiance(){

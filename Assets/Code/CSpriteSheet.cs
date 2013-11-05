@@ -6,13 +6,16 @@ public class CSpriteSheet // : MonoBehaviour
 	bool m_bIsPlaying;
 	bool m_bIsForward;
 	bool m_bIsEnd;
+	bool m_bVibration;
 	int m_nColumns = 1;
 	int m_nRows = 1;	
 	float m_fFPS = 1.0f;
+	float m_fCoeffVelocity;
 	float m_fTemps;
 	Vector2 m_Size;
 	string[] m_sounds;
-	CGame game;
+	CGame m_Game;
+	const float m_fFixFPS = 30.0f;
 	
 	public enum EEndCondition{
 		e_Loop,
@@ -40,11 +43,13 @@ public class CSpriteSheet // : MonoBehaviour
 		m_bIsPlaying = false;
 		m_bIsForward = true;
 		m_bIsEnd = false;
+		m_bVibration = false;
 		m_myRenderer = m_parent.renderer;
 		m_fTemps = 0.0f;
 		m_nIndex = 1;
-		//game = GameObject.Find("_Game").GetComponent<CGame>();
+		m_Game = GameObject.Find("_Game").GetComponent<CGame>();
 		m_endCondition = EEndCondition.e_Loop;
+		m_fCoeffVelocity = 1.0f;
 	}
 	
 	//-------------------------------------------------------------------------------
@@ -53,7 +58,8 @@ public class CSpriteSheet // : MonoBehaviour
 	public void Reset()
 	{
 		m_fTemps = 0.0f;
-		m_nIndex = 0;
+		m_nIndex = 1;
+		m_fCoeffVelocity = 1.0f;
 	}
 	
 	//-------------------------------------------------------------------------------
@@ -63,6 +69,7 @@ public class CSpriteSheet // : MonoBehaviour
 	{
 		m_fTemps = 0.0f;
 		m_nIndex = m_nRows * m_nColumns - 1;
+		m_fCoeffVelocity = 1.0f;
 	}
 	
 	public void GoToNextFram()
@@ -76,12 +83,11 @@ public class CSpriteSheet // : MonoBehaviour
 	//-------------------------------------------------------------------------------
 	public void Process () 
 	{
-		
+		float fDeltatime = Time.deltaTime;
+		m_fTemps += fDeltatime;
 		if(m_endCondition != EEndCondition.e_FramPerFram)
 		{
-			m_fTemps += 1.0f/m_fFPS;
-			
-			if (m_fTemps > 1.0f && m_bIsPlaying)
+			if (m_fTemps > m_fFPS*m_fCoeffVelocity/m_fFixFPS && m_bIsPlaying)
 			{
 				// Calculate index
 				if(m_bIsForward){
@@ -123,7 +129,7 @@ public class CSpriteSheet // : MonoBehaviour
 				
 				//Play sound if necessary
 				if(m_sounds[m_nIndex] != "" && m_sounds[m_nIndex] != null)
-					game.getSoundEngine().postEvent(m_sounds[m_nIndex], m_parent);
+					m_Game.getSoundEngine().postEvent(m_sounds[m_nIndex], m_parent);
 				
 				m_fTemps = 0.0f;
 				
@@ -134,8 +140,14 @@ public class CSpriteSheet // : MonoBehaviour
 		Vector2 offset = new Vector2(	((float)m_nIndex / m_nColumns - (m_nIndex / m_nColumns)), //x index
                                       1-	((m_nIndex / m_nColumns) / (float)m_nRows));    //y index
 		
+		if(m_bVibration)
+		{
+			offset.x = Mathf.Cos(100.0f * m_fTemps) / 50.0f;
+		}
+		
 		Vector2 textureSize = new Vector2(1f / m_nColumns, 1f / m_nRows);
-        // Reset the y offset, if needed
+        
+		// Reset the y offset, if needed
         if (offset.y == 1)
           offset.y = 0.0f;
 		
@@ -178,6 +190,11 @@ public class CSpriteSheet // : MonoBehaviour
 		m_bIsEnd = true;
 	}
 	
+	public void SetCoeffVelocity(float fCoeff)
+	{
+		m_fCoeffVelocity = fCoeff;
+	}
+	
 	public void SetDirection(bool forward)
 	{
 		m_bIsForward = forward;
@@ -195,5 +212,10 @@ public class CSpriteSheet // : MonoBehaviour
 	public bool IsEnd()
 	{
 		return ((m_endCondition == EEndCondition.e_Stop) && m_bIsEnd);
+	}
+	
+	public void SetVibration(bool bOn)
+	{
+		m_bVibration = bOn;	
 	}
 }

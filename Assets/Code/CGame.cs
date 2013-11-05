@@ -14,21 +14,33 @@ public class CGame : MonoBehaviour
 	
 	// materials
 	public Material m_materialPlayer1Repos;
-	public Material m_materialPlayer1Horizontal;
-	public Material m_materialPlayer1Vertical;
-	public Material m_materialPlayer1Die;
+	
+	public Material m_materialPlayer1UpUp;
+	public Material m_materialPlayer1UpDown;
+	public Material m_materialPlayer1UpLeft;
+	public Material m_materialPlayer1UpRight;
+
+	public Material m_materialPlayer1DownUp;
+	public Material m_materialPlayer1DownDown;
+	public Material m_materialPlayer1DownLeft;
+	public Material m_materialPlayer1DownRight;
+		
+	public Material m_materialPlayer1LeftUp;
+	public Material m_materialPlayer1LeftDown;
+	public Material m_materialPlayer1LeftLeft;
+	public Material m_materialPlayer1LeftRight;
+	
+	public Material m_materialPlayer1RightUp;
+	public Material m_materialPlayer1RightDown;
+	public Material m_materialPlayer1RightLeft;
+	public Material m_materialPlayer1RightRight;
+	
+	public Material m_materialPlayer1DieHeadCut;
+	public Material m_materialPlayer1DieFall;
+	
 	public Material m_materialPlayer2Repos;
-	public Material m_materialPlayer2Horizontal;
-	public Material m_materialPlayer2Vertical;
-	public Material m_materialPlayer2Die;
 	public Material m_materialPlayer3Repos;
-	public Material m_materialPlayer3Horizontal;
-	public Material m_materialPlayer3Vertical;
-	public Material m_materialPlayer3Die;
 	public Material m_materialPlayer4Repos;
-	public Material m_materialPlayer4Horizontal;
-	public Material m_materialPlayer4Vertical;
-	public Material m_materialPlayer4Die;
 	
 	// variables de LD
 	public bool m_bPadXBox = false;
@@ -55,6 +67,17 @@ public class CGame : MonoBehaviour
 	public float m_fMonsterTimeErrance = 2.0f;
 	public float m_fMonsterRadiusAlerte = 1.0f;
 	
+	public float m_fCameraDezoomMax = 800.0f;
+	public float m_fCameraDezoomMin = 400.0f;
+	
+	public float m_fTimerDestructionPont = 2.0f;
+	public int m_nNbImpactMaxCaisse = 4;
+	
+	public float m_fCreepTimerParasiteMin = 4.0f;
+	public float m_fCreepTimerParasiteMax = 8.0f;
+	public float m_fCreepCoeffRalentissement = 0.5f;
+	public float m_fCreepVelocity = 100.0f;
+	
 	public bool m_BMute = false;
 	public string soundbankName = "Jeu_apoil.bnk";
 	public bool m_bLightIsOn = true;
@@ -76,7 +99,7 @@ public class CGame : MonoBehaviour
 	GameObject[] m_pLevelIn;
 	
 	static int m_instanceCount = 0;
-	
+	bool m_bStartCalled = false;
 	//-------------------------------------------------------------------------------
 	///
 	//-------------------------------------------------------------------------------
@@ -115,6 +138,7 @@ public class CGame : MonoBehaviour
 		m_bInGame = true;
 	}
 	
+	
 	//-------------------------------------------------------------------------------
 	///
 	//-------------------------------------------------------------------------------
@@ -129,15 +153,17 @@ public class CGame : MonoBehaviour
 			CheckLooseGame();		
 			
 			//Quit on Escape
-			if(Input.GetKey(KeyCode.Escape))
+			if(CApoilInput.Quit)
 				Application.Quit();
 			
 			//Debug
-			if(Input.GetKey(KeyCode.F8))
+			if(CApoilInput.DebugF9)
 				RestartLevel();
-			if(Input.GetKey(KeyCode.F9))
+			if(CApoilInput.DebugF10)
+				Reset();
+			if(CApoilInput.DebugF11)
 				FinishLevel(true, CPlayer.EIdPlayer.e_IdPlayer_Player1);
-			if(Input.GetKey(KeyCode.F10))
+			if(CApoilInput.DebugF12)
 				FinishLevel(false, CPlayer.EIdPlayer.e_IdPlayer_Player1);
 		}
 		
@@ -262,10 +288,7 @@ public class CGame : MonoBehaviour
 			
 			menu.SetTexturePlayerWin(TexturePlayerWin);
 		}
-		else
-		{
-			
-		}
+
 		menu.SetMenuState(CMenu.EmenuState.e_menuState_menuWinLoose);
 	}
 	
@@ -293,23 +316,22 @@ public class CGame : MonoBehaviour
 	
 	public void GoToNextLevel()
 	{
-		Debug.Log ("Exiting level "+Application.loadedLevel);
+		Debug.Log ("Exiting level " + Application.loadedLevel);
 		
 		if(m_bNotUseMasterGame)
-			RestartLevel();
-		else 
 		{
-			if(Application.loadedLevel < Application.levelCount)
-				Application.LoadLevel(Application.loadedLevel+1);
-			StartLevel();
+			Application.LoadLevel(Application.loadedLevel);
 		}
+		else if(Application.loadedLevel < Application.levelCount)
+			Application.LoadLevel(Application.loadedLevel+1);
+		
 	}
 	
 	public void RestartLevel()
 	{
 		Debug.Log("Restarting level "+Application.loadedLevel);
 		Application.LoadLevel(Application.loadedLevel);
-		StartLevel();
+		
 	}
 	
 	public int GetIdLevel()
@@ -350,6 +372,7 @@ public class CGame : MonoBehaviour
 	//-------------------------------------------------------------------------------
 	void Start()
 	{
+		m_bStartCalled =true;
 		if(m_instanceCount++ != 0){
 			//We are not the first CGame object :'( we need to abort !!
 			Debug.Log("Deleting redundant _Game");
@@ -373,7 +396,7 @@ public class CGame : MonoBehaviour
 	}
 	
 	//-------------------------------------------------------------------------------
-	/// Unity
+	///		Unity
 	//-------------------------------------------------------------------------------
 	void Update()
 	{
@@ -383,6 +406,17 @@ public class CGame : MonoBehaviour
 		}
 	}
 	
+
+	//-------------------------------------------------------------------------------
+	/// 	Unity
+	//-------------------------------------------------------------------------------
+	void OnLevelWasLoaded(int level) 
+	{	
+		if(!m_bStartCalled)
+			return;
+		StartLevel();
+		
+    }
 	
 	//-------------------------------------------------------------------------------
 	/// 

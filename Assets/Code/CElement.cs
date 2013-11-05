@@ -47,7 +47,7 @@ public class CElement
 	//-------------------------------------------------------------------------------
 	///
 	//-------------------------------------------------------------------------------
-	public GameObject getGameObject()
+	public GameObject GetGameObject()
 	{
 		return m_GameObject;	
 	}
@@ -65,6 +65,11 @@ public class CElement
 		pos.y = pos2D.y;
 		pos.z = -2;
 		m_GameObject.transform.position = pos;
+	}
+	
+	public Vector2 GetPosition2D()
+	{
+		return new Vector2(m_GameObject.transform.position.x, m_GameObject.transform.position.y);
 	}
 
 }

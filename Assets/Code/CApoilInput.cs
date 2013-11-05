@@ -7,6 +7,10 @@ public struct SPlayerInput
 	public bool MoveRight;
 	public bool MoveUp;
 	public bool MoveDown;
+	public bool LookLeft;
+	public bool LookRight;
+	public bool LookUp;
+	public bool LookDown;
 	public bool WalkFast;
 	public bool WalkSlow;
 	public bool PickUpObject;
@@ -24,6 +28,13 @@ public class CApoilInput
 	public static SPlayerInput InputPlayer4;
 
 	public static Vector2 MousePosition;
+	public static bool Quit;
+	
+	//Debug
+	public static bool DebugF9;
+	public static bool DebugF10;
+	public static bool DebugF11;
+	public static bool DebugF12;
 	
 	static CGame m_Game = GameObject.Find("_Game").GetComponent<CGame>();
 
@@ -61,6 +72,13 @@ public class CApoilInput
 			InputPlayer1.DirectionHorizontal = 0.0f;
 			InputPlayer1.DirectionVertical = 0.0f;
 		}
+		
+		Quit = Input.GetKey(KeyCode.Escape);
+		
+		DebugF9 = Input.GetKey(KeyCode.F9);
+		DebugF10 = Input.GetKey(KeyCode.F10);
+		DebugF11 = Input.GetKey(KeyCode.F11);
+		DebugF12 = Input.GetKey(KeyCode.F12);
 	}
 	
 	//-------------------------------------------------------------------------------
@@ -72,6 +90,11 @@ public class CApoilInput
 		InputPlayer.MoveDown = (Input.GetAxis(playerName+"_MoveVertical")) > fTolerance;
 		InputPlayer.MoveLeft = (Input.GetAxis(playerName+"_MoveHorizontal")) < -fTolerance;
 		InputPlayer.MoveRight = (Input.GetAxis(playerName+"_MoveHorizontal")) > fTolerance;
+		
+		InputPlayer.LookUp = (Input.GetAxis(playerName+"_DirectionHorizontal")) < -fTolerance;
+		InputPlayer.LookDown = (Input.GetAxis(playerName+"_DirectionHorizontal")) > fTolerance;
+		InputPlayer.LookLeft = (Input.GetAxis(playerName+"_DirectionVertical")) < -fTolerance;
+		InputPlayer.LookRight = (Input.GetAxis(playerName+"_DirectionVertical")) > fTolerance;
 		
 		InputPlayer.DirectionHorizontal = Input.GetAxis(playerName+"_DirectionHorizontal");
 		InputPlayer.DirectionVertical = Input.GetAxis(playerName+"_DirectionVertical");

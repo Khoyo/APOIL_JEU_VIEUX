@@ -68,7 +68,7 @@ public class CConeVision : MonoBehaviour
 		(m_gameObject.AddComponent( typeof( MeshRenderer )) as MeshRenderer).material = m_Material;
 		m_gameObject.layer = LayerMask.NameToLayer("Cone");
 		m_gameObject.tag = "cone";
-		m_Transform = game.getLevel().getPlayer(0).getGameObject().transform; //transform; // histoire de limiter les getcomponent dans la boucle
+		m_Transform = game.getLevel().getPlayer(0).GetGameObject().transform; //transform; // histoire de limiter les getcomponent dans la boucle
 		
 		// Préparation des rayons
 		setDirection();

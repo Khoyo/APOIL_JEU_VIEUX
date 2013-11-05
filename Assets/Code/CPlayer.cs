@@ -1,12 +1,32 @@
 using UnityEngine;
 using System.Collections;
 
-public struct SAnimationPlayer
+public struct SAnimationPlayer //AnimAB A = mouvement de deplacement, B = mouvement du regard
 {
 	public CAnimation AnimRepos;
-	public CAnimation AnimHorizontal;
-	public CAnimation AnimVertical;
-	public CAnimation AnimDie;
+	
+	public CAnimation AnimUpUp;
+	public CAnimation AnimUpDown;
+	public CAnimation AnimUpLeft;
+	public CAnimation AnimUpRight;
+	
+	public CAnimation AnimDownUp;
+	public CAnimation AnimDownDown;
+	public CAnimation AnimDownLeft;
+	public CAnimation AnimDownRight;
+	
+	public CAnimation AnimLeftUp;
+	public CAnimation AnimLeftDown;
+	public CAnimation AnimLeftLeft;
+	public CAnimation AnimLeftRight;
+	
+	public CAnimation AnimRightUp;
+	public CAnimation AnimRightDown;
+	public CAnimation AnimRightLeft;
+	public CAnimation AnimRightRight;
+	
+	public CAnimation AnimDieHeadCut;
+	public CAnimation AnimDieFall;
 }
 
 public class CPlayer : CCharacter {
@@ -29,15 +49,21 @@ public class CPlayer : CCharacter {
 	Camera m_CameraCone;
 	Vector2 m_posInit;
 	Vector2 m_posRespawn;
+	Vector2 m_posGoToDie;
+	Vector2 m_posOfDie;
 	Vector2 m_DirectionRegard;
 	Vector2 m_DirectionDeplacement;
 	bool m_bMainCharacter;
 	bool m_bHaveObject;
 	bool m_bIsAlive;
+	bool m_bHaveDirectionToDie;
+	bool m_bIsRespawn;
+	bool m_bResetSubElements;
 	
 	CCercleDiscretion m_CercleDiscretion;
-	CTakeElement m_HeldObject;
+	CTakeElement m_YounesSuceDesBites;
 	SPlayerInput m_PlayerInput;
+	int m_nNbCreepOnPlayer;
 	
 	public enum EMoveModState // mode de deplacement
 	{
@@ -84,8 +110,8 @@ public class CPlayer : CCharacter {
 		SetPosition2D(posInit);
 		m_posInit = posInit;
 		
-		m_ConeVision = m_GameObject.GetComponent<CConeVision>();
-		m_CameraCone = m_Game.m_CameraCone;
+		//m_ConeVision = m_GameObject.GetComponent<CConeVision>();
+		//m_CameraCone = m_Game.m_CameraCone;
 		
 		m_fSpeed = m_Game.m_fSpeedPlayer;
 		m_spriteSheet = new CSpriteSheet(m_GameObject); //m_GameObject.GetComponent<CSpriteSheet>();	
@@ -97,9 +123,11 @@ public class CPlayer : CCharacter {
 		
 		SetPlayerInput();
 		
-		m_HeldObject = null;
+		m_YounesSuceDesBites = null;
 		m_bHaveObject = false;
+		m_bIsRespawn = false;
 		m_bIsAlive = true;
+		m_bResetSubElements = false;
 		m_fTimerDead = 0.0f;
 		
 		m_Torche = m_GameObject.transform.FindChild("Torche").gameObject;
@@ -115,9 +143,11 @@ public class CPlayer : CCharacter {
 		base.Init();
 		SetPosition2D(m_posInit);
 		m_posRespawn = m_posInit;
+		m_posGoToDie = new Vector2(0,0);
+		m_posOfDie = new Vector2(0,0);
 		//Appel a la main des scripts du gameObject
 		m_spriteSheet.Init();
-		m_ConeVision.Init();
+		//m_ConeVision.Init();
 		//m_spriteSheet.SetAnimation(m_AnimRepos);
 		m_CercleDiscretion.Init(this);
 
@@ -135,6 +165,7 @@ public class CPlayer : CCharacter {
 		SetPosition2D(m_posInit);
 		m_GameObject.active = true;
 		m_bIsAlive = true;
+		m_bResetSubElements = false;
 	}
 
 	//-------------------------------------------------------------------------------
@@ -174,25 +205,21 @@ public class CPlayer : CCharacter {
 			//gestion si on tiens un objet
 			if(m_bHaveObject)
 			{
-				m_HeldObject.SetPosition2D(m_GameObject.transform.position);
+				m_YounesSuceDesBites.SetPosition2D(m_GameObject.transform.position);
 			}
 		
 			//Appel a la main des scripts du gameObject
 			m_spriteSheet.Process();
-			if(m_bMainCharacter)
-				m_ConeVision.Process();
+		
+			/*if(m_bMainCharacter)
+				m_ConeVision.Process();*/
 			
 			m_CercleDiscretion.Process();
-		}
-		else if (m_fTimerDead < m_fTimerDeadMax)
-		{
-			m_spriteSheet.Process();
-			m_fTimerDead += fDeltatime;
+			if(m_bIsRespawn)
+				m_bIsRespawn = false;
 		}
 		else 
-		{
-			Respawn();
-		}
+			GestionDie(fDeltatime);
 	}
 	
 	void PrepareStargate()
@@ -205,8 +232,40 @@ public class CPlayer : CCharacter {
 	public void LaunchStargate()
 	{
 		m_bIsAlive = true;
-		m_HeldObject = null;
+		m_YounesSuceDesBites = null;
 		m_bHaveObject = false;
+	}
+	
+	//-------------------------------------------------------------------------------
+	///
+	//-------------------------------------------------------------------------------
+	void GestionDie(float fDeltatime)
+	{
+		if (m_fTimerDead < m_fTimerDeadMax)
+		{
+			m_spriteSheet.Process();
+			m_fTimerDead += fDeltatime;
+			if(m_bHaveDirectionToDie)
+			{
+				float fX;
+				float fY;
+				if(m_fTimerDead < m_fTimerDeadMax / 2.0f)
+				{
+					fX = CApoilMath.InterpolationLinear(m_fTimerDead, 0.0f, m_fTimerDeadMax / 2.0f, m_posOfDie.x, m_posGoToDie.x);
+					fY = CApoilMath.InterpolationLinear(m_fTimerDead, 0.0f, m_fTimerDeadMax / 2.0f, m_posOfDie.y, m_posGoToDie.y);
+				}
+				else
+				{
+					fX = m_posGoToDie.x;
+					fY = m_posGoToDie.y;
+				}
+				SetPosition2D(new Vector2(fX, fY)); 
+			}
+		}
+		else 
+		{
+			Respawn();
+		}	
 	}
 	
 	//-------------------------------------------------------------------------------
@@ -226,16 +285,19 @@ public class CPlayer : CCharacter {
 			case EMoveModState.e_MoveModState_discret:
 			{
 				fVitesseAttitude = m_Game.m_fCoeffSlowWalk;
+				m_spriteSheet.SetCoeffVelocity(1.5f);
 				break;
 			}
 			case EMoveModState.e_MoveModState_marche:
 			{
 				fVitesseAttitude = m_Game.m_fCoeffNormalWalk;
+				m_spriteSheet.SetCoeffVelocity(1.0f);
 				break;
 			}
 			case EMoveModState.e_MoveModState_cours	:
 			{
 				fVitesseAttitude = m_Game.m_fCoeffRunWalk;
+				m_spriteSheet.SetCoeffVelocity(0.5f);
 				break;
 			}
 			default: fVitesseAttitude = 1.0f; break;
@@ -244,7 +306,11 @@ public class CPlayer : CCharacter {
 		float fCoeffDirection = Vector2.Dot(m_DirectionRegard, m_DirectionDeplacement);
 		fCoeffDirection = m_Game.m_fCoeffReverseWalk + (1.0f - m_Game.m_fCoeffReverseWalk)*(fCoeffDirection + 1)/2;
 		
-		m_fSpeed = m_Game.m_fSpeedPlayer * fVitesseEtat * fVitesseAttitude * fCoeffDirection;
+		float fCoeffVelocityCreep = m_Game.m_fCreepCoeffRalentissement * (1.0f/(float)m_nNbCreepOnPlayer);
+		if(m_nNbCreepOnPlayer == 0)
+			fCoeffVelocityCreep = 1.0f;
+				
+		m_fSpeed = m_Game.m_fSpeedPlayer * fVitesseEtat * fVitesseAttitude * fCoeffDirection * fCoeffVelocityCreep;
 	}
 	
 	//-------------------------------------------------------------------------------
@@ -252,13 +318,13 @@ public class CPlayer : CCharacter {
 	//-------------------------------------------------------------------------------
 	public void PickUpObject(CTakeElement obj)
 	{
-		m_HeldObject = obj;
+		m_YounesSuceDesBites = obj;
 		m_bHaveObject = true;
 	}
 	
 	public CTakeElement GetHeldElement()
 	{
-		return m_HeldObject;
+		return m_YounesSuceDesBites;
 	}
 	
 	//-------------------------------------------------------------------------------
@@ -266,7 +332,7 @@ public class CPlayer : CCharacter {
 	//-------------------------------------------------------------------------------
 	public void DropElement()
 	{
-		m_HeldObject = null;
+		m_YounesSuceDesBites = null;
 		m_bHaveObject = false;
 	}
 	
@@ -307,38 +373,74 @@ public class CPlayer : CCharacter {
 			if (m_PlayerInput.MoveUp) 
 			{ 
 				velocity += new Vector3(0,1,0); 
-				m_spriteSheet.SetAnimation(m_AnimPlayer.AnimVertical);
-				m_spriteSheet.AnimationStart();
+				
 				m_eMoveModState = EMoveModState.e_MoveModState_marche;
+				
+				if(m_PlayerInput.LookDown)
+					m_spriteSheet.SetAnimation(m_AnimPlayer.AnimUpDown);
+				else if(m_PlayerInput.LookLeft)
+					m_spriteSheet.SetAnimation(m_AnimPlayer.AnimUpLeft);
+				else if(m_PlayerInput.LookRight)
+					m_spriteSheet.SetAnimation(m_AnimPlayer.AnimUpRight);
+				else
+					m_spriteSheet.SetAnimation(m_AnimPlayer.AnimUpUp);
+				m_spriteSheet.AnimationStart();
+				
 			}
-			if (m_PlayerInput.MoveDown) 
+			else if (m_PlayerInput.MoveDown) 
 			{ 
 				velocity += new Vector3(0,-1,0); 
-				m_spriteSheet.SetAnimation(m_AnimPlayer.AnimVertical);
-				m_spriteSheet.AnimationStart();
 				m_eMoveModState = EMoveModState.e_MoveModState_marche;
+				
+				if(m_PlayerInput.LookUp)
+					m_spriteSheet.SetAnimation(m_AnimPlayer.AnimDownUp);
+				else if(m_PlayerInput.LookLeft)
+					m_spriteSheet.SetAnimation(m_AnimPlayer.AnimDownLeft);
+				else if(m_PlayerInput.LookRight)
+					m_spriteSheet.SetAnimation(m_AnimPlayer.AnimDownRight);
+				else
+					m_spriteSheet.SetAnimation(m_AnimPlayer.AnimDownDown);
+				
+				m_spriteSheet.AnimationStart();
+				
 			}
 			if (m_PlayerInput.MoveLeft) 
 			{
 				velocity += new Vector3(-1,0,0); 
-				m_spriteSheet.SetAnimation(m_AnimPlayer.AnimHorizontal);
-				m_spriteSheet.AnimationStart();
-				flipLeft();
 				m_eMoveModState = EMoveModState.e_MoveModState_marche;
 				
+				if(m_PlayerInput.LookUp)
+					m_spriteSheet.SetAnimation(m_AnimPlayer.AnimLeftUp);
+				else if(m_PlayerInput.LookDown)
+					m_spriteSheet.SetAnimation(m_AnimPlayer.AnimLeftDown);
+				else if(m_PlayerInput.LookRight)
+					m_spriteSheet.SetAnimation(m_AnimPlayer.AnimLeftRight);
+				else
+					m_spriteSheet.SetAnimation(m_AnimPlayer.AnimLeftLeft);
+				
+				m_spriteSheet.AnimationStart();		
 			}
-			if (m_PlayerInput.MoveRight) 
+			else if (m_PlayerInput.MoveRight) 
 			{ 
 				velocity += new Vector3(1,0,0); 
-				m_spriteSheet.SetAnimation(m_AnimPlayer.AnimHorizontal);
-				m_spriteSheet.AnimationStart();
-				flipRight();
 				m_eMoveModState = EMoveModState.e_MoveModState_marche;
+				
+				if(m_PlayerInput.LookUp)
+					m_spriteSheet.SetAnimation(m_AnimPlayer.AnimRightUp);
+				else if(m_PlayerInput.LookDown)
+					m_spriteSheet.SetAnimation(m_AnimPlayer.AnimRightDown);
+				else if(m_PlayerInput.LookLeft)
+					m_spriteSheet.SetAnimation(m_AnimPlayer.AnimRightLeft);
+				else
+					m_spriteSheet.SetAnimation(m_AnimPlayer.AnimRightRight);
+				
+				m_spriteSheet.AnimationStart();
+				
 			}
 			if(!m_PlayerInput.MoveUp && !m_PlayerInput.MoveDown && !m_PlayerInput.MoveLeft && !m_PlayerInput.MoveRight) 
 			{
 				m_spriteSheet.SetAnimation(m_AnimPlayer.AnimRepos);
-				m_spriteSheet.AnimationStop();
+				m_spriteSheet.AnimationStart();
 				m_eMoveModState = EMoveModState.e_MoveModState_attente;
 				m_GameObject.rigidbody.velocity = Vector3.zero;
 			}
@@ -433,17 +535,40 @@ public class CPlayer : CCharacter {
 	//-------------------------------------------------------------------------------
 	///
 	//-------------------------------------------------------------------------------
-	public void Die()
+	public void DieHeadCut()
 	{
 		if(m_bIsAlive)
 		{
 			DropElement();
 			m_bIsAlive = false;
-			m_spriteSheet.SetAnimation(m_AnimPlayer.AnimDie);
+			m_spriteSheet.SetAnimation(m_AnimPlayer.AnimDieHeadCut);
 			m_spriteSheet.setEndCondition(CSpriteSheet.EEndCondition.e_Stop);
 			m_spriteSheet.Reset();
 			m_spriteSheet.AnimationStart();
 			m_fTimerDead = 0.0f;
+			m_bResetSubElements = true;
+		}
+	}
+	
+	//-------------------------------------------------------------------------------
+	///
+	//-------------------------------------------------------------------------------
+	public void DieFall(Vector2 posOfDie, Vector2 posToDie, Vector2 posRespawn)
+	{
+		if(m_bIsAlive && !m_bIsRespawn)
+		{
+			DropElement();
+			m_bIsAlive = false;
+			m_spriteSheet.SetAnimation(m_AnimPlayer.AnimDieFall);
+			m_spriteSheet.setEndCondition(CSpriteSheet.EEndCondition.e_Stop);
+			m_spriteSheet.Reset();
+			m_spriteSheet.AnimationStart();
+			m_fTimerDead = 0.0f;
+			m_bHaveDirectionToDie = true;
+			m_posGoToDie = posToDie;
+			m_posOfDie 	 = posOfDie;
+			SetPosRespawn(posRespawn);
+			m_bResetSubElements = true;
 		}
 	}
 	
@@ -452,11 +577,15 @@ public class CPlayer : CCharacter {
 	//-------------------------------------------------------------------------------
 	public void Respawn()
 	{
-		m_bIsAlive = true;
 		SetPosition2D(m_posRespawn);
+		m_bIsAlive = true;	
 		m_spriteSheet.setEndCondition(CSpriteSheet.EEndCondition.e_Loop);
 		m_spriteSheet.Reset();
 		m_spriteSheet.AnimationStart();
+		m_bHaveDirectionToDie = false;
+		m_bIsRespawn = true;
+		m_bResetSubElements = false;
+		m_nNbCreepOnPlayer = 0;
 	}
 	
 	public void ResetPosInit(Vector2 posInit)
@@ -501,4 +630,24 @@ public class CPlayer : CCharacter {
 		return (m_bIsAlive || m_GameObject.active);
 	}	
 	
+	public void SetPosRespawn(Vector2 pos)
+	{
+		m_posRespawn = pos;
+	}
+	
+	public void SetCreepOnPlayer(CCreep creep)
+	{
+		++m_nNbCreepOnPlayer;		
+	}
+	
+	public void CreepLeavePlayer()
+	{
+		if(m_nNbCreepOnPlayer > 0)
+			--m_nNbCreepOnPlayer;
+	}
+	
+	public bool IsResetSubElements()
+	{
+		return m_bResetSubElements;	
+	}
 }

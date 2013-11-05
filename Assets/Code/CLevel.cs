@@ -36,8 +36,7 @@ public class CLevel
 			m_Players[i].Init();
 		
 		foreach(CElement elem in m_pElement)
-			elem.Init();
-		
+			elem.Init();	
 	}
 	
 	//-------------------------------------------------------------------------------
@@ -52,6 +51,8 @@ public class CLevel
 		
 		foreach(CElement elem in m_pElement)
 			elem.Reset();
+		
+		SetPlayerPosition();
 	}
 	
 	//-------------------------------------------------------------------------------
@@ -62,7 +63,7 @@ public class CLevel
 		for(int i = 0 ; i < m_Game.m_nNbPlayer ; ++i)
 			m_Players[i].Process(fDeltatime);
 		
-		GestionCameraTwoPlayers();
+		GestionCameraFromPlayers();
 		
 		if(Input.GetKey(KeyCode.L) && m_bTimerLightSwitch <= 0){
 			m_Game.m_bLightIsOn = !m_Game.m_bLightIsOn;
@@ -121,48 +122,46 @@ public class CLevel
 	///
 	//-------------------------------------------------------------------------------
 	public void CreatePlayers()
-	{
-		Vector3 pos3D = m_ObjetLevel.transform.FindChild("LevelIn").position;
-		Vector2 posInit = new Vector2 (pos3D.x, pos3D.y);
-		float fSizePlayer = 100.0f;
-		Vector2[] posPlayer = new Vector2[4];
-		posPlayer[0] = new Vector2(pos3D.x - fSizePlayer / 2.0f, pos3D.y - fSizePlayer / 2.0f);
-		posPlayer[1] = new Vector2(pos3D.x + fSizePlayer / 2.0f, pos3D.y - fSizePlayer / 2.0f);
-		posPlayer[2] = new Vector2(pos3D.x + fSizePlayer / 2.0f, pos3D.y + fSizePlayer / 2.0f);
-		posPlayer[3] = new Vector2(pos3D.x - fSizePlayer / 2.0f, pos3D.y + fSizePlayer / 2.0f);
-		//Vector2 posInit = new Vector2 (0,0);
-		int nNbPlayer = m_Game.m_nNbPlayer;
-		
-		
+	{	
 		SAnimationPlayer[] AnimPlayer = new SAnimationPlayer[4];
 		
-		AnimPlayer[0].AnimRepos = new CAnimation(m_Game.m_materialPlayer1Repos, 1, 1, 1.0f);
-		AnimPlayer[0].AnimHorizontal = new CAnimation(m_Game.m_materialPlayer1Horizontal, 7, 4, 0.5f);
-		AnimPlayer[0].AnimVertical = new CAnimation(m_Game.m_materialPlayer1Vertical, 6, 1, 2.0f);
-		AnimPlayer[0].AnimDie = new CAnimation(m_Game.m_materialPlayer1Die, 3, 2, 1.0f);
-		
-		AnimPlayer[1].AnimRepos = new CAnimation(m_Game.m_materialPlayer2Repos, 1, 1, 1.0f);
-		AnimPlayer[1].AnimHorizontal = new CAnimation(m_Game.m_materialPlayer2Horizontal, 7, 4, 0.5f);
-		AnimPlayer[1].AnimVertical = new CAnimation(m_Game.m_materialPlayer2Vertical, 6, 1, 2.0f);
-		AnimPlayer[1].AnimDie = new CAnimation(m_Game.m_materialPlayer2Die, 3, 2, 1.0f);
-		
-		AnimPlayer[2].AnimRepos = new CAnimation(m_Game.m_materialPlayer3Repos, 1, 1, 1.0f);
-		AnimPlayer[2].AnimHorizontal = new CAnimation(m_Game.m_materialPlayer3Horizontal, 7, 4, 0.5f);
-		AnimPlayer[2].AnimVertical = new CAnimation(m_Game.m_materialPlayer3Vertical, 6, 1, 2.0f);
-		AnimPlayer[2].AnimDie = new CAnimation(m_Game.m_materialPlayer3Die, 3, 2, 1.0f);
-		
-		AnimPlayer[3].AnimRepos = new CAnimation(m_Game.m_materialPlayer4Repos, 1, 1, 1.0f);
-		AnimPlayer[3].AnimHorizontal = new CAnimation(m_Game.m_materialPlayer4Horizontal, 7, 4, 0.5f);
-		AnimPlayer[3].AnimVertical = new CAnimation(m_Game.m_materialPlayer4Vertical, 6, 1, 2.0f);
-		AnimPlayer[3].AnimDie = new CAnimation(m_Game.m_materialPlayer4Die, 3, 2, 1.0f);
+		for (int i = 0 ; i < 4 ; ++i)
+		{
+			float fFPS = 4.0f;
+			AnimPlayer[i].AnimRepos = new CAnimation(m_Game.m_materialPlayer1Repos, 4, 1, fFPS);
+			
+			AnimPlayer[i].AnimUpUp = new CAnimation(	m_Game.m_materialPlayer1UpUp,	4, 1, fFPS);
+			AnimPlayer[i].AnimUpDown = new CAnimation(	m_Game.m_materialPlayer1UpDown,	4, 1, fFPS);
+			AnimPlayer[i].AnimUpLeft = new CAnimation(	m_Game.m_materialPlayer1UpLeft, 4, 1, fFPS);
+			AnimPlayer[i].AnimUpRight= new CAnimation(	m_Game.m_materialPlayer1UpRight, 4, 1, fFPS);
+			
+			AnimPlayer[i].AnimDownUp = new CAnimation(m_Game.m_materialPlayer1DownUp, 4, 1, fFPS);
+			AnimPlayer[i].AnimDownDown = new CAnimation(m_Game.m_materialPlayer1DownDown, 4, 1, fFPS);
+			AnimPlayer[i].AnimDownLeft = new CAnimation(m_Game.m_materialPlayer1DownLeft, 4, 1, fFPS);
+			AnimPlayer[i].AnimDownRight = new CAnimation(m_Game.m_materialPlayer1DownRight, 4, 1, fFPS);
+			
+			AnimPlayer[i].AnimLeftUp = new CAnimation(m_Game.m_materialPlayer1LeftUp, 4, 1, fFPS);
+			AnimPlayer[i].AnimLeftDown = new CAnimation(m_Game.m_materialPlayer1LeftDown, 4, 1, fFPS);
+			AnimPlayer[i].AnimLeftLeft = new CAnimation(m_Game.m_materialPlayer1LeftLeft, 4, 1, fFPS);
+			AnimPlayer[i].AnimLeftRight = new CAnimation(m_Game.m_materialPlayer1LeftRight, 4, 1, fFPS);
+			
+			AnimPlayer[i].AnimRightUp = new CAnimation(m_Game.m_materialPlayer1RightUp, 4, 1, fFPS);
+			AnimPlayer[i].AnimRightDown = new CAnimation(m_Game.m_materialPlayer1RightDown, 4, 1, fFPS);
+			AnimPlayer[i].AnimRightLeft = new CAnimation(m_Game.m_materialPlayer1RightLeft, 4, 1, fFPS);
+			AnimPlayer[i].AnimRightRight = new CAnimation(m_Game.m_materialPlayer1RightRight, 4, 1, fFPS);
+			
+			AnimPlayer[i].AnimDieHeadCut = new CAnimation(	m_Game.m_materialPlayer1DieHeadCut, 3, 2, 1.0f);
+			AnimPlayer[i].AnimDieFall = new CAnimation(	m_Game.m_materialPlayer1DieFall, 3, 2, 3.0f);
+		}
 		
 		for(int i = 0 ; i < m_Game.m_nNbPlayer ; ++i)
 		{
 			
 			CPlayer.EIdPlayer eIdPlayer = SetIdPlayer(i);
-			m_Players[i] = new CPlayer(posPlayer[i], eIdPlayer, AnimPlayer[i]);
+			m_Players[i] = new CPlayer(new Vector2(0,0), eIdPlayer, AnimPlayer[i]);
 		}
 		
+		SetPlayerPosition();
 	}
 	
 	public void SetPlayerPosition()
@@ -177,17 +176,16 @@ public class CLevel
 		posPlayer[3] = new Vector2(pos3D.x - fSizePlayer / 2.0f, pos3D.y + fSizePlayer / 2.0f);
 		//Vector2 posInit = new Vector2 (0,0);
 		int nNbPlayer = m_Game.m_nNbPlayer;
-		
+			
 		for(int i = 0 ; i < m_Game.m_nNbPlayer ; ++i)
 		{
 			m_Players[i].SetPosition2D(posPlayer[i]);
+			m_Players[i].ResetPosInit(posPlayer[i]);
 		}
 	}
 	
 	public void StartLevel()
 	{
-		SetPlayerPosition();
-		
 		for(int i = 0 ; i < m_Game.m_nNbPlayer ; ++i)
 		{
 			m_Players[i].LaunchStargate();
@@ -221,29 +219,39 @@ public class CLevel
 	//-------------------------------------------------------------------------------
 	///
 	//-------------------------------------------------------------------------------
-	public void GestionCameraTwoPlayers()
+	public void GestionCameraFromPlayers()
 	{
-		Vector2 posPlayer1 = new Vector2(m_Players[0].getGameObject().transform.position.x, m_Players[0].getGameObject().transform.position.y);
-		Vector2 posPlayer2 = new Vector2(m_Players[1].getGameObject().transform.position.x, m_Players[1].getGameObject().transform.position.y);
-		Vector2 posCenter = new Vector2(0,0);
-		float fSize = 400.0f;
-		if(m_Players[0].IsAlive() && m_Players[1].IsAlive()) 
+		if(m_Game.m_nNbPlayer == 1)
 		{
-			posCenter = (posPlayer2 + posPlayer1)/2;
-			fSize = (posPlayer1 - posPlayer2).magnitude;
+			Vector2 posPlayer1 = new Vector2(m_Players[0].GetGameObject().transform.position.x, m_Players[0].GetGameObject().transform.position.y);
+			m_Game.getCamera().SetPosition(posPlayer1);
+			m_Game.getCamera().SetFactorScale(m_Game.m_fCameraDezoomMin);
 		}
-		else if(m_Players[0].IsAlive() && !m_Players[1].IsAlive())
+		
+		if(m_Game.m_nNbPlayer == 2)
 		{
-			posCenter = posPlayer1;
-			fSize = 400.0f;
+			Vector2 posPlayer1 = new Vector2(m_Players[0].GetGameObject().transform.position.x, m_Players[0].GetGameObject().transform.position.y);
+			Vector2 posPlayer2 = new Vector2(m_Players[1].GetGameObject().transform.position.x, m_Players[1].GetGameObject().transform.position.y);
+			Vector2 posCenter = new Vector2(0,0);
+			float fSize = 400.0f;
+			if(m_Players[0].IsAlive() && m_Players[1].IsAlive()) 
+			{
+				posCenter = (posPlayer2 + posPlayer1)/2;
+				fSize = (posPlayer1 - posPlayer2).magnitude;
+			}
+			else if(m_Players[0].IsAlive() && !m_Players[1].IsAlive())
+			{
+				posCenter = posPlayer1;
+				fSize = 400.0f;
+			}
+			else if(!m_Players[0].IsAlive() && m_Players[1].IsAlive())
+			{
+				posCenter = posPlayer2;
+				fSize = 400.0f;
+			}
+			m_Game.getCamera().SetPosition(posCenter);
+			m_Game.getCamera().SetFactorScale(fSize);
 		}
-		else if(!m_Players[0].IsAlive() && m_Players[1].IsAlive())
-		{
-			posCenter = posPlayer2;
-			fSize = 400.0f;
-		}
-		m_Game.getCamera().SetPosition(posCenter);
-		m_Game.getCamera().SetFactorScale(fSize);
 
 	}
 	
