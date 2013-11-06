@@ -31,11 +31,6 @@ public struct SAnimationPlayer //AnimAB A = mouvement de deplacement, B = mouvem
 
 public class CPlayer : CCharacter 
 {
-	
-	// a foutre dans le constructeur si on veut pouvoir le faire indifferement des jouerus
-	int m_nResistance = 5;
-	int m_nRadiusDiscrectionCircle = 10;
-	
 	//CGame m_game = GameObject.Find("_Game").GetComponent<CGame>();
 	float m_fSpeed;
 	float m_fAngleCone;

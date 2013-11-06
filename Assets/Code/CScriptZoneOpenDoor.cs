@@ -3,13 +3,12 @@ using System.Collections;
 
 public class CScriptZoneOpenDoor : MonoBehaviour 
 {
-	bool m_bOpen;
 	bool m_bNoPlayerInZone;
 	
 	CGame m_Game;
 	// Use this for initialization
-	void Start () {
-		m_bOpen = false;
+	void Start () 
+	{
 		m_bNoPlayerInZone = true;
 		m_Game = GameObject.Find("_Game").GetComponent<CGame>();
 	}
