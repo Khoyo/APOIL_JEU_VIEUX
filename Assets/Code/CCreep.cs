@@ -14,7 +14,6 @@ public class CCreep : CElement
 	CScriptCreep m_ScriptCreep;
 	CScriptCreepZone m_ScriptCreepZone;
 	CSpriteSheet m_SpriteSheet;
-	CGame m_Game;
 	CPlayer m_PlayerParasitized;
 	bool m_bIsOnPlayer;
 	bool m_bCanParasitizedPlayer;

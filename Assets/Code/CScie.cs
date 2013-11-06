@@ -1,10 +1,8 @@
 using UnityEngine;
 using System.Collections;
 
-public class CScie : CElement {
-	
-	CGame m_Game;
-	
+public class CScie : CElement 
+{
 	public int m_number;
 	
 	public override void Init()

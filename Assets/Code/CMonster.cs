@@ -20,12 +20,10 @@ public class CMonster : CCharacter
 	float m_fSpeed;
 	float m_fRadiusAlerte;
 	bool m_bDetectionAudio;
-	bool m_bDetectionVisuelle;
 	bool m_bPlayerIsDetected;
 	float m_fTimerErrance;
 	Vector2 m_PosDetection; // derniere position connu du player
 	CPlayer m_Player; 
-	CGame m_Game;
 	
 	//-------------------------------------------------------------------------------
 	///
@@ -208,35 +206,30 @@ public class CMonster : CCharacter
 			{
 				m_fSpeed = 2;
 				m_bDetectionAudio = true;
-				m_bDetectionVisuelle = true;
 				break;	
 			}
 			
 			case EMonsterState.e_MonsterState_affut:	
 			{
 				m_bDetectionAudio = true;
-				m_bDetectionVisuelle = true;
 				m_fSpeed = 3;
 				break;	
 			}
 			case EMonsterState.e_MonsterState_alerte:	
 			{
 				m_bDetectionAudio = true;
-				m_bDetectionVisuelle = true;
 				m_fSpeed = 1;	
 				break;	
 			}
 			case EMonsterState.e_MonsterState_attaque:	
 			{
 				m_bDetectionAudio = true;
-				m_bDetectionVisuelle = false;
 				m_fSpeed = 4;
 				break;	
 			}
 			case EMonsterState.e_MonsterState_mange:	
 			{
 				m_bDetectionAudio = false;
-				m_bDetectionVisuelle = false;
 				m_fSpeed = 4;
 				break;	
 			}

@@ -29,17 +29,18 @@ public struct SAnimationPlayer //AnimAB A = mouvement de deplacement, B = mouvem
 	public CAnimation AnimDieFall;
 }
 
-public class CPlayer : CCharacter {
+public class CPlayer : CCharacter 
+{
 	
 	// a foutre dans le constructeur si on veut pouvoir le faire indifferement des jouerus
 	int m_nResistance = 5;
 	int m_nRadiusDiscrectionCircle = 10;
-	CGame m_Game;
 	
 	//CGame m_game = GameObject.Find("_Game").GetComponent<CGame>();
 	float m_fSpeed;
 	float m_fAngleCone;
 	float m_fTimerDead;
+	float m_fForceMagnet;
 	const float m_fTimerDeadMax = 2.0f;
 	CSpriteSheet m_spriteSheet;
 	SAnimationPlayer m_AnimPlayer;
@@ -53,12 +54,14 @@ public class CPlayer : CCharacter {
 	Vector2 m_posOfDie;
 	Vector2 m_DirectionRegard;
 	Vector2 m_DirectionDeplacement;
+	Vector2 m_PosMagnet; //Yeah Bitch! Magnets!
 	bool m_bMainCharacter;
 	bool m_bHaveObject;
 	bool m_bIsAlive;
 	bool m_bHaveDirectionToDie;
 	bool m_bIsRespawn;
 	bool m_bResetSubElements;
+	bool m_bMagnet;
 	
 	CCercleDiscretion m_CercleDiscretion;
 	CTakeElement m_YounesSuceDesBites;
@@ -459,7 +462,15 @@ public class CPlayer : CCharacter {
 			
 			CalculateSpeed();
 			
-			m_GameObject.transform.position += m_fSpeed * velocity * fDeltatime;
+			Vector3 MagnetDeviation = Vector3.zero;
+			if(m_bMagnet)
+			{
+				Vector2 Deviation = (m_PosMagnet - GetPosition2D()).normalized;
+				MagnetDeviation.x = Deviation.x;
+				MagnetDeviation.y = Deviation.y;
+			}
+				
+			m_GameObject.transform.position += m_fSpeed * velocity * fDeltatime + m_fForceMagnet * MagnetDeviation;
 		}
 		else
 		{
@@ -649,5 +660,19 @@ public class CPlayer : CCharacter {
 	public bool IsResetSubElements()
 	{
 		return m_bResetSubElements;	
+	}
+	
+	public void SetMagnetData(Vector3 pos, float fForce)
+	{
+		m_bMagnet = true;
+		m_PosMagnet = new Vector2(pos.x, pos.y);
+		m_fForceMagnet = fForce;
+	}	
+	
+	public void StopMagnet()
+	{
+		m_bMagnet = false;
+		m_PosMagnet = Vector2.zero;
+		m_fForceMagnet = 0.0f;
 	}
 }

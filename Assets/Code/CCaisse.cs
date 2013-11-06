@@ -5,7 +5,6 @@ public class CCaisse : CElement
 {
 	CScriptCaisse m_ScriptCaisse;
 	CSpriteSheet m_SpriteSheet;
-	CGame m_Game;
 	int m_nNbImpact;
 	bool m_bDestroy;
 
