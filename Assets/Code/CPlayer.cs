@@ -128,6 +128,7 @@ public class CPlayer : CCharacter
 		m_Torche = m_GameObject.transform.FindChild("Torche").gameObject;
 		
 		m_CercleDiscretion = m_GameObject.transform.FindChild("CercleDiscretion").GetComponent<CCercleDiscretion>();
+		
 	}
 	
 	//-------------------------------------------------------------------------------
@@ -161,6 +162,7 @@ public class CPlayer : CCharacter
 		m_GameObject.active = true;
 		m_bIsAlive = true;
 		m_bResetSubElements = false;
+		StopMagnet();
 	}
 
 	//-------------------------------------------------------------------------------
