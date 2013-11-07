@@ -57,6 +57,7 @@ public class CPlayer : CCharacter
 	bool m_bIsRespawn;
 	bool m_bResetSubElements;
 	bool m_bMagnet;
+	bool m_bParalyse;
 	
 	CCercleDiscretion m_CercleDiscretion;
 	CTakeElement m_YounesSuceDesBites;
@@ -73,13 +74,8 @@ public class CPlayer : CCharacter
 	
 	public enum EState // etat de l'avatar
 	{
-		e_State_normal,
-		e_State_enflamme,
-		e_State_oxygeneManque,
-		e_State_empoisonne,
-		e_State_parasite,
-		e_State_frigorifie,
-		e_State_aveugle,
+		e_Normal,
+		e_Paralyse,
 		
 		e_State_nbState
 	}
@@ -126,6 +122,7 @@ public class CPlayer : CCharacter
 		m_bIsRespawn = false;
 		m_bIsAlive = true;
 		m_bResetSubElements = false;
+		m_bParalyse = false;
 		m_fTimerDead = 0.0f;
 		
 		m_Torche = m_GameObject.transform.FindChild("Torche").gameObject;
@@ -175,7 +172,16 @@ public class CPlayer : CCharacter
 		{
 			base.Process(fDeltatime);
 			SetPlayerInput();
-			MovePlayer(fDeltatime);
+			
+			if(!m_bParalyse)
+				MovePlayer(fDeltatime);
+			else
+			{
+				m_spriteSheet.SetAnimation(m_AnimPlayer.AnimRepos);
+				m_spriteSheet.AnimationStart();
+				m_eMoveModState = EMoveModState.e_MoveModState_attente;
+				m_GameObject.rigidbody.velocity = Vector3.zero;	
+			}
 			GestionTorche(fDeltatime);
 			
 			if(m_Game.IsDebug())
@@ -185,7 +191,7 @@ public class CPlayer : CCharacter
 					m_eState = (m_eState + 1);
 					
 					if (m_eState >= EState.e_State_nbState)
-						m_eState = EState.e_State_normal;
+						m_eState = EState.e_Normal;
 
 				}
 			}
@@ -669,5 +675,10 @@ public class CPlayer : CCharacter
 		m_bMagnet = false;
 		m_PosMagnet = Vector2.zero;
 		m_fForceMagnet = 0.0f;
+	}
+	
+	public void SetParalyse(bool bState)
+	{
+		m_bParalyse = bState;	
 	}
 }

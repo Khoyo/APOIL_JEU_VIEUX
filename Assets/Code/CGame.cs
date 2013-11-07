@@ -78,6 +78,8 @@ public class CGame : MonoBehaviour
 	public float m_fCreepCoeffRalentissement = 0.5f;
 	public float m_fCreepVelocity = 100.0f;
 	
+	public float m_fGravityTimerPrisonMax = 3.0f;
+	
 	public bool m_BMute = false;
 	public string soundbankName = "Jeu_apoil.bnk";
 	public bool m_bLightIsOn = true;

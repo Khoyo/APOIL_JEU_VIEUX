@@ -7,6 +7,8 @@ public class CGravityMonster : CElement
 	CScriptGravityMonsterZone m_ScriptGravityMonsterZone;
 	CSpriteSheet m_SpriteSheet;
 	CPlayer m_PlayerAttracted;
+	float m_fTimerPrison;
+	bool m_bPlayerInJail;
 
 
 	//-------------------------------------------------------------------------------
@@ -15,6 +17,8 @@ public class CGravityMonster : CElement
 	public CGravityMonster()
 	{
 		m_PlayerAttracted = null;
+		m_fTimerPrison = 0.0f;
+		m_bPlayerInJail = false;
 	}
 	
 	//-------------------------------------------------------------------------------
@@ -48,6 +52,8 @@ public class CGravityMonster : CElement
 		m_SpriteSheet.Reset();
 		m_ScriptGravityMonster.Reset();
 		m_ScriptGravityMonsterZone.Reset();
+		m_fTimerPrison = 0.0f;
+		m_bPlayerInJail = false;
 	}
 	
 
@@ -58,6 +64,18 @@ public class CGravityMonster : CElement
 	{
 		base.Process(fDeltatime);
 		m_SpriteSheet.Process();
+		
+		if(m_bPlayerInJail)
+		{
+			if(m_fTimerPrison < m_Game.m_fGravityTimerPrisonMax)
+				m_fTimerPrison += fDeltatime;
+			else
+			{
+				m_PlayerAttracted.SetParalyse(false);	
+				DropPlayer(m_PlayerAttracted);
+				m_bPlayerInJail = false;
+			}
+		}	
 	}
 	
 	//-------------------------------------------------------------------------------
@@ -84,5 +102,14 @@ public class CGravityMonster : CElement
 			m_PlayerAttracted.StopMagnet();
 			m_PlayerAttracted = null;
 		}
+	}
+	
+	public void JailPlayer(CPlayer player)
+	{
+		DropPlayer(player);
+		CatchPlayer(player);
+		m_fTimerPrison = 0.0f;
+		m_bPlayerInJail = true;
+		m_PlayerAttracted.SetParalyse(true);
 	}
 }

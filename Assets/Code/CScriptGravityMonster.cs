@@ -32,7 +32,7 @@ public class CScriptGravityMonster : MonoBehaviour
 		{
 			if(other.gameObject == m_Game.getLevel().getPlayer(i).GetGameObject())
 			{
-				//gameObject.transform.Translate(new Vector3(10,10,0));
+				m_GravityMonster.JailPlayer(m_Game.getLevel().getPlayer(i));				
 			}
 		}
 	}
