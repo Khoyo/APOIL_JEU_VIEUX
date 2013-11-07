@@ -32,7 +32,7 @@ public class CSpriteSheet // : MonoBehaviour
 	
 	public CSpriteSheet(GameObject parent)
 	{
-		m_parent=parent;
+		SetParent(parent);
 	}
 	
 	//-------------------------------------------------------------------------------
@@ -60,6 +60,7 @@ public class CSpriteSheet // : MonoBehaviour
 		m_fTemps = 0.0f;
 		m_nIndex = 1;
 		m_fCoeffVelocity = 1.0f;
+		m_myRenderer = m_parent.renderer;
 	}
 	
 	//-------------------------------------------------------------------------------
@@ -149,13 +150,13 @@ public class CSpriteSheet // : MonoBehaviour
         
 		// Reset the y offset, if needed
         if (offset.y == 1)
-          offset.y = 0.0f;
+       		offset.y = 0.0f;
 		
 		// If we have scaled the texture, we need to reposition the texture to the center of the object
         offset.x += ((1f / m_nColumns) - textureSize.x) / 2.0f;
         offset.y += ((1f / m_nRows) - textureSize.y) / 2.0f;
-
-		m_myRenderer.sharedMaterial.SetTextureOffset("_MainTex", offset);
+		
+		m_parent.renderer.sharedMaterial.SetTextureOffset("_MainTex", offset);
 	}	
 	
 	//-------------------------------------------------------------------------------
@@ -217,5 +218,10 @@ public class CSpriteSheet // : MonoBehaviour
 	public void SetVibration(bool bOn)
 	{
 		m_bVibration = bOn;	
+	}
+	
+	public void SetParent(GameObject parent)
+	{
+		m_parent = parent;
 	}
 }

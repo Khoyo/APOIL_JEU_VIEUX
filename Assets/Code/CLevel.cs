@@ -271,4 +271,9 @@ public class CLevel
 		return m_Players[i];
 	}
 	
+	public void DeleteCElements()
+	{
+		m_pElement.Clear();
+	}
+	
 }

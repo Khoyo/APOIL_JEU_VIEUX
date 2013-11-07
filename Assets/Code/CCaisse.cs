@@ -42,13 +42,15 @@ public class CCaisse : CElement
 	public override void Reset()
 	{
 		base.Reset();
-		m_SpriteSheet.Reset();
+		
 		m_ScriptCaisse.Reset();
 		m_nNbImpact = 0;
 		m_bDestroy = false;
 		m_GameObject.active = true;
 		m_GameObject.collider.enabled = true;
+		m_SpriteSheet.Reset();
 	}
+
 
 	//-------------------------------------------------------------------------------
 	///
@@ -57,6 +59,7 @@ public class CCaisse : CElement
 	{
 		base.Process(fDeltatime);
 		m_SpriteSheet.Process();
+		
 	}
 	
 	//-------------------------------------------------------------------------------

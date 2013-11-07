@@ -295,6 +295,9 @@ public class CGame : MonoBehaviour
 		}
 
 		menu.SetMenuState(CMenu.EmenuState.e_menuState_menuWinLoose);
+		
+		m_Level.DeleteCElements();
+		
 	}
 	
 	//-------------------------------------------------------------------------------

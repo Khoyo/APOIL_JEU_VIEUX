@@ -12,7 +12,7 @@ public class CScriptCaisse : MonoBehaviour {
 	void Start () 
 	{
 		m_Game = GameObject.Find("_Game").GetComponent<CGame>();
-		m_Game.getLevel().CreateElement<CCaisse>(gameObject);		
+		m_Game.getLevel().CreateElement<CCaisse>(gameObject);
 	}
 	
 	public void Reset()
@@ -21,8 +21,7 @@ public class CScriptCaisse : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () 
-	{
-		
+	{		
 	}
 	
 	void OnCollisionEnter(Collision other) 
