@@ -3,7 +3,6 @@ using System.Collections;
 
 public class CGravityMonster : CElement 
 {
-	public float m_fForceMagnet = 2;
 	CScriptGravityMonster m_ScriptGravityMonster;
 	CScriptGravityMonsterZone m_ScriptGravityMonsterZone;
 	CSpriteSheet m_SpriteSheet;
@@ -74,7 +73,7 @@ public class CGravityMonster : CElement
 		if(m_PlayerAttracted == null)
 		{
 			m_PlayerAttracted = player;
-			m_PlayerAttracted.SetMagnetData(m_GameObject.transform.position, m_fForceMagnet);	
+			m_PlayerAttracted.SetMagnetData(m_GameObject.transform.position, m_ScriptGravityMonster.m_fForceMagnet);	
 		}
 	}
 	

@@ -5,6 +5,7 @@ public class CScriptGravityMonster : MonoBehaviour
 {
 	CGame m_Game;
 	CGravityMonster m_GravityMonster;
+	public float m_fForceMagnet = 5;
 	
 	public Material m_material;
 	
