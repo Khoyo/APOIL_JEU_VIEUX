@@ -17,7 +17,8 @@ public class CSpriteSheet // : MonoBehaviour
 	CGame m_Game;
 	const float m_fFixFPS = 30.0f;
 	
-	public enum EEndCondition{
+	public enum EEndCondition
+	{
 		e_Loop,
 		e_PingPong,
 		e_Stop,
@@ -46,7 +47,7 @@ public class CSpriteSheet // : MonoBehaviour
 		m_bVibration = false;
 		m_myRenderer = m_parent.renderer;
 		m_fTemps = 0.0f;
-		m_nIndex = 1;
+		m_nIndex = 0;
 		m_Game = GameObject.Find("_Game").GetComponent<CGame>();
 		m_endCondition = EEndCondition.e_Loop;
 		m_fCoeffVelocity = 1.0f;
@@ -58,7 +59,7 @@ public class CSpriteSheet // : MonoBehaviour
 	public void Reset()
 	{
 		m_fTemps = 0.0f;
-		m_nIndex = 1;
+		m_nIndex = 0;
 		m_fCoeffVelocity = 1.0f;
 		m_myRenderer = m_parent.renderer;
 	}
@@ -149,8 +150,8 @@ public class CSpriteSheet // : MonoBehaviour
 		Vector2 textureSize = new Vector2(1f / m_nColumns, 1f / m_nRows);
         
 		// Reset the y offset, if needed
-        if (offset.y == 1)
-       		offset.y = 0.0f;
+       /* if (offset.y == 1)
+       		offset.y = 0.0f; */
 		
 		// If we have scaled the texture, we need to reposition the texture to the center of the object
         offset.x += ((1f / m_nColumns) - textureSize.x) / 2.0f;

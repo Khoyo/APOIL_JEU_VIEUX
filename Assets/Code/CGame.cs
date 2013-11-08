@@ -163,9 +163,7 @@ public class CGame : MonoBehaviour
 			
 			//Debug
 			if(CApoilInput.DebugF9)
-				RestartLevel();
-			if(CApoilInput.DebugF10)
-				Reset();
+				GoToNextLevelOrRestart(false);
 			if(CApoilInput.DebugF11)
 				FinishLevel(true, CPlayer.EIdPlayer.e_IdPlayer_Player1);
 			if(CApoilInput.DebugF12)
@@ -296,7 +294,7 @@ public class CGame : MonoBehaviour
 
 		menu.SetMenuState(CMenu.EmenuState.e_menuState_menuWinLoose);
 		
-		m_Level.DeleteCElements();
+		//m_Level.DeleteCElements();
 		
 	}
 	
@@ -314,9 +312,10 @@ public class CGame : MonoBehaviour
 		Reset();	
 	}
 
-	public void GoToNextLevelOrRestart ()
+	public void GoToNextLevelOrRestart (bool bWin)
 	{
-		if(IsWin())
+		m_Level.DeleteCElements();
+		if(bWin)
 			GoToNextLevel();
 		else
 			RestartLevel();

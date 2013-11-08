@@ -26,7 +26,7 @@ public class CCaisse : CElement
 		m_ScriptCaisse = m_GameObject.GetComponent<CScriptCaisse>();
 		m_ScriptCaisse.SetCaisseElement(this);
 		
-		CAnimation anim = new CAnimation(m_ScriptCaisse.GetMaterial(), 1, 6, 60.0f);
+		CAnimation anim = new CAnimation(m_ScriptCaisse.GetMaterial(), 3, 2, 60.0f);
 		
 		m_SpriteSheet = new CSpriteSheet(m_GameObject);
 		m_Game = GameObject.Find("_Game").GetComponent<CGame>();

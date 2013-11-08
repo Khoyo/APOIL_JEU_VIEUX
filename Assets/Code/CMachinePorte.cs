@@ -24,6 +24,7 @@ public class CMachinePorte : MonoBehaviour, IMachineAction
 		m_bChangeState = false;
 		m_bTargetIsOpen = false;
 		m_bBlockClose = false;
+		CSpriteSheet sprite = gameObject.GetComponent<CScriptMachine>().GetMachine().GetSpriteSheet();
 		gameObject.GetComponent<CScriptMachine>().GetMachine().GetSpriteSheet().setEndCondition(CSpriteSheet.EEndCondition.e_Stop);
 		gameObject.GetComponent<CScriptMachine>().GetMachine().GetSpriteSheet().AnimationStop();
 		m_fTimer = 0.0f;

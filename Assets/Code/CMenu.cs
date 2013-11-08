@@ -241,7 +241,7 @@ public class CMenu : MonoBehaviour{
 				{	
 					m_EState = EmenuState.e_menuState_inGame;
 					ResumeGame();
-					m_Game.GoToNextLevelOrRestart();
+					m_Game.GoToNextLevelOrRestart(m_Game.IsWin());
 				}
 				break;
 			}
