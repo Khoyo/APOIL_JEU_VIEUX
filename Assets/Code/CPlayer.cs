@@ -59,6 +59,11 @@ public class CPlayer : CCharacter
 	bool m_bMagnet;
 	bool m_bParalyse;
 	
+	bool m_bLookLeft;
+	bool m_bLookRight;
+	bool m_bLookUp;
+	bool m_bLookDown;
+	
 	CCercleDiscretion m_CercleDiscretion;
 	CTakeElement m_YounesSuceDesBites;
 	SPlayerInput m_PlayerInput;
@@ -124,6 +129,10 @@ public class CPlayer : CCharacter
 		m_bResetSubElements = false;
 		m_bParalyse = false;
 		m_fTimerDead = 0.0f;
+		m_bLookLeft = false;
+		m_bLookRight = false;
+		m_bLookUp = false;
+		m_bLookDown = false;
 		
 		m_Torche = m_GameObject.transform.FindChild("Torche").gameObject;
 		
@@ -382,11 +391,11 @@ public class CPlayer : CCharacter
 				
 				m_eMoveModState = EMoveModState.e_MoveModState_marche;
 				
-				if(m_PlayerInput.LookDown)
+				if(m_bLookDown)
 					m_spriteSheet.SetAnimation(m_AnimPlayer.AnimUpDown);
-				else if(m_PlayerInput.LookLeft)
+				else if(m_bLookLeft)
 					m_spriteSheet.SetAnimation(m_AnimPlayer.AnimUpLeft);
-				else if(m_PlayerInput.LookRight)
+				else if(m_bLookRight)
 					m_spriteSheet.SetAnimation(m_AnimPlayer.AnimUpRight);
 				else
 					m_spriteSheet.SetAnimation(m_AnimPlayer.AnimUpUp);
@@ -398,11 +407,11 @@ public class CPlayer : CCharacter
 				velocity += new Vector3(0,-1,0); 
 				m_eMoveModState = EMoveModState.e_MoveModState_marche;
 				
-				if(m_PlayerInput.LookUp)
+				if(m_bLookUp)
 					m_spriteSheet.SetAnimation(m_AnimPlayer.AnimDownUp);
-				else if(m_PlayerInput.LookLeft)
+				else if(m_bLookLeft)
 					m_spriteSheet.SetAnimation(m_AnimPlayer.AnimDownLeft);
-				else if(m_PlayerInput.LookRight)
+				else if(m_bLookRight)
 					m_spriteSheet.SetAnimation(m_AnimPlayer.AnimDownRight);
 				else
 					m_spriteSheet.SetAnimation(m_AnimPlayer.AnimDownDown);
@@ -415,11 +424,11 @@ public class CPlayer : CCharacter
 				velocity += new Vector3(-1,0,0); 
 				m_eMoveModState = EMoveModState.e_MoveModState_marche;
 				
-				if(m_PlayerInput.LookUp)
+				if(m_bLookUp)
 					m_spriteSheet.SetAnimation(m_AnimPlayer.AnimLeftUp);
-				else if(m_PlayerInput.LookDown)
+				else if(m_bLookDown)
 					m_spriteSheet.SetAnimation(m_AnimPlayer.AnimLeftDown);
-				else if(m_PlayerInput.LookRight)
+				else if(m_bLookRight)
 					m_spriteSheet.SetAnimation(m_AnimPlayer.AnimLeftRight);
 				else
 					m_spriteSheet.SetAnimation(m_AnimPlayer.AnimLeftLeft);
@@ -431,11 +440,11 @@ public class CPlayer : CCharacter
 				velocity += new Vector3(1,0,0); 
 				m_eMoveModState = EMoveModState.e_MoveModState_marche;
 				
-				if(m_PlayerInput.LookUp)
+				if(m_bLookUp)
 					m_spriteSheet.SetAnimation(m_AnimPlayer.AnimRightUp);
-				else if(m_PlayerInput.LookDown)
+				else if(m_bLookDown)
 					m_spriteSheet.SetAnimation(m_AnimPlayer.AnimRightDown);
-				else if(m_PlayerInput.LookLeft)
+				else if(m_bLookLeft)
 					m_spriteSheet.SetAnimation(m_AnimPlayer.AnimRightLeft);
 				else
 					m_spriteSheet.SetAnimation(m_AnimPlayer.AnimRightRight);
@@ -494,7 +503,14 @@ public class CPlayer : CCharacter
 			float fPadX = m_PlayerInput.DirectionVertical;
 			float fTolerance = 0.05f;
 			if(Mathf.Abs(fPadX) > fTolerance || Mathf.Abs(fPadY) > fTolerance)
+			{
 				m_DirectionRegard = (new Vector2(fPadX, -fPadY)).normalized;
+			
+				m_bLookUp = m_PlayerInput.LookUp;
+				m_bLookDown = m_PlayerInput.LookDown;
+				m_bLookLeft = m_PlayerInput.LookLeft;
+				m_bLookRight = m_PlayerInput.LookRight;
+			}
 			
 			/*
 			Vector3 debugVec = new Vector3 (m_DirectionRegard.x, m_DirectionRegard.y, 0.0f);
