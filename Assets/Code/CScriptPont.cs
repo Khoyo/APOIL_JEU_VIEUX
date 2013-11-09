@@ -3,6 +3,7 @@ using System.Collections;
 
 public class CScriptPont : MonoBehaviour 
 {
+	public bool m_bIsHole = false;
 	public enum EState
 	{
 		e_NotBroken,
@@ -17,19 +18,27 @@ public class CScriptPont : MonoBehaviour
 	
 	public Material m_material;
 	
-	// Use this for initialization
+	//-------------------------------------------------------------------------------
+	///
+	//-------------------------------------------------------------------------------
 	void Start () 
 	{
 		m_Game = GameObject.Find("_Game").GetComponent<CGame>();
 		m_Game.getLevel().CreateElement<CPont>(gameObject);
-		m_eState = EState.e_NotBroken;
+		if(m_bIsHole)
+			m_eState = EState.e_Broken;
+		else
+			m_eState = EState.e_NotBroken;
 		m_fTimerDestruction = 0.0f;
-		
+		SetSpriteSheetState();
 	}
 	
 	public void Reset()
 	{
-		m_eState = EState.e_NotBroken;
+		if(m_bIsHole)
+			m_eState = EState.e_Broken;
+		else
+			m_eState = EState.e_NotBroken;
 		m_fTimerDestruction = 0.0f;
 	}
 	
@@ -42,26 +51,52 @@ public class CScriptPont : MonoBehaviour
 			else
 			{
 				m_eState = EState.e_Broken;
-				m_Pont.GetSpriteSheet().GoToNextFram();
+				SetSpriteSheetState();
 			}
-		
-		if(m_eState == EState.e_Broken)
-			m_Pont.GetSpriteSheet().SetVibration(false);
 	}
 	
+	//-------------------------------------------------------------------------------
+	///
+	//-------------------------------------------------------------------------------
+	void SetSpriteSheetState()
+	{
+		switch(m_eState)
+		{
+			case EState.e_NotBroken :
+			{
+				m_Pont.GetSpriteSheet().Reset();
+				m_Pont.GetSpriteSheet().SetVibration(false);
+				break;
+			}
+			case EState.e_Cracked :
+			{
+				m_Pont.GetSpriteSheet().GoToFram(1);
+				m_Pont.GetSpriteSheet().SetVibration(true);
+				break;
+			}
+			case EState.e_Broken :
+			{
+				m_Pont.GetSpriteSheet().ResetAtEnd();
+				m_Pont.GetSpriteSheet().SetVibration(false);
+				break;
+			}
+		}
+	}
+	
+	//-------------------------------------------------------------------------------
+	///
+	//-------------------------------------------------------------------------------
  	void OnTriggerEnter(Collider other) 
 	{
 		for(int i = 0 ; i < m_Game.m_nNbPlayer ; ++i)
 		{
 			if(other.gameObject == m_Game.getLevel().getPlayer(i).GetGameObject())
-			{
-				m_Pont.GetSpriteSheet().GoToNextFram();
+			{				
 				switch(m_eState)
 				{
 					case EState.e_NotBroken :
 					{
 						m_eState = EState.e_Cracked;
-						m_Pont.GetSpriteSheet().SetVibration(true);
 						break;
 					}
 					case EState.e_Cracked :
@@ -70,6 +105,7 @@ public class CScriptPont : MonoBehaviour
 						break;
 					}
 				}
+				SetSpriteSheetState();
 			}
 		}
 		

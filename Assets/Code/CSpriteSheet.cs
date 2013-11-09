@@ -76,8 +76,13 @@ public class CSpriteSheet // : MonoBehaviour
 	
 	public void GoToNextFram()
 	{
-		if (m_nIndex < m_nRows * m_nColumns)
+		if (m_nIndex < m_nRows * m_nColumns-1)
 			++m_nIndex;
+	}
+	
+	public void GoToFram(int nFrame)
+	{
+		m_nIndex = nFrame;
 	}
 	
 	//-------------------------------------------------------------------------------
@@ -144,14 +149,14 @@ public class CSpriteSheet // : MonoBehaviour
 		
 		if(m_bVibration)
 		{
-			offset.x = Mathf.Cos(100.0f * m_fTemps) / 50.0f;
+			offset.x += Mathf.Cos(20.0f * Time.time) / 100.0f;
 		}
 		
 		Vector2 textureSize = new Vector2(1f / m_nColumns, 1f / m_nRows);
         
 		// Reset the y offset, if needed
-       /* if (offset.y == 1)
-       		offset.y = 0.0f; */
+        if (offset.y == 1)
+       		offset.y = 0.0f; 
 		
 		// If we have scaled the texture, we need to reposition the texture to the center of the object
         offset.x += ((1f / m_nColumns) - textureSize.x) / 2.0f;
