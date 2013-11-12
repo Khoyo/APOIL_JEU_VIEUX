@@ -4,6 +4,7 @@ using System.Collections;
 public class CScriptZoneOpenDoor : MonoBehaviour 
 {
 	bool m_bNoPlayerInZone;
+	bool m_bPowerOn; // si la zone est allimenté en energie
 	
 	CGame m_Game;
 	// Use this for initialization
@@ -11,6 +12,7 @@ public class CScriptZoneOpenDoor : MonoBehaviour
 	{
 		m_bNoPlayerInZone = true;
 		m_Game = GameObject.Find("_Game").GetComponent<CGame>();
+		m_bPowerOn = true;
 	}
 	
 	// Update is called once per frame
@@ -28,7 +30,7 @@ public class CScriptZoneOpenDoor : MonoBehaviour
 		
 		for(int i = 0 ; i < m_Game.m_nNbPlayer ; ++i)
 		{
-			if(!m_Game.LightIsOn())
+			if(!m_bPowerOn)
 			{
 				Vector3 PosPlayer = m_Game.getLevel().getPlayer(i).GetGameObject().transform.position;
 				Vector3 DirectionRegard = m_Game.getLevel().getPlayer(i).GetDirectionRegard();
@@ -49,5 +51,10 @@ public class CScriptZoneOpenDoor : MonoBehaviour
 				m_bNoPlayerInZone = false;
 			}
 		}
+	}
+	
+	public void SetPowerStatus(bool bOn)
+	{
+		m_bPowerOn = bOn;	
 	}
 }

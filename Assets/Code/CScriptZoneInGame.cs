@@ -5,13 +5,15 @@ using System.Collections.Generic;
 public class CScriptZoneInGame : MonoBehaviour 
 {
 	List<GameObject> m_Lights;
-	bool m_bNoPower;
+	List<CScriptZoneOpenDoor> m_Portes;
+	bool m_bPowerOn;
 	// Use this for initialization
 	void Start () 
 	{
 		m_Lights = new List<GameObject>();	
+		m_Portes = new List<CScriptZoneOpenDoor>();
 		SetObjectsInZone();
-		m_bNoPower = true;
+		m_bPowerOn = true;
 	}
 	
 	// Update is called once per frame
@@ -19,34 +21,40 @@ public class CScriptZoneInGame : MonoBehaviour
 	{
 		if(CApoilInput.DebugF10)
 		{
-			if(!m_bNoPower)
-				TurnLight(false);
+			if(m_bPowerOn)
+				TurnDoors(false);
 			else
-				TurnLight(true);
+				TurnDoors(true);
 		}
 	}
 	
 	public void SetObjectsInZone()
 	{
-		GameObject[] ShipLight;
-		ShipLight = GameObject.FindGameObjectsWithTag("ShipLight");
+		GameObject[] ShipLight = GameObject.FindGameObjectsWithTag("ShipLight");	
+		GameObject[] Portes = GameObject.FindGameObjectsWithTag("Porte");
 		
 		foreach(GameObject currentLight in ShipLight)
 		{
-			GameObject papa = currentLight.transform.parent.gameObject;
-			int k = 0;
-			
 			if(currentLight.transform.parent != null)
 			{
 				if(currentLight.transform.parent.gameObject == gameObject)
 					m_Lights.Add(currentLight);
 			}
 		}	
+		
+		foreach(GameObject currentPorte in Portes)
+		{
+			if(currentPorte.transform.parent != null)
+			{
+				if(currentPorte.transform.parent.gameObject == gameObject)
+					m_Portes.Add(currentPorte.transform.GetComponentInChildren<CScriptZoneOpenDoor>());
+			}
+		}
 	}
 	
 	public void TurnLight(bool bOn)
 	{	
-		m_bNoPower = !bOn;
+		m_bPowerOn = bOn;//pour debuger faudra l'enlever vu qu'on le fait deja dans SetPowerZone
 		foreach(GameObject currentLight in m_Lights)
 		{
 			if(bOn)
@@ -59,5 +67,24 @@ public class CScriptZoneInGame : MonoBehaviour
 				currentLight.active = true;
 			}
 		}
+	}
+	
+	public void TurnDoors(bool bOn)
+	{	
+		m_bPowerOn = bOn; //pour debuger faudra l'enlever vu qu'on le fait deja dans SetPowerZone
+		foreach(CScriptZoneOpenDoor currentPorte in m_Portes)
+		{
+			if(currentPorte != null)
+				currentPorte.SetPowerStatus(bOn);
+		}
+	}
+	
+	
+	
+	public void SetPowerZone(bool bOn)
+	{
+		m_bPowerOn = bOn;
+		TurnLight(bOn);
+		TurnDoors(bOn);
 	}
 }
