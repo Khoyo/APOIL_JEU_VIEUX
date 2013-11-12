@@ -2,14 +2,17 @@ using UnityEngine;
 using System.Collections;
 
 public class CLaserTurret : CElement
-{
+{	
 	GameObject m_Base, m_LightZone, m_DarkZone;
 	GameObject tracked = null;
+	CScriptLaserTurret m_script;
 	float m_fLastFired = 0f;
+	
 	public override void Init()
 	{
 		base.Init();
-		m_GameObject.GetComponent<CScriptLaserTurret>().SetTurret(this);
+		m_script =	m_GameObject.GetComponent<CScriptLaserTurret>();
+		m_script.SetTurret(this);
 		
 		CScriptTurretLightZone light = m_GameObject.GetComponentInChildren<CScriptTurretLightZone>();
 		m_LightZone = light.gameObject;
@@ -18,22 +21,24 @@ public class CLaserTurret : CElement
 		CScriptTurretDarkZone dark = m_GameObject.GetComponentInChildren<CScriptTurretDarkZone>();
 		m_DarkZone = dark.gameObject;
 		dark.SetTurret(this);
-		
+		 
 	}
 	
 	public override void Process(float fDeltatime)
 	{
 		base.Process(fDeltatime);
 		
-		if(tracked != null && Time.time>(m_fLastFired+2f))
+		if(tracked != null && Time.time>(m_fLastFired+m_script.m_fReloadTime))
 		{
 			//First, fire in it's direction ^^
 			CScie saw = new CScie();
 			saw.Init();
 			saw.GetGameObject().active = true;
-			saw.GetGameObject().transform.position = m_GameObject.transform.position;
-			saw.GetGameObject().rigidbody.velocity = (tracked.transform.position - m_GameObject.transform.position)*2 ;  
-			m_fLastFired = Time.time;
+			saw.GetGameObject().transform.position = m_GameObject.transform.position; // + new Vector3(0,0, 10);
+			saw.GetGameObject().rigidbody.velocity = (tracked.transform.position - m_GameObject.transform.position).normalized * m_script.m_fShotSpeed;
+			saw.useTimer = true;
+			saw.m_fTimer = m_script.m_fTimer;
+			saw.m_fFiredTime = m_fLastFired = Time.time;
 		}
 		
 	}
