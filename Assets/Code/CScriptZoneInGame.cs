@@ -6,14 +6,14 @@ public class CScriptZoneInGame : MonoBehaviour
 {
 	List<GameObject> m_Lights;
 	List<CScriptZoneOpenDoor> m_Portes;
-	bool m_bPowerOn;
+	public bool m_bPowerOn = true;
 	// Use this for initialization
 	void Start () 
 	{
 		m_Lights = new List<GameObject>();	
 		m_Portes = new List<CScriptZoneOpenDoor>();
 		SetObjectsInZone();
-		m_bPowerOn = true;
+		SetPowerZone(m_bPowerOn);
 	}
 	
 	// Update is called once per frame
@@ -21,10 +21,7 @@ public class CScriptZoneInGame : MonoBehaviour
 	{
 		if(CApoilInput.DebugF10)
 		{
-			if(m_bPowerOn)
-				TurnDoors(false);
-			else
-				TurnDoors(true);
+			SwitchPowerState();
 		}
 	}
 	
@@ -78,13 +75,19 @@ public class CScriptZoneInGame : MonoBehaviour
 				currentPorte.SetPowerStatus(bOn);
 		}
 	}
-	
-	
-	
+		
 	public void SetPowerZone(bool bOn)
 	{
 		m_bPowerOn = bOn;
 		TurnLight(bOn);
 		TurnDoors(bOn);
+	}
+	
+	public void SwitchPowerState()
+	{
+		if(m_bPowerOn)
+			SetPowerZone(false);
+		else
+			SetPowerZone(true);	
 	}
 }

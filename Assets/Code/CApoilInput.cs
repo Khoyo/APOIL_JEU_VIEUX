@@ -15,6 +15,7 @@ public struct SPlayerInput
 	public bool WalkSlow;
 	public bool PickUpObject;
 	public bool DropObject;
+	public bool ClickButton;
 	public bool ActivateMachine;
 	public float DirectionHorizontal;
 	public float DirectionVertical;
@@ -108,6 +109,7 @@ public class CApoilInput
 				InputPlayer.PickUpObject = Input.GetKey(KeyCode.Joystick1Button0); //A
 				InputPlayer.DropObject = Input.GetKeyDown(KeyCode.Joystick1Button2); //X
 				InputPlayer.ActivateMachine = Input.GetKeyDown(KeyCode.Joystick1Button0); //A
+				InputPlayer.ClickButton = Input.GetKeyDown(KeyCode.Joystick1Button0); //A
 				break;
 			}
 			case "player2":
@@ -117,6 +119,7 @@ public class CApoilInput
 				InputPlayer.PickUpObject = Input.GetKey(KeyCode.Joystick2Button0); //A
 				InputPlayer.DropObject = Input.GetKeyDown(KeyCode.Joystick2Button2); //X
 				InputPlayer.ActivateMachine = Input.GetKeyDown(KeyCode.Joystick2Button0); //A
+				InputPlayer.ClickButton = Input.GetKeyDown(KeyCode.Joystick2Button0); //A
 				break;
 			}
 			case "player3":
@@ -126,6 +129,7 @@ public class CApoilInput
 				InputPlayer.PickUpObject = Input.GetKey(KeyCode.Joystick3Button0); //A
 				InputPlayer.DropObject = Input.GetKeyDown(KeyCode.Joystick3Button2); //X
 				InputPlayer.ActivateMachine = Input.GetKeyDown(KeyCode.Joystick3Button0); //A
+				InputPlayer.ClickButton = Input.GetKeyDown(KeyCode.Joystick3Button0); //A
 				break;
 			}
 			case "player4":
@@ -135,6 +139,7 @@ public class CApoilInput
 				InputPlayer.PickUpObject = Input.GetKey(KeyCode.Joystick4Button0); //A
 				InputPlayer.DropObject = Input.GetKeyDown(KeyCode.Joystick4Button2); //X
 				InputPlayer.ActivateMachine = Input.GetKeyDown(KeyCode.Joystick4Button0); //A
+				InputPlayer.ClickButton = Input.GetKeyDown(KeyCode.Joystick4Button0); //A
 				break;
 			}
 		}
