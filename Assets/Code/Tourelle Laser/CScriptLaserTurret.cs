@@ -3,6 +3,10 @@ using System.Collections;
 
 public class CScriptLaserTurret : MonoBehaviour {
 	
+	public float m_fReloadTime = 2f;
+	public float m_fShotSpeed = 500;
+	public float m_fTimer = 200;
+	
 	CGame m_Game;
 	CLaserTurret m_Turret;
 	

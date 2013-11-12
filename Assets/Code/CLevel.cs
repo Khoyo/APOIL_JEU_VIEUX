@@ -35,6 +35,7 @@ public class CLevel
 		for(int i = 0 ; i < m_Game.m_nNbPlayer ; ++i)
 			m_Players[i].Init();
 		
+		
 		foreach(CElement elem in m_pElement)
 			elem.Init();	
 	}
@@ -49,7 +50,10 @@ public class CLevel
 			m_Players[i].Reset();
 		}
 		
-		foreach(CElement elem in m_pElement)
+		CElement[] pElement = new CElement[m_pElement.Count];
+		m_pElement.CopyTo(pElement);
+		
+		foreach(CElement elem in pElement)
 			elem.Reset();
 		
 		SetPlayerPosition();
@@ -75,7 +79,10 @@ public class CLevel
 		else
 			TurnLight(true);
 		
-		foreach(CElement elem in m_pElement)
+		CElement[] pElement = new CElement[m_pElement.Count];
+		m_pElement.CopyTo(pElement);
+		
+		foreach(CElement elem in pElement)
 			elem.Process(fDeltatime);
 	}
 	
@@ -111,6 +118,10 @@ public class CLevel
 		elem.Init();
 		m_pElement.Add(elem);
 		
+	}
+	
+	public void RegisterElement(CElement elem){
+		m_pElement.Add(elem);
 	}
 	
 	public void UnregisterElement(CElement elem)
