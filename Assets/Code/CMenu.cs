@@ -46,7 +46,7 @@ public class CMenu : MonoBehaviour{
 	CGame m_Game;
 	
 	float m_fTimerMenuNavigation;
-	float m_fTimerMenuNavigationMax = 0.5f;
+	float m_fTimerMenuNavigationMax = 0.2f;
 	
 	//-------------------------------------------------------------------------------
 	/// 
@@ -104,8 +104,8 @@ public class CMenu : MonoBehaviour{
 		m_fTimerMenuNavigation = 0.0f;
 		if(!m_Game.IsNotUseMasterGame())	
 		{
-			//m_EState = EmenuState.e_menuState_splash;
-			m_EState = EmenuState.e_menuState_main;
+			m_EState = EmenuState.e_menuState_splash;
+			//m_EState = EmenuState.e_menuState_main;
 			m_fTempsSplash = m_fTempsSplashInit;
 			m_EMainState = EMenuMain.e_Play;
 		}
@@ -183,55 +183,17 @@ public class CMenu : MonoBehaviour{
 			case EmenuState.e_menuState_inGame:
 			{
 				//if (GUI.Button(new Rect(940, 10, 200, 60), m_Texture_ButtonMenu))
-				if (GUI.Button(new Rect(10, 10, 200, 60), m_Texture_ButtonMenu))
-				{
-					m_EState = EmenuState.e_menuState_main;
-					PauseGame();
-				}
+				
+				GestionMenuInGame(m_Game.m_bPadXBox);
 			
-				if (GUI.Button(new Rect(1160, 10, 60, 60), m_Texture_ButtonQuit))
-				{
-					Application.Quit();
-				}
-			
-				if (GUI.Button(new Rect(250, 10, 60, 60), m_Texture_ButtonPause))
-				{
-					if(!m_bGamePaused)
-					{
-						PauseGame();
-					}
-					else 
-					{
-						ResumeGame();
-					}
-				}
 				break;
 			}	
 			case EmenuState.e_menuState_menuWinLoose:
 			{
 				PauseGame();
-				float fPosX = m_Game.GetSizeScreen().x / 2.0f;
-				float fPosY = m_Game.GetSizeScreen().y / 2.0f;
-				float fWidth = 300.0f;
-				float fSizeSprite = 200.0f;
-				if(m_Game.IsWin())
-				{
-					GUI.DrawTexture(new Rect(0, fPosY - fWidth/2.0f, m_Game.GetSizeScreen().x, fWidth), m_Texture_Blue);
-					GUI.DrawTexture(new Rect(fPosX - fSizeSprite/2.0f, fPosY - fSizeSprite/2.0f, fSizeSprite, fSizeSprite), m_Texture_PlayerWin);
-					
-				}
-				else
-				{
-					GUI.DrawTexture(new Rect(0, fPosY - fWidth/2.0f, m_Game.GetSizeScreen().x, fWidth), m_Texture_Red);
-					GUI.DrawTexture(new Rect(fPosX - fSizeSprite/2.0f, fPosY - fSizeSprite/2.0f, fSizeSprite, fSizeSprite), m_Texture_Lost);
-				}
+				
+				GestionMenuWinLoose(m_Game.m_bPadXBox);
 			
-				if (GUI.Button(new Rect(390, 100, 500, 150), m_Texture_ButtonOk))
-				{	
-					m_EState = EmenuState.e_menuState_inGame;
-					ResumeGame();
-					m_Game.GoToNextLevelOrRestart(m_Game.IsWin());
-				}
 				break;
 			}
 		}
@@ -343,12 +305,23 @@ public class CMenu : MonoBehaviour{
 						}
 						break;	
 					}
+					
+					default:
+						m_EMainState = EMenuMain.e_Menu;
+						m_fTimerMenuNavigation = 0.0f;
+						break;
+				}
+				
+				if(CApoilInput.MenuMenu)
+				{
+					bPlay = true;
+					m_fTimerMenuNavigation = 0.0f;
 				}
 				
 			}
 			else
 			{
-				m_fTimerMenuNavigation += Time.deltaTime;
+				m_fTimerMenuNavigation += 1/60.0f;
 			}			
 			
 			float fOffsetPlay = (m_EMainState == EMenuMain.e_Play) ? 0.5f : 0.0f;
@@ -362,7 +335,7 @@ public class CMenu : MonoBehaviour{
 			GUI.DrawTextureWithTexCoords(new Rect(1160, 10, 60, 60), m_Texture_ButtonQuit, new Rect(fOffsetQuit, 0, 0.5f, 1));
 		}
 		
-		NagigationMenuMain(bPlay, bCredit, bMenu, bQuit);
+		NagigationMenuMain(bPlay, bCredit, bMenu, bQuit, false);
 		
 	}
 	
@@ -432,7 +405,7 @@ public class CMenu : MonoBehaviour{
 			}
 			else
 			{
-				m_fTimerMenuNavigation += Time.deltaTime;
+				m_fTimerMenuNavigation += 1/60.0f;
 			}			
 			
 			float fOffsetMenu = (m_EMainState == EMenuMain.e_Menu) ? 0.5f : 0.0f;
@@ -441,13 +414,114 @@ public class CMenu : MonoBehaviour{
 			GUI.DrawTextureWithTexCoords(new Rect(940, 10, 200, 60), m_Texture_ButtonMenu, new Rect(fOffsetMenu, 0, 0.5f, 1));
 			GUI.DrawTextureWithTexCoords(new Rect(1160, 10, 60, 60), m_Texture_ButtonQuit, new Rect(fOffsetQuit, 0, 0.5f, 1));	
 		}
-		NagigationMenuMain(false, false, bMenu, bQuit);
+		NagigationMenuMain(false, false, bMenu, bQuit, false);
 	}
 	
 	//-------------------------------------------------------------------------------
 	///
 	//-------------------------------------------------------------------------------
-	void NagigationMenuMain(bool bPlay, bool bCredit, bool bMenu, bool bQuit)
+	void GestionMenuInGame(bool bManette)
+	{
+		bool bMenu = false;
+		bool bQuit = false;
+		bool bPause = false;
+		
+		if(!bManette)
+		{
+			if (GUI.Button(new Rect(10, 10, 200, 60), m_Texture_ButtonMenu))
+			{
+				bMenu = true;
+				bPause = true;
+			}
+		
+			if (GUI.Button(new Rect(250, 10, 60, 60), m_Texture_ButtonPause))
+			{
+				bPause = true;
+			}	
+		}
+		else
+		{
+			if(m_fTimerMenuNavigation > m_fTimerMenuNavigationMax)
+			{
+				if(CApoilInput.MenuMenu)
+				{
+					bMenu = true;
+					if(!m_bGamePaused)
+						bPause = true;
+					m_fTimerMenuNavigation = 0.0f;
+				}
+				if(CApoilInput.MenuPause)
+				{
+					Debug.Log ("pause" + m_bGamePaused);
+					bPause = true;
+					m_fTimerMenuNavigation = 0.0f;
+				}
+			}
+			else
+			{
+				m_fTimerMenuNavigation += 1.0f/60.0f;	
+			}
+			
+			float fOffsetPauseX = m_bGamePaused ? 0.5f : 0;
+			
+			GUI.DrawTextureWithTexCoords(new Rect(940, 10, 200, 60), m_Texture_ButtonMenu, new Rect(0, 0, 0.5f, 1));
+			GUI.DrawTextureWithTexCoords(new Rect(1160, 10, 60, 60), m_Texture_ButtonPause, new Rect(fOffsetPauseX, 0, 0.5f, 1));	
+		}
+		
+		NagigationMenuMain(false, false, bMenu, bQuit, bPause);
+	}
+	
+	//-------------------------------------------------------------------------------
+	///
+	//-------------------------------------------------------------------------------
+	void GestionMenuWinLoose(bool bManette)
+	{
+		float fPosX = m_Game.GetSizeScreen().x / 2.0f;
+		float fPosY = m_Game.GetSizeScreen().y / 2.0f;
+		float fWidth = 300.0f;
+		float fSizeSprite = 200.0f;
+		if(m_Game.IsWin())
+		{
+			GUI.DrawTexture(new Rect(0, fPosY - fWidth/2.0f, m_Game.GetSizeScreen().x, fWidth), m_Texture_Blue);
+			GUI.DrawTexture(new Rect(fPosX - fSizeSprite/2.0f, fPosY - fSizeSprite/2.0f, fSizeSprite, fSizeSprite), m_Texture_PlayerWin);
+			
+		}
+		else
+		{
+			GUI.DrawTexture(new Rect(0, fPosY - fWidth/2.0f, m_Game.GetSizeScreen().x, fWidth), m_Texture_Red);
+			GUI.DrawTexture(new Rect(fPosX - fSizeSprite/2.0f, fPosY - fSizeSprite/2.0f, fSizeSprite, fSizeSprite), m_Texture_Lost);
+		}
+		
+		bool bClick = false;
+		
+		if(!bManette)
+		{
+			if (GUI.Button(new Rect(390, 100, 500, 150), m_Texture_ButtonOk))
+			{	
+				bClick = true;
+			}
+		}
+		else
+		{
+			if(CApoilInput.MenuValidate)
+				bClick = true;
+			
+			GUI.DrawTextureWithTexCoords(new Rect(390, 100, 500, 150), m_Texture_ButtonOk, new Rect(0, 0, 1, 1));
+		}
+		
+		if(bClick)
+		{
+			m_EState = EmenuState.e_menuState_inGame;
+			ResumeGame();
+			m_Game.GoToNextLevelOrRestart(m_Game.IsWin());
+			
+		}
+	}
+	
+	//-------------------------------------------------------------------------------
+	///
+	//-------------------------------------------------------------------------------
+	void NagigationMenuMain(bool bPlay, bool bCredit, bool bMenu, bool bQuit, bool bPause)
 	{
 		if (bPlay)
 		{
@@ -470,6 +544,18 @@ public class CMenu : MonoBehaviour{
 		if (bQuit)
 		{
 			Application.Quit();
+		}
+		
+		if(bPause)
+		{
+			if(!m_bGamePaused)
+			{
+				PauseGame();
+			}
+			else 
+			{
+				ResumeGame();
+			}	
 		}
 	}
 }
