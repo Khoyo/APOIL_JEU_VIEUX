@@ -702,4 +702,9 @@ public class CPlayer : CCharacter
 	{
 		m_bParalyse = bState;	
 	}
+	
+	public SPlayerInput GetPlayerInput()
+	{
+		return m_PlayerInput;	
+	}
 }

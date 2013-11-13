@@ -8,7 +8,7 @@ public class CLevel
 	CPlayer[] m_Players;
 	float m_bTimerLightSwitch;
 	GameObject m_ObjetLevel;
-	
+	List<CScriptZoneInGame> m_pObjetsZone;
 	List<CElement> m_pElement;
 	
 	//-------------------------------------------------------------------------------
@@ -22,7 +22,8 @@ public class CLevel
 
 		m_bTimerLightSwitch = 0;
 		
-		m_pElement = new List<CElement>();
+		m_pElement = new List<CElement>();		
+		m_pObjetsZone = new List<CScriptZoneInGame>();;
 		
 	}
 	
@@ -37,7 +38,13 @@ public class CLevel
 		
 		
 		foreach(CElement elem in m_pElement)
-			elem.Init();	
+			elem.Init();
+		
+		GameObject[] pObj = GameObject.FindGameObjectsWithTag("ZoneInGame");	
+		foreach (GameObject currentObj in pObj)
+		{
+			m_pObjetsZone.Add(currentObj.transform.GetComponent<CScriptZoneInGame>());
+		}
 	}
 	
 	//-------------------------------------------------------------------------------
@@ -69,15 +76,18 @@ public class CLevel
 		
 		GestionCameraFromPlayers();
 		
-		if(Input.GetKey(KeyCode.L) && m_bTimerLightSwitch <= 0 ){
-			m_Game.m_bLightIsOn = !m_Game.m_bLightIsOn;
+
+		if(Input.GetKey(KeyCode.L) && m_bTimerLightSwitch <= 0){
 			m_bTimerLightSwitch = 10f;
+			
+			if(m_Game.m_bLightIsOn == false)
+				TurnLight(true);
+			else
+				TurnLight(false);
 		}
-		m_bTimerLightSwitch -= 0.5f;
-		if(m_Game.m_bLightIsOn == false )
-			TurnLight(false);
-		else
-			TurnLight(true);
+
+		if(m_bTimerLightSwitch > 0.0f)
+			m_bTimerLightSwitch -= 0.5f;
 		
 		CElement[] pElement = new CElement[m_pElement.Count];
 		m_pElement.CopyTo(pElement);
@@ -91,20 +101,10 @@ public class CLevel
 	//-------------------------------------------------------------------------------
 	public void TurnLight(bool bOn)
 	{
-		GameObject[] ShipLight;
-		ShipLight = GameObject.FindGameObjectsWithTag("ShipLight");
-		
-		foreach(GameObject currentLight in ShipLight)
+		m_Game.m_bLightIsOn = bOn;
+		foreach(CScriptZoneInGame currentZone in m_pObjetsZone)
 		{
-			if(bOn)
-			{
-				currentLight.SetActiveRecursively(true);
-			}
-			else
-			{
-				currentLight.SetActiveRecursively(false);
-				currentLight.active = true;
-			}
+			currentZone.TurnLight(bOn);
 		}
 	}
 	
