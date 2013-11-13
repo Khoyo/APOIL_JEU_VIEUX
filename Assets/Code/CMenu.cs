@@ -13,7 +13,16 @@ public class CMenu : MonoBehaviour{
 		e_menuState_menuWinLoose,
 	}
 	
+	public enum EMenuMain
+	{
+		e_Play,
+		e_Credit,
+		e_Menu,
+		e_Quit
+	}
+	
 	EmenuState m_EState;
+	EMenuMain m_EMainState;
 	
 	public Texture m_Texture_Fond;
 	public Texture m_Texture_ButtonPlay;
@@ -35,6 +44,9 @@ public class CMenu : MonoBehaviour{
 	float m_fTempsVideoIntro;
 	bool m_bGamePaused;
 	CGame m_Game;
+	
+	float m_fTimerMenuNavigation;
+	float m_fTimerMenuNavigationMax = 0.5f;
 	
 	//-------------------------------------------------------------------------------
 	/// 
@@ -89,10 +101,13 @@ public class CMenu : MonoBehaviour{
 		m_fTempsSplash = 0.0f;
 		m_fTempsVideoIntro = 0.0f;
 		m_bGamePaused = false;
+		m_fTimerMenuNavigation = 0.0f;
 		if(!m_Game.IsNotUseMasterGame())	
 		{
-			m_EState = EmenuState.e_menuState_splash;
+			//m_EState = EmenuState.e_menuState_splash;
+			m_EState = EmenuState.e_menuState_main;
 			m_fTempsSplash = m_fTempsSplashInit;
+			m_EMainState = EMenuMain.e_Play;
 		}
 		else {
 			m_EState = EmenuState.e_menuState_inGame;
@@ -151,27 +166,8 @@ public class CMenu : MonoBehaviour{
 			{
 				GUI.DrawTexture(new Rect(0, 0, 1280, 800), m_Texture_Fond);
 			
-				if (GUI.Button(new Rect(390, 100, 500, 150), m_Texture_ButtonPlay))
-				{
-		            m_Game.StartGame();
-					ResumeGame();
-					m_EState = EmenuState.e_menuState_inGame;
-				}
+				GestionMenuMain(m_Game.m_bPadXBox);
 				
-				if (GUI.Button(new Rect(390, 400, 500, 150), m_Texture_ButtonCredit))
-				{
-					m_EState = EmenuState.e_menuState_credits;
-				}
-			
-				if (GUI.Button(new Rect(940, 10, 200, 60), m_Texture_ButtonMenu))
-				{
-					m_EState = EmenuState.e_menuState_main;
-				}
-			
-				if (GUI.Button(new Rect(1160, 10, 60, 60), m_Texture_ButtonQuit))
-				{
-					Application.Quit();
-				}
 				break;
 			}	
 			
@@ -179,15 +175,8 @@ public class CMenu : MonoBehaviour{
 			{
 				GUI.DrawTexture(new Rect(0, 0, 1280, 800), m_Texture_Credit);
 			
-				if (GUI.Button(new Rect(940, 10, 200, 60), m_Texture_ButtonMenu))
-				{
-					m_EState = EmenuState.e_menuState_main;
-				}
-			
-				if (GUI.Button(new Rect(1160, 10, 60, 60), m_Texture_ButtonQuit))
-				{
-					Application.Quit();
-				}
+				GestionMenuCredit(m_Game.m_bPadXBox);
+				
 				break;
 			}	
 			
@@ -247,4 +236,240 @@ public class CMenu : MonoBehaviour{
 			}
 		}
     }
+	
+	//-------------------------------------------------------------------------------
+	///
+	//-------------------------------------------------------------------------------
+	void GestionMenuMain(bool bManette)
+	{
+		bool bPlay = false;
+		bool bCredit = false;
+		bool bMenu = false;
+		bool bQuit = false;
+		
+		if(!bManette)
+		{
+			if (GUI.Button(new Rect(390, 100, 500, 150), m_Texture_ButtonPlay))
+			{
+	            bPlay = true;
+			}
+			
+			if (GUI.Button(new Rect(390, 400, 500, 150), m_Texture_ButtonCredit))
+			{
+				bCredit = true;
+			}
+		
+			if (GUI.Button(new Rect(940, 10, 200, 60), m_Texture_ButtonMenu))
+			{
+				bMenu = true;
+			}
+		
+			if (GUI.Button(new Rect(1160, 10, 60, 60), m_Texture_ButtonQuit))
+			{
+				bQuit = true;
+			}
+		}
+		else
+		{
+			
+			if(m_fTimerMenuNavigation > m_fTimerMenuNavigationMax)
+			{
+				switch(m_EMainState)
+				{
+					case EMenuMain.e_Play :
+					{
+						if(CApoilInput.MenuValidate)
+							bPlay = true;
+						if(CApoilInput.MenuUp)
+						{
+							m_EMainState = EMenuMain.e_Menu;
+							m_fTimerMenuNavigation = 0.0f;
+						}
+						else if (CApoilInput.MenuDown)
+						{
+							m_EMainState = EMenuMain.e_Credit;
+							m_fTimerMenuNavigation = 0.0f;
+						}
+						break;	
+					}
+					
+					case EMenuMain.e_Credit :
+					{
+						if(CApoilInput.MenuValidate)
+							bCredit = true;
+						if(CApoilInput.MenuUp)
+						{
+							m_EMainState = EMenuMain.e_Play;
+							m_fTimerMenuNavigation = 0.0f;
+						}
+						else if (CApoilInput.MenuDown)
+						{
+							m_EMainState = EMenuMain.e_Credit;
+							m_fTimerMenuNavigation = 0.0f;
+						}
+						break;	
+					}
+					
+					case EMenuMain.e_Menu :
+					{
+						if(CApoilInput.MenuValidate)
+							bMenu = true;
+						if(CApoilInput.MenuUp)
+						{
+							m_EMainState = EMenuMain.e_Quit;
+							m_fTimerMenuNavigation = 0.0f;
+						}
+						else if (CApoilInput.MenuDown)
+						{
+							m_EMainState = EMenuMain.e_Play;
+							m_fTimerMenuNavigation = 0.0f;
+						}
+						break;	
+					}
+					
+					case EMenuMain.e_Quit :
+					{
+						if(CApoilInput.MenuValidate)
+							bQuit = true;
+						if(CApoilInput.MenuUp)
+						{
+							m_EMainState = EMenuMain.e_Quit;
+							m_fTimerMenuNavigation = 0.0f;
+						}
+						else if (CApoilInput.MenuDown)
+						{
+							m_EMainState = EMenuMain.e_Menu;
+							m_fTimerMenuNavigation = 0.0f;
+						}
+						break;	
+					}
+				}
+				
+			}
+			else
+			{
+				m_fTimerMenuNavigation += Time.deltaTime;
+			}			
+			
+			float fOffsetPlay = (m_EMainState == EMenuMain.e_Play) ? 0.5f : 0.0f;
+			float fOffsetCredit = (m_EMainState == EMenuMain.e_Credit) ? 0.5f : 0.0f;
+			float fOffsetMenu = (m_EMainState == EMenuMain.e_Menu) ? 0.5f : 0.0f;
+			float fOffsetQuit = (m_EMainState == EMenuMain.e_Quit) ? 0.5f : 0.0f;
+			
+			GUI.DrawTextureWithTexCoords(new Rect(390, 100, 500, 150), m_Texture_ButtonPlay, new Rect(fOffsetPlay, 0, 0.5f, 1));
+			GUI.DrawTextureWithTexCoords(new Rect(390, 400, 500, 150), m_Texture_ButtonCredit, new Rect(fOffsetCredit, 0, 0.5f, 1));
+			GUI.DrawTextureWithTexCoords(new Rect(940, 10, 200, 60), m_Texture_ButtonMenu, new Rect(fOffsetMenu, 0, 0.5f, 1));
+			GUI.DrawTextureWithTexCoords(new Rect(1160, 10, 60, 60), m_Texture_ButtonQuit, new Rect(fOffsetQuit, 0, 0.5f, 1));
+		}
+		
+		NagigationMenuMain(bPlay, bCredit, bMenu, bQuit);
+		
+	}
+	
+	//-------------------------------------------------------------------------------
+	///
+	//-------------------------------------------------------------------------------
+	void GestionMenuCredit(bool bManette)
+	{
+		bool bMenu = false;
+		bool bQuit = false;
+		
+		if(!bManette)
+		{
+			if (GUI.Button(new Rect(940, 10, 200, 60), m_Texture_ButtonMenu))
+			{
+				bMenu = true;
+			}
+		
+			if (GUI.Button(new Rect(1160, 10, 60, 60), m_Texture_ButtonQuit))
+			{
+				bQuit = true;
+			}
+		}
+		else
+		{
+			if(m_fTimerMenuNavigation > m_fTimerMenuNavigationMax)
+			{
+				switch(m_EMainState)
+				{	
+					case EMenuMain.e_Menu :
+					{
+						if(CApoilInput.MenuValidate)
+							bMenu = true;
+						if(CApoilInput.MenuUp)
+						{
+							m_EMainState = EMenuMain.e_Quit;
+							m_fTimerMenuNavigation = 0.0f;
+						}
+						else if (CApoilInput.MenuDown)
+						{
+							m_EMainState = EMenuMain.e_Menu;
+							m_fTimerMenuNavigation = 0.0f;
+						}
+						break;	
+					}
+					
+					case EMenuMain.e_Quit :
+					{
+						if(CApoilInput.MenuValidate)
+							bQuit = true;
+						if(CApoilInput.MenuUp)
+						{
+							m_EMainState = EMenuMain.e_Quit;
+							m_fTimerMenuNavigation = 0.0f;
+						}
+						else if (CApoilInput.MenuDown)
+						{
+							m_EMainState = EMenuMain.e_Menu;
+							m_fTimerMenuNavigation = 0.0f;
+						}
+						break;	
+					}
+					default :
+						m_EMainState = EMenuMain.e_Quit;
+						break;
+				}
+			}
+			else
+			{
+				m_fTimerMenuNavigation += Time.deltaTime;
+			}			
+			
+			float fOffsetMenu = (m_EMainState == EMenuMain.e_Menu) ? 0.5f : 0.0f;
+			float fOffsetQuit = (m_EMainState == EMenuMain.e_Quit) ? 0.5f : 0.0f;
+			
+			GUI.DrawTextureWithTexCoords(new Rect(940, 10, 200, 60), m_Texture_ButtonMenu, new Rect(fOffsetMenu, 0, 0.5f, 1));
+			GUI.DrawTextureWithTexCoords(new Rect(1160, 10, 60, 60), m_Texture_ButtonQuit, new Rect(fOffsetQuit, 0, 0.5f, 1));	
+		}
+		NagigationMenuMain(false, false, bMenu, bQuit);
+	}
+	
+	//-------------------------------------------------------------------------------
+	///
+	//-------------------------------------------------------------------------------
+	void NagigationMenuMain(bool bPlay, bool bCredit, bool bMenu, bool bQuit)
+	{
+		if (bPlay)
+		{
+            m_Game.StartGame();
+			ResumeGame();
+			m_EState = EmenuState.e_menuState_inGame;
+		}
+		
+		if (bCredit)
+		{
+			m_EState = EmenuState.e_menuState_credits;
+		}
+	
+		if (bMenu)
+		{
+			m_EState = EmenuState.e_menuState_main;
+			m_EMainState = EMenuMain.e_Menu;
+		}
+	
+		if (bQuit)
+		{
+			Application.Quit();
+		}
+	}
 }

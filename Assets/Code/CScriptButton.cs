@@ -8,6 +8,9 @@ public class CScriptButton : MonoBehaviour
 	CGame m_Game;
 	bool m_bSwitch;
 	
+	public bool m_bIsForLight = true;
+
+	
 	// Use this for initialization
 	void Start () 
 	{
@@ -32,9 +35,19 @@ public class CScriptButton : MonoBehaviour
 		m_SpriteSheet.Process();
 		if(m_bSwitch)
 		{
-			m_Zone.SwitchPowerState();
+			bool bOn;
+			if(m_bIsForLight)
+			{
+				bOn = m_Zone.m_bPowerLightOn;
+				m_Zone.SwitchPowerStateLight();
+			}
+			else
+			{
+				bOn = m_Zone.m_bPowerDoorOn;
+				m_Zone.SwitchPowerStateDoor();
+			}
 			
-			int nFrame = m_Zone.m_bPowerOn ? 0 : 1;
+			int nFrame = bOn ? 0 : 1;
 			m_SpriteSheet.GoToFram(nFrame);
 			m_bSwitch = false;
 		}

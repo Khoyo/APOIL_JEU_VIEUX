@@ -31,6 +31,10 @@ public class CApoilInput
 	public static Vector2 MousePosition;
 	public static bool Quit;
 	
+	public static bool MenuValidate;
+	public static bool MenuUp;
+	public static bool MenuDown;
+	
 	//Debug
 	public static bool DebugF9;
 	public static bool DebugF10;
@@ -44,10 +48,9 @@ public class CApoilInput
 	//-------------------------------------------------------------------------------
 	public static void Process(float fDeltatime) 
 	{
+		float fTolerance = 0.05f;
 		if(m_Game.IsPadXBoxMod())
-		{	
-			float fTolerance = 0.05f;
-			
+		{		
 			ProcessPlayer("player1", ref CApoilInput.InputPlayer1, fTolerance);
 			ProcessPlayer("player2", ref CApoilInput.InputPlayer2, fTolerance);
 			//ProcessPlayer("player3", ref CApoilInput.InputPlayer3, fTolerance);
@@ -75,6 +78,11 @@ public class CApoilInput
 		}
 		
 		Quit = Input.GetKey(KeyCode.Escape);
+		
+		MenuValidate = Input.GetKeyDown(KeyCode.JoystickButton0); //A
+		
+		MenuUp = (Input.GetAxis("player1_MoveVertical")) < -fTolerance;
+		MenuDown = (Input.GetAxis("player1_MoveVertical")) > fTolerance;
 		
 		DebugF9 = Input.GetKeyDown(KeyCode.F9);
 		DebugF10 = Input.GetKeyDown(KeyCode.F10);

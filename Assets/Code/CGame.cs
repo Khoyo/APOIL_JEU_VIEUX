@@ -149,9 +149,10 @@ public class CGame : MonoBehaviour
 	//-------------------------------------------------------------------------------
 	void Process(float fDeltatime)
 	{	
+		CApoilInput.Process(fDeltatime);
+
 		if(m_bInGame)
 		{
-			CApoilInput.Process(fDeltatime);
 			m_Level.Process(fDeltatime);
 			m_Camera.Process(fDeltatime);
 			//ProcessRoomState();
@@ -407,10 +408,7 @@ public class CGame : MonoBehaviour
 	//-------------------------------------------------------------------------------
 	void Update()
 	{
-		if(m_bInGame)
-		{
-			Process(Time.deltaTime);
-		}
+		Process(Time.deltaTime);
 	}
 	
 
