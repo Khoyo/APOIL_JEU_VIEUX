@@ -64,8 +64,10 @@ public class CPlayer : CCharacter
 	bool m_bLookUp;
 	bool m_bLookDown;
 	
+	float m_fBatteryLevel = 600;
+	
 	CCercleDiscretion m_CercleDiscretion;
-	CTakeElement m_YounesSuceDesBites;
+	CTakeElement m_heldElement;
 	SPlayerInput m_PlayerInput;
 	int m_nNbCreepOnPlayer;
 	
@@ -122,7 +124,7 @@ public class CPlayer : CCharacter
 		
 		SetPlayerInput();
 		
-		m_YounesSuceDesBites = null;
+		m_heldElement = null;
 		m_bHaveObject = false;
 		m_bIsRespawn = false;
 		m_bIsAlive = true;
@@ -208,9 +210,10 @@ public class CPlayer : CCharacter
 			}
 			
 			//gestion de la lampe torche
-			if(m_Game.m_bLightIsOn == false)
+			if(m_Game.m_bLightIsOn == false && m_fBatteryLevel > 0 && m_heldElement != null &&  m_heldElement.GetGameObject().name=="Torche")
 			{
 				m_Torche.SetActiveRecursively(true);
+				m_fBatteryLevel--;
 			}
 			else
 			{
@@ -220,7 +223,7 @@ public class CPlayer : CCharacter
 			//gestion si on tiens un objet
 			if(m_bHaveObject)
 			{
-				m_YounesSuceDesBites.SetPosition2D(m_GameObject.transform.position);
+				m_heldElement.SetPosition2D(m_GameObject.transform.position);
 			}
 		
 			//Appel a la main des scripts du gameObject
@@ -247,7 +250,7 @@ public class CPlayer : CCharacter
 	public void LaunchStargate()
 	{
 		m_bIsAlive = true;
-		m_YounesSuceDesBites = null;
+		m_heldElement = null;
 		m_bHaveObject = false;
 	}
 	
@@ -333,13 +336,13 @@ public class CPlayer : CCharacter
 	//-------------------------------------------------------------------------------
 	public void PickUpObject(CTakeElement obj)
 	{
-		m_YounesSuceDesBites = obj;
+		m_heldElement = obj;
 		m_bHaveObject = true;
 	}
 	
 	public CTakeElement GetHeldElement()
 	{
-		return m_YounesSuceDesBites;
+		return m_heldElement;
 	}
 	
 	//-------------------------------------------------------------------------------
@@ -347,7 +350,7 @@ public class CPlayer : CCharacter
 	//-------------------------------------------------------------------------------
 	public void DropElement()
 	{
-		m_YounesSuceDesBites = null;
+		m_heldElement = null;
 		m_bHaveObject = false;
 	}
 	
