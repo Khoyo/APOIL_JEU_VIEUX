@@ -47,7 +47,7 @@ public class CScriptButton : MonoBehaviour
 				m_Zone.SwitchPowerStateDoor();
 			}
 			
-			int nFrame = bOn ? 0 : 1;
+			int nFrame = bOn ? 1 : 0;
 			m_SpriteSheet.GoToFram(nFrame);
 			m_bSwitch = false;
 		}
