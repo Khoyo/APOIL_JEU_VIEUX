@@ -473,7 +473,7 @@ public class CPlayer : CCharacter
 				MagnetDeviation.x = Deviation.x;
 				MagnetDeviation.y = Deviation.y;
 			}
-			//velocity+=  m_fForceMagnet * MagnetDeviation;
+			
 			m_GameObject.transform.position += /*m_fSpeed * velocity * fDeltatime + */m_fForceMagnet * MagnetDeviation;
 			m_GameObject.rigidbody.velocity = m_fSpeed * velocity;
 		}
