@@ -27,6 +27,9 @@ public class CScriptButton : MonoBehaviour
 		m_SpriteSheet.setEndCondition(CSpriteSheet.EEndCondition.e_FramPerFram);
 		
 		m_bSwitch = false;
+		
+		SetSprite();
+		
 	}
 	
 	// Update is called once per frame
@@ -35,20 +38,16 @@ public class CScriptButton : MonoBehaviour
 		m_SpriteSheet.Process();
 		if(m_bSwitch)
 		{
-			bool bOn;
 			if(m_bIsForLight)
 			{
-				bOn = m_Zone.m_bPowerLightOn;
 				m_Zone.SwitchPowerStateLight();
 			}
 			else
 			{
-				bOn = m_Zone.m_bPowerDoorOn;
 				m_Zone.SwitchPowerStateDoor();
 			}
 			
-			int nFrame = bOn ? 1 : 0;
-			m_SpriteSheet.GoToFram(nFrame);
+			SetSprite();
 			m_bSwitch = false;
 		}
 	}
@@ -66,5 +65,21 @@ public class CScriptButton : MonoBehaviour
 			}
 			
 		}
+	}
+	
+	public void SetSprite()
+	{
+		bool bOn;
+		if(m_bIsForLight)
+		{
+			bOn = m_Zone.m_bPowerLightOn;
+		}
+		else
+		{
+			bOn = m_Zone.m_bPowerDoorOn;
+		}
+			
+		int nFrame = bOn ? 0 : 1;
+		m_SpriteSheet.GoToFram(nFrame);
 	}
 }
