@@ -51,7 +51,6 @@ public class CGame : MonoBehaviour
 	public float m_fSpeedMonster = 1.0f;
 	
 	public float m_fCoeffReverseWalk = 1.0f;
-	public float m_fCoeffSlowWalk = 1.0f;
 	public float m_fCoeffNormalWalk = 1.0f;
 	public float m_fCoeffRunWalk = 1.0f;
 	

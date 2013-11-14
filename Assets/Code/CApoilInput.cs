@@ -12,7 +12,6 @@ public struct SPlayerInput
 	public bool LookUp;
 	public bool LookDown;
 	public bool WalkFast;
-	public bool WalkSlow;
 	public bool PickUpObject;
 	public bool DropObject;
 	public bool ClickButton;
@@ -67,7 +66,6 @@ public class CApoilInput
 			InputPlayer1.MoveLeft = Input.GetKey(KeyCode.Q);
 			InputPlayer1.MoveRight = Input.GetKey(KeyCode.D);
 			InputPlayer1.WalkFast = Input.GetKey(KeyCode.LeftShift);
-			InputPlayer1.WalkSlow = Input.GetKey(KeyCode.LeftControl);
 			
 			InputPlayer1.PickUpObject = Input.GetMouseButton(0);
 			InputPlayer1.DropObject = Input.GetMouseButton(2);
@@ -118,7 +116,6 @@ public class CApoilInput
 			case "player1":
 			{
 				InputPlayer.WalkFast = Input.GetKey(KeyCode.Joystick1Button5); //RB
-				InputPlayer.WalkSlow = Input.GetKey(KeyCode.Joystick1Button4); //LB			
 				InputPlayer.PickUpObject = Input.GetKey(KeyCode.Joystick1Button0); //A
 				InputPlayer.DropObject = Input.GetKeyDown(KeyCode.Joystick1Button2); //X
 				InputPlayer.ActivateMachine = Input.GetKeyDown(KeyCode.Joystick1Button0); //A
@@ -128,7 +125,6 @@ public class CApoilInput
 			case "player2":
 			{
 				InputPlayer.WalkFast = Input.GetKey(KeyCode.Joystick2Button5); //RB
-				InputPlayer.WalkSlow = Input.GetKey(KeyCode.Joystick2Button4); //LB			
 				InputPlayer.PickUpObject = Input.GetKey(KeyCode.Joystick2Button0); //A
 				InputPlayer.DropObject = Input.GetKeyDown(KeyCode.Joystick2Button2); //X
 				InputPlayer.ActivateMachine = Input.GetKeyDown(KeyCode.Joystick2Button0); //A
@@ -138,7 +134,6 @@ public class CApoilInput
 			case "player3":
 			{
 				InputPlayer.WalkFast = Input.GetKey(KeyCode.Joystick3Button5); //RB
-				InputPlayer.WalkSlow = Input.GetKey(KeyCode.Joystick3Button4); //LB			
 				InputPlayer.PickUpObject = Input.GetKey(KeyCode.Joystick3Button0); //A
 				InputPlayer.DropObject = Input.GetKeyDown(KeyCode.Joystick3Button2); //X
 				InputPlayer.ActivateMachine = Input.GetKeyDown(KeyCode.Joystick3Button0); //A
@@ -148,7 +143,6 @@ public class CApoilInput
 			case "player4":
 			{
 				InputPlayer.WalkFast = Input.GetKey(KeyCode.Joystick4Button5); //RB
-				InputPlayer.WalkSlow = Input.GetKey(KeyCode.Joystick4Button4); //LB			
 				InputPlayer.PickUpObject = Input.GetKey(KeyCode.Joystick4Button0); //A
 				InputPlayer.DropObject = Input.GetKeyDown(KeyCode.Joystick4Button2); //X
 				InputPlayer.ActivateMachine = Input.GetKeyDown(KeyCode.Joystick4Button0); //A
