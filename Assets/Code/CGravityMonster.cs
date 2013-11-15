@@ -3,12 +3,21 @@ using System.Collections;
 
 public class CGravityMonster : CElement 
 {
+	enum EState
+	{
+		e_Veille,
+		e_Alerte,
+		e_Actif,
+		e_Mange,
+		e_Eclaire
+	}
+	
+	EState m_eState;
 	CScriptGravityMonster m_ScriptGravityMonster;
 	CScriptGravityMonsterZone m_ScriptGravityMonsterZone;
 	CSpriteSheet m_SpriteSheet;
 	CPlayer m_PlayerAttracted;
-	float m_fTimerPrison;
-	bool m_bPlayerInJail;
+	float m_fEatTimer;
 
 
 	//-------------------------------------------------------------------------------
@@ -17,8 +26,8 @@ public class CGravityMonster : CElement
 	public CGravityMonster()
 	{
 		m_PlayerAttracted = null;
-		m_fTimerPrison = 0.0f;
-		m_bPlayerInJail = false;
+		m_fEatTimer = 0.0f;
+		m_eState = EState.e_Veille;
 	}
 	
 	//-------------------------------------------------------------------------------
@@ -52,8 +61,8 @@ public class CGravityMonster : CElement
 		m_SpriteSheet.Reset();
 		m_ScriptGravityMonster.Reset();
 		m_ScriptGravityMonsterZone.Reset();
-		m_fTimerPrison = 0.0f;
-		m_bPlayerInJail = false;
+		m_fEatTimer = 0.0f;
+		m_eState = EState.e_Veille;
 	}
 	
 
@@ -65,15 +74,35 @@ public class CGravityMonster : CElement
 		base.Process(fDeltatime);
 		m_SpriteSheet.Process();
 		
-		if(m_bPlayerInJail)
+		switch(m_eState)
 		{
-			if(m_fTimerPrison < m_Game.m_fGravityTimerPrisonMax)
-				m_fTimerPrison += fDeltatime;
-			else
+			case EState.e_Veille:
 			{
-				m_PlayerAttracted.SetParalyse(false);	
-				DropPlayer(m_PlayerAttracted);
-				m_bPlayerInJail = false;
+				break;	
+			}
+			case EState.e_Alerte:
+			{
+				break;	
+			}
+			case EState.e_Actif:
+			{
+				break;	
+			}
+			case EState.e_Mange:
+			{
+				if(m_fEatTimer < m_Game.m_fGravityTimerPrisonMax)
+					m_fEatTimer += fDeltatime;
+				else
+				{
+					m_PlayerAttracted.SetParalyse(false);	
+					DropPlayer(m_PlayerAttracted);
+					m_eState = EState.e_Veille;
+				}
+				break;	
+			}
+			case EState.e_Eclaire:
+			{
+				break;	
 			}
 		}	
 	}
@@ -100,16 +129,19 @@ public class CGravityMonster : CElement
 		if(m_PlayerAttracted == player)
 		{
 			m_PlayerAttracted.StopMagnet();
+			m_PlayerAttracted.Respawn();
+			m_PlayerAttracted.ResetSprite();
 			m_PlayerAttracted = null;
 		}
 	}
 	
-	public void JailPlayer(CPlayer player)
+	public void EatPlayer(CPlayer player)
 	{
-		DropPlayer(player);
+		//DropPlayer(player);
 		CatchPlayer(player);
-		m_fTimerPrison = 0.0f;
-		m_bPlayerInJail = true;
+		m_fEatTimer = 0.0f;
+		m_eState = EState.e_Mange;
+		m_PlayerAttracted.SetSpriteDieGravity();
 		m_PlayerAttracted.SetParalyse(true);
 	}
 }

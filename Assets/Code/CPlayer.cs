@@ -27,6 +27,7 @@ public struct SAnimationPlayer //AnimAB A = mouvement de deplacement, B = mouvem
 	
 	public CAnimation AnimDieHeadCut;
 	public CAnimation AnimDieFall;
+	public CAnimation AnimDieGravity;
 }
 
 public class CPlayer : CCharacter 
@@ -191,8 +192,8 @@ public class CPlayer : CCharacter
 				MovePlayer(fDeltatime);
 			else
 			{
-				m_spriteSheet.SetAnimation(m_AnimPlayer.AnimRepos);
-				m_spriteSheet.AnimationStart();
+				//m_spriteSheet.SetAnimation(m_AnimPlayer.AnimRepos);
+				//m_spriteSheet.AnimationStart();
 				m_eMoveModState = EMoveModState.e_MoveModState_attente;
 				m_GameObject.rigidbody.velocity = Vector3.zero;	
 			}
@@ -706,4 +707,20 @@ public class CPlayer : CCharacter
 	{
 		return m_PlayerInput;	
 	}
+	
+	public void SetSpriteDieGravity()
+	{
+		m_spriteSheet.SetAnimation(m_AnimPlayer.AnimDieGravity);
+		m_spriteSheet.AnimationStart();
+	}
+	public void ResetSprite()
+	{
+		m_spriteSheet.SetAnimation(m_AnimPlayer.AnimRepos);
+	}
+	
+	public SAnimationPlayer GetAnimation()
+	{
+		return m_AnimPlayer;	
+	}
+	
 }

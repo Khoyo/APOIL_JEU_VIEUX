@@ -37,6 +37,7 @@ public class CGame : MonoBehaviour
 	
 	public Material m_materialPlayer1DieHeadCut;
 	public Material m_materialPlayer1DieFall;
+	public Material m_materialPlayer1DieGravity;
 	
 	public Material m_materialPlayer2Repos;
 	public Material m_materialPlayer3Repos;
@@ -180,7 +181,7 @@ public class CGame : MonoBehaviour
 	{
 		GUI.Label(new Rect(10, 10, 100, 20), System.Convert.ToString(Time.deltaTime));
 		GUI.Label(new Rect(10, 30, 100, 20), System.Convert.ToString(1f/Time.deltaTime));
-		GUI.Label(new Rect(10, 50, 100, 20), System.Convert.ToString(m_nIdLevel));
+		GUI.Label(new Rect(10, 50, 300, 20), System.Convert.ToString(getLevel().getPlayer(0).GetAnimation()));
 	}
 	
 	//-------------------------------------------------------------------------------

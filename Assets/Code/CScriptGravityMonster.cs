@@ -32,7 +32,7 @@ public class CScriptGravityMonster : MonoBehaviour
 		{
 			if(other.gameObject == m_Game.getLevel().getPlayer(i).GetGameObject())
 			{
-				m_GravityMonster.JailPlayer(m_Game.getLevel().getPlayer(i));				
+				m_GravityMonster.EatPlayer(m_Game.getLevel().getPlayer(i));				
 			}
 		}
 	}
