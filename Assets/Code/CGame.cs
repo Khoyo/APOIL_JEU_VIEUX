@@ -88,6 +88,8 @@ public class CGame : MonoBehaviour
 	
 	public GameObject m_PrefabScie;
 	
+	public float m_fTimeToDischargeInSec = 15;
+	
 	// variables
 	bool m_bInGame;
 	bool m_bGameStarted;

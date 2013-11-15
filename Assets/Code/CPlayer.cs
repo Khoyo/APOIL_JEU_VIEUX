@@ -64,7 +64,6 @@ public class CPlayer : CCharacter
 	bool m_bLookUp;
 	bool m_bLookDown;
 	
-	float m_fBatteryLevel = 600;
 	
 	CCercleDiscretion m_CercleDiscretion;
 	CTakeElement m_heldElement;
@@ -210,10 +209,11 @@ public class CPlayer : CCharacter
 			}
 			
 			//gestion de la lampe torche
-			if(m_Game.m_bLightIsOn == false && m_fBatteryLevel > 0 && m_heldElement != null &&  m_heldElement.GetGameObject().name=="Torche")
+			CScriptBattery scriptBattery = m_heldElement != null ? (m_heldElement.GetGameObject().GetComponent<CScriptBattery>() ?? null) : null;
+			if(m_Game.m_bLightIsOn == false && scriptBattery != null && scriptBattery.m_fChargeLevel > 0)
 			{
 				m_Torche.SetActiveRecursively(true);
-				m_fBatteryLevel--;
+				m_heldElement.GetGameObject().GetComponent<CScriptBattery>().UseBattery();
 			}
 			else
 			{
@@ -338,6 +338,7 @@ public class CPlayer : CCharacter
 	{
 		m_heldElement = obj;
 		m_bHaveObject = true;
+		m_heldElement.Held();
 	}
 	
 	public CTakeElement GetHeldElement()
@@ -350,6 +351,8 @@ public class CPlayer : CCharacter
 	//-------------------------------------------------------------------------------
 	public void DropElement()
 	{
+		if(m_heldElement != null)
+			m_heldElement.Drop();
 		m_heldElement = null;
 		m_bHaveObject = false;
 	}

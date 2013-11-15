@@ -88,9 +88,9 @@ public class CScriptTakeElement : MonoBehaviour
 		CTakeElement.ETypeObject type = CTakeElement.ETypeObject.e_TypeObject_NoTakeElement;
 		switch(gameObject.name)
 		{
-			case "MarteauThor" :
+			case "Batterie||Batterie(Clone)" :
 			{
-				type = CTakeElement.ETypeObject.e_TypeObject_Torche;
+				type = CTakeElement.ETypeObject.e_TypeObject_Battery;
 				break;	
 			}
 		}
