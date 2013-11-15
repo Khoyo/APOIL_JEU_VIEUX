@@ -58,13 +58,14 @@ public class CPlayer : CCharacter
 	bool m_bResetSubElements;
 	bool m_bMagnet;
 	bool m_bParalyse;
+	bool m_bLightIsOn;
 	
 	bool m_bLookLeft;
 	bool m_bLookRight;
 	bool m_bLookUp;
 	bool m_bLookDown;
 	
-	float m_fBatteryLevel = 600;
+	float m_fBatteryLevel = 6.0f;
 	
 	CCercleDiscretion m_CercleDiscretion;
 	CTakeElement m_heldElement;
@@ -134,6 +135,7 @@ public class CPlayer : CCharacter
 		m_bLookRight = false;
 		m_bLookUp = false;
 		m_bLookDown = false;
+		m_bLightIsOn = false;
 		
 		m_Torche = m_GameObject.transform.FindChild("Torche").gameObject;
 		
@@ -207,17 +209,24 @@ public class CPlayer : CCharacter
 
 				}
 			}
-			
+						
 			//gestion de la lampe torche
-			if(m_Game.m_bLightIsOn == false && m_fBatteryLevel > 0 && m_heldElement != null &&  m_heldElement.GetGameObject().name=="Torche")
+			
+			if(m_PlayerInput.ActivateLight)
+			{
+				m_bLightIsOn = !m_bLightIsOn;	
+			}
+			
+			if(m_bLightIsOn && m_fBatteryLevel > 0 && m_heldElement != null &&  m_heldElement.GetGameObject().name=="Torche")
 			{
 				m_Torche.SetActiveRecursively(true);
-				m_fBatteryLevel--;
+				m_fBatteryLevel -= fDeltatime;
 			}
 			else
 			{
 				m_Torche.SetActiveRecursively(false);
 			}
+			
 			
 			//gestion si on tiens un objet
 			if(m_bHaveObject)

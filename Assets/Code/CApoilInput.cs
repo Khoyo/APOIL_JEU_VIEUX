@@ -16,6 +16,7 @@ public struct SPlayerInput
 	public bool DropObject;
 	public bool ClickButton;
 	public bool ActivateMachine;
+	public bool ActivateLight;
 	public float DirectionHorizontal;
 	public float DirectionVertical;
 }
@@ -120,6 +121,7 @@ public class CApoilInput
 				InputPlayer.DropObject = Input.GetKeyDown(KeyCode.Joystick1Button2); //X
 				InputPlayer.ActivateMachine = Input.GetKeyDown(KeyCode.Joystick1Button0); //A
 				InputPlayer.ClickButton = Input.GetKeyDown(KeyCode.Joystick1Button0); //A
+				InputPlayer.ActivateLight = Input.GetKeyDown(KeyCode.Joystick1Button4); // LB
 				break;
 			}
 			case "player2":
@@ -129,6 +131,7 @@ public class CApoilInput
 				InputPlayer.DropObject = Input.GetKeyDown(KeyCode.Joystick2Button2); //X
 				InputPlayer.ActivateMachine = Input.GetKeyDown(KeyCode.Joystick2Button0); //A
 				InputPlayer.ClickButton = Input.GetKeyDown(KeyCode.Joystick2Button0); //A
+				InputPlayer.ActivateLight = Input.GetKeyDown(KeyCode.Joystick2Button4); // LB
 				break;
 			}
 			case "player3":
@@ -138,6 +141,7 @@ public class CApoilInput
 				InputPlayer.DropObject = Input.GetKeyDown(KeyCode.Joystick3Button2); //X
 				InputPlayer.ActivateMachine = Input.GetKeyDown(KeyCode.Joystick3Button0); //A
 				InputPlayer.ClickButton = Input.GetKeyDown(KeyCode.Joystick3Button0); //A
+				InputPlayer.ActivateLight = Input.GetKeyDown(KeyCode.Joystick3Button4); // LB
 				break;
 			}
 			case "player4":
@@ -147,6 +151,7 @@ public class CApoilInput
 				InputPlayer.DropObject = Input.GetKeyDown(KeyCode.Joystick4Button2); //X
 				InputPlayer.ActivateMachine = Input.GetKeyDown(KeyCode.Joystick4Button0); //A
 				InputPlayer.ClickButton = Input.GetKeyDown(KeyCode.Joystick4Button0); //A
+				InputPlayer.ActivateLight = Input.GetKeyDown(KeyCode.Joystick4Button4); // LB
 				break;
 			}
 		}
