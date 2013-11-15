@@ -6,19 +6,12 @@ public class CTakeElement : CElement {
 	public enum ETypeObject
 	{
 		e_TypeObject_NoTakeElement,
-		e_TypeObject_Medicament,
-		e_TypeObject_Chalumeau,
-		e_TypeObject_RechargeChalumeau,
-		e_TypeObject_Rouage,
-		e_TypeObject_OutilMecano,
-		e_TypeObject_ClefCapitaine,
-		e_TypeObject_ClefSecond,
-		e_TypeObject_BouteilleCryo,
-		e_TypeObject_Torche
+		e_TypeObject_Battery
 	}
 	
 	ETypeObject m_eTypeObject;
 	CScriptTakeElement m_ScriptTakeElement;
+	public bool m_bHeld;
 	
 	//-------------------------------------------------------------------------------
 	///
@@ -58,6 +51,16 @@ public class CTakeElement : CElement {
 		
 		// appel a la main des script de l'objet
 		//m_ScriptTakeElement.Process();
+	}
+	
+	public void Held()
+	{
+		m_bHeld = true;
+	}
+	
+	public void Drop()
+	{
+		m_bHeld = false;
 	}
 	
 	public ETypeObject GetTypeElement()

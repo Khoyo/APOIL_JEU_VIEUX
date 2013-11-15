@@ -16,7 +16,7 @@ public class CMachineBreakable : MonoBehaviour, IMachineAction
 		CTakeElement obj = player.GetHeldElement();
 		
 		//Debug.Log(obj.GetTypeElement() +" "+CTakeElement.ETypeObject.e_TypeObject_Torche);
-		if(obj != null && obj.GetTypeElement() == CTakeElement.ETypeObject.e_TypeObject_Torche)
+		if(obj != null && obj.GetTypeElement() == CTakeElement.ETypeObject.e_TypeObject_Battery)
 		{
 			gameObject.active = false;
 		}

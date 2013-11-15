@@ -88,6 +88,8 @@ public class CGame : MonoBehaviour
 	
 	public GameObject m_PrefabScie;
 	
+	public float m_fTimeToDischargeInSec = 15;
+	
 	// variables
 	bool m_bInGame;
 	bool m_bGameStarted;
@@ -181,7 +183,7 @@ public class CGame : MonoBehaviour
 	{
 		GUI.Label(new Rect(10, 10, 100, 20), System.Convert.ToString(Time.deltaTime));
 		GUI.Label(new Rect(10, 30, 100, 20), System.Convert.ToString(1f/Time.deltaTime));
-		GUI.Label(new Rect(10, 50, 300, 20), System.Convert.ToString(getLevel().getPlayer(0).GetAnimation()));
+	//	GUI.Label(new Rect(10, 50, 300, 20), System.Convert.ToString(getLevel().getPlayer(0).GetAnimation()));
 	}
 	
 	//-------------------------------------------------------------------------------
