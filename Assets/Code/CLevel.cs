@@ -167,8 +167,7 @@ public class CLevel
 		}
 		
 		for(int i = 0 ; i < m_Game.m_nNbPlayer ; ++i)
-		{
-			
+		{	
 			CPlayer.EIdPlayer eIdPlayer = SetIdPlayer(i);
 			m_Players[i] = new CPlayer(new Vector2(0,0), eIdPlayer, AnimPlayer[i]);
 		}

@@ -716,11 +716,6 @@ public class CPlayer : CCharacter
 	public void ResetSprite()
 	{
 		m_spriteSheet.SetAnimation(m_AnimPlayer.AnimRepos);
-	}
-	
-	public SAnimationPlayer GetAnimation()
-	{
-		return m_AnimPlayer;	
-	}
-	
+		m_spriteSheet.AnimationStart();
+	}	
 }

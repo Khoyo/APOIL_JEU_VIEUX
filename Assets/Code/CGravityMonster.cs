@@ -86,6 +86,7 @@ public class CGravityMonster : CElement
 			}
 			case EState.e_Actif:
 			{
+				
 				break;	
 			}
 			case EState.e_Mange:
@@ -102,6 +103,7 @@ public class CGravityMonster : CElement
 			}
 			case EState.e_Eclaire:
 			{
+				DropPlayer(m_PlayerAttracted);
 				break;	
 			}
 		}	
