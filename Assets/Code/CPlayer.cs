@@ -73,7 +73,6 @@ public class CPlayer : CCharacter
 	public enum EMoveModState // mode de deplacement
 	{
 		e_MoveModState_attente,
-		e_MoveModState_discret,
 		e_MoveModState_marche,
 		e_MoveModState_cours
 	}
@@ -300,12 +299,6 @@ public class CPlayer : CCharacter
 				fVitesseAttitude = 0.0f;
 				break;
 			}
-			case EMoveModState.e_MoveModState_discret:
-			{
-				fVitesseAttitude = m_Game.m_fCoeffSlowWalk;
-				m_spriteSheet.SetCoeffVelocity(1.5f);
-				break;
-			}
 			case EMoveModState.e_MoveModState_marche:
 			{
 				fVitesseAttitude = m_Game.m_fCoeffNormalWalk;
@@ -473,10 +466,6 @@ public class CPlayer : CCharacter
 			{
 				m_eMoveModState = EMoveModState.e_MoveModState_cours;
 			}	
-			if(m_PlayerInput.WalkSlow)
-			{
-				m_eMoveModState = EMoveModState.e_MoveModState_discret;	
-			}
 			
 			CalculateSpeed();
 			
@@ -487,8 +476,9 @@ public class CPlayer : CCharacter
 				MagnetDeviation.x = Deviation.x;
 				MagnetDeviation.y = Deviation.y;
 			}
-				
-			m_GameObject.transform.position += m_fSpeed * velocity * fDeltatime + m_fForceMagnet * MagnetDeviation;
+			
+			m_GameObject.transform.position += /*m_fSpeed * velocity * fDeltatime + */m_fForceMagnet * MagnetDeviation;
+			m_GameObject.rigidbody.velocity = m_fSpeed * velocity;
 		}
 		else
 		{

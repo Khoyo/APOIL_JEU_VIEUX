@@ -29,7 +29,7 @@ public class CMachineActiveZone : MonoBehaviour {
 	{	
 		for(int i = 0 ; i < m_Game.m_nNbPlayer ; ++i)
 		{
-			if(other.gameObject ==  m_Game.getLevel().getPlayer(i).GetGameObject() && CApoilInput.GetInput(i).ActivateMachine)
+			if(other.gameObject ==  m_Game.getLevel().getPlayer(i).GetGameObject() && m_Game.getLevel().getPlayer(i).GetPlayerInput().ActivateMachine)
 			{
 				m_Machine.Activate(m_Game.getLevel().getPlayer(i));
 			}

@@ -12,7 +12,6 @@ public struct SPlayerInput
 	public bool LookUp;
 	public bool LookDown;
 	public bool WalkFast;
-	public bool WalkSlow;
 	public bool PickUpObject;
 	public bool DropObject;
 	public bool ClickButton;
@@ -31,6 +30,12 @@ public class CApoilInput
 	public static Vector2 MousePosition;
 	public static bool Quit;
 	
+	public static bool MenuValidate;
+	public static bool MenuUp;
+	public static bool MenuDown;
+	public static bool MenuPause;
+	public static bool MenuMenu;
+	
 	//Debug
 	public static bool DebugF9;
 	public static bool DebugF10;
@@ -44,10 +49,9 @@ public class CApoilInput
 	//-------------------------------------------------------------------------------
 	public static void Process(float fDeltatime) 
 	{
+		float fTolerance = 0.05f;
 		if(m_Game.IsPadXBoxMod())
-		{	
-			float fTolerance = 0.05f;
-			
+		{		
 			ProcessPlayer("player1", ref CApoilInput.InputPlayer1, fTolerance);
 			ProcessPlayer("player2", ref CApoilInput.InputPlayer2, fTolerance);
 			//ProcessPlayer("player3", ref CApoilInput.InputPlayer3, fTolerance);
@@ -62,7 +66,6 @@ public class CApoilInput
 			InputPlayer1.MoveLeft = Input.GetKey(KeyCode.Q);
 			InputPlayer1.MoveRight = Input.GetKey(KeyCode.D);
 			InputPlayer1.WalkFast = Input.GetKey(KeyCode.LeftShift);
-			InputPlayer1.WalkSlow = Input.GetKey(KeyCode.LeftControl);
 			
 			InputPlayer1.PickUpObject = Input.GetMouseButton(0);
 			InputPlayer1.DropObject = Input.GetMouseButton(2);
@@ -75,6 +78,14 @@ public class CApoilInput
 		}
 		
 		Quit = Input.GetKey(KeyCode.Escape);
+		
+		MenuValidate = Input.GetKeyDown(KeyCode.JoystickButton0); //A
+		
+		MenuUp = (Input.GetAxis("player1_MoveVertical")) < -fTolerance;
+		MenuDown = (Input.GetAxis("player1_MoveVertical")) > fTolerance;
+		
+		MenuPause = Input.GetKeyUp(KeyCode.JoystickButton7); //start
+		MenuMenu = 	Input.GetKeyDown(KeyCode.JoystickButton6); //back
 		
 		DebugF9 = Input.GetKeyDown(KeyCode.F9);
 		DebugF10 = Input.GetKeyDown(KeyCode.F10);
@@ -105,7 +116,6 @@ public class CApoilInput
 			case "player1":
 			{
 				InputPlayer.WalkFast = Input.GetKey(KeyCode.Joystick1Button5); //RB
-				InputPlayer.WalkSlow = Input.GetKey(KeyCode.Joystick1Button4); //LB			
 				InputPlayer.PickUpObject = Input.GetKey(KeyCode.Joystick1Button0); //A
 				InputPlayer.DropObject = Input.GetKeyDown(KeyCode.Joystick1Button2); //X
 				InputPlayer.ActivateMachine = Input.GetKeyDown(KeyCode.Joystick1Button0); //A
@@ -115,7 +125,6 @@ public class CApoilInput
 			case "player2":
 			{
 				InputPlayer.WalkFast = Input.GetKey(KeyCode.Joystick2Button5); //RB
-				InputPlayer.WalkSlow = Input.GetKey(KeyCode.Joystick2Button4); //LB			
 				InputPlayer.PickUpObject = Input.GetKey(KeyCode.Joystick2Button0); //A
 				InputPlayer.DropObject = Input.GetKeyDown(KeyCode.Joystick2Button2); //X
 				InputPlayer.ActivateMachine = Input.GetKeyDown(KeyCode.Joystick2Button0); //A
@@ -125,7 +134,6 @@ public class CApoilInput
 			case "player3":
 			{
 				InputPlayer.WalkFast = Input.GetKey(KeyCode.Joystick3Button5); //RB
-				InputPlayer.WalkSlow = Input.GetKey(KeyCode.Joystick3Button4); //LB			
 				InputPlayer.PickUpObject = Input.GetKey(KeyCode.Joystick3Button0); //A
 				InputPlayer.DropObject = Input.GetKeyDown(KeyCode.Joystick3Button2); //X
 				InputPlayer.ActivateMachine = Input.GetKeyDown(KeyCode.Joystick3Button0); //A
@@ -135,7 +143,6 @@ public class CApoilInput
 			case "player4":
 			{
 				InputPlayer.WalkFast = Input.GetKey(KeyCode.Joystick4Button5); //RB
-				InputPlayer.WalkSlow = Input.GetKey(KeyCode.Joystick4Button4); //LB			
 				InputPlayer.PickUpObject = Input.GetKey(KeyCode.Joystick4Button0); //A
 				InputPlayer.DropObject = Input.GetKeyDown(KeyCode.Joystick4Button2); //X
 				InputPlayer.ActivateMachine = Input.GetKeyDown(KeyCode.Joystick4Button0); //A

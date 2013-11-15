@@ -6,29 +6,32 @@ public class CScriptZoneInGame : MonoBehaviour
 {
 	List<GameObject> m_Lights;
 	List<CScriptZoneOpenDoor> m_Portes;
-	public bool m_bPowerOn = true;
+	List<CScriptButton> m_ButtonsLight;
+	List<CScriptButton> m_ButtonsDoor;
+	public bool m_bPowerLightOn = true;
+	public bool m_bPowerDoorOn = true;
 	// Use this for initialization
 	void Start () 
 	{
 		m_Lights = new List<GameObject>();	
 		m_Portes = new List<CScriptZoneOpenDoor>();
+		m_ButtonsDoor = new List<CScriptButton>();
+		m_ButtonsLight = new List<CScriptButton>();
 		SetObjectsInZone();
-		SetPowerZone(m_bPowerOn);
+		TurnLight(m_bPowerLightOn);
+		TurnDoor(m_bPowerDoorOn);
 	}
 	
 	// Update is called once per frame
 	void Update () 
 	{
-		if(CApoilInput.DebugF10)
-		{
-			SwitchPowerState();
-		}
 	}
 	
 	public void SetObjectsInZone()
 	{
 		GameObject[] ShipLight = GameObject.FindGameObjectsWithTag("ShipLight");	
-		GameObject[] Portes = GameObject.FindGameObjectsWithTag("Porte");
+		GameObject[] Portes = GameObject.FindGameObjectsWithTag("Porte");		
+		GameObject[] Buttons = GameObject.FindGameObjectsWithTag("ButtonPower");
 		
 		foreach(GameObject currentLight in ShipLight)
 		{
@@ -47,11 +50,27 @@ public class CScriptZoneInGame : MonoBehaviour
 					m_Portes.Add(currentPorte.transform.GetComponentInChildren<CScriptZoneOpenDoor>());
 			}
 		}
+		
+		foreach(GameObject currentButton in Buttons)
+		{
+			if(currentButton.transform.parent != null)
+			{
+				if(currentButton.transform.parent.gameObject == gameObject)
+				{
+					CScriptButton ScriptButton = currentButton.GetComponent<CScriptButton>();
+					if(ScriptButton.m_bIsForLight)
+						m_ButtonsLight.Add(ScriptButton);
+					else
+						m_ButtonsDoor.Add(ScriptButton);
+				}
+			}
+		}
+		
 	}
 	
 	public void TurnLight(bool bOn)
 	{	
-		m_bPowerOn = bOn;//pour debuger faudra l'enlever vu qu'on le fait deja dans SetPowerZone
+		m_bPowerLightOn = bOn;//pour debuger faudra l'enlever vu qu'on le fait deja dans SetPowerZone
 		foreach(GameObject currentLight in m_Lights)
 		{
 			if(bOn)
@@ -66,28 +85,35 @@ public class CScriptZoneInGame : MonoBehaviour
 		}
 	}
 	
-	public void TurnDoors(bool bOn)
+	public void TurnDoor(bool bOn)
 	{	
-		m_bPowerOn = bOn; //pour debuger faudra l'enlever vu qu'on le fait deja dans SetPowerZone
+		m_bPowerDoorOn = bOn; //pour debuger faudra l'enlever vu qu'on le fait deja dans SetPowerZone
 		foreach(CScriptZoneOpenDoor currentPorte in m_Portes)
 		{
 			if(currentPorte != null)
 				currentPorte.SetPowerStatus(bOn);
 		}
 	}
-		
-	public void SetPowerZone(bool bOn)
+	
+	public void SwitchPowerStateLight()
 	{
-		m_bPowerOn = bOn;
-		TurnLight(bOn);
-		TurnDoors(bOn);
+		if(m_bPowerLightOn)
+			TurnLight(false);
+		else
+			TurnLight(true);
+		
+		foreach(CScriptButton currentButton in m_ButtonsLight)
+			currentButton.SetSprite();
 	}
 	
-	public void SwitchPowerState()
+	public void SwitchPowerStateDoor()
 	{
-		if(m_bPowerOn)
-			SetPowerZone(false);
+		if(m_bPowerDoorOn)
+			TurnDoor(false);
 		else
-			SetPowerZone(true);	
+			TurnDoor(true);	
+		
+		foreach(CScriptButton currentButton in m_ButtonsDoor)
+			currentButton.SetSprite();
 	}
 }

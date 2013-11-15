@@ -51,7 +51,6 @@ public class CGame : MonoBehaviour
 	public float m_fSpeedMonster = 1.0f;
 	
 	public float m_fCoeffReverseWalk = 1.0f;
-	public float m_fCoeffSlowWalk = 1.0f;
 	public float m_fCoeffNormalWalk = 1.0f;
 	public float m_fCoeffRunWalk = 1.0f;
 	
@@ -151,9 +150,10 @@ public class CGame : MonoBehaviour
 	//-------------------------------------------------------------------------------
 	void Process(float fDeltatime)
 	{	
+		CApoilInput.Process(fDeltatime);
+
 		if(m_bInGame)
 		{
-			CApoilInput.Process(fDeltatime);
 			m_Level.Process(fDeltatime);
 			m_Camera.Process(fDeltatime);
 			//ProcessRoomState();
@@ -409,10 +409,7 @@ public class CGame : MonoBehaviour
 	//-------------------------------------------------------------------------------
 	void Update()
 	{
-		if(m_bInGame)
-		{
-			Process(Time.deltaTime);
-		}
+		Process(Time.deltaTime);
 	}
 	
 

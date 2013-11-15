@@ -6,6 +6,10 @@ public class CScriptButton : MonoBehaviour
 	CScriptZoneInGame m_Zone;
 	CSpriteSheet m_SpriteSheet;
 	CGame m_Game;
+	bool m_bSwitch;
+	
+	public bool m_bIsForLight = true;
+
 	
 	// Use this for initialization
 	void Start () 
@@ -21,12 +25,31 @@ public class CScriptButton : MonoBehaviour
 		m_SpriteSheet.Init();
 		m_SpriteSheet.SetAnimation(anim);
 		m_SpriteSheet.setEndCondition(CSpriteSheet.EEndCondition.e_FramPerFram);
+		
+		m_bSwitch = false;
+		
+		SetSprite();
+		
 	}
 	
 	// Update is called once per frame
 	void Update () 
 	{
 		m_SpriteSheet.Process();
+		if(m_bSwitch)
+		{
+			if(m_bIsForLight)
+			{
+				m_Zone.SwitchPowerStateLight();
+			}
+			else
+			{
+				m_Zone.SwitchPowerStateDoor();
+			}
+			
+			SetSprite();
+			m_bSwitch = false;
+		}
 	}
 	
 	void OnTriggerStay(Collider other) 
@@ -37,11 +60,26 @@ public class CScriptButton : MonoBehaviour
 			{
 				if(m_Game.getLevel().getPlayer(i).GetPlayerInput().ClickButton)
 				{
-					Debug.Log("clic!!");
-					m_Zone.SwitchPowerState();
+					m_bSwitch = true;					
 				}
 			}
 			
 		}
+	}
+	
+	public void SetSprite()
+	{
+		bool bOn;
+		if(m_bIsForLight)
+		{
+			bOn = m_Zone.m_bPowerLightOn;
+		}
+		else
+		{
+			bOn = m_Zone.m_bPowerDoorOn;
+		}
+			
+		int nFrame = bOn ? 0 : 1;
+		m_SpriteSheet.GoToFram(nFrame);
 	}
 }
