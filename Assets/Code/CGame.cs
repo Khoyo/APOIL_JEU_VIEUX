@@ -43,6 +43,12 @@ public class CGame : MonoBehaviour
 	public Material m_materialPlayer3Repos;
 	public Material m_materialPlayer4Repos;
 	
+	public Material m_materialMonterGravityActif;
+	public Material m_materialMonterGravityAlerte;
+	public Material m_materialMonterGravityEclaire;
+	public Material m_materialMonterGravityMange;
+	public Material m_materialMonterGravityVeille;
+	
 	// variables de LD
 	public bool m_bPadXBox = false;
 	public bool m_bDebug = false;
@@ -78,7 +84,8 @@ public class CGame : MonoBehaviour
 	public float m_fCreepCoeffRalentissement = 0.5f;
 	public float m_fCreepVelocity = 100.0f;
 	
-	public float m_fGravityTimerPrisonMax = 3.0f;
+	public float m_fGravityVeilleTimerMax = 3.0f;
+	public float m_fGravityEatTimerMax = 3.0f;
 	
 	public bool m_BMute = false;
 	public string soundbankName = "Jeu_apoil.bnk";
