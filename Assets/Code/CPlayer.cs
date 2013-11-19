@@ -176,6 +176,7 @@ public class CPlayer : CCharacter
 		m_bIsAlive = true;
 		m_bResetSubElements = false;
 		StopMagnet();
+		m_spriteSheet.setEndCondition(CSpriteSheet.EEndCondition.e_Loop);
 	}
 
 	//-------------------------------------------------------------------------------
