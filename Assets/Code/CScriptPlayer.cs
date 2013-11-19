@@ -1,8 +1,8 @@
 using UnityEngine;
 using System.Collections;
 
-public class CScriptPlayer : MonoBehaviour {
-
+public class CScriptPlayer : MonoBehaviour 
+{
 	// Use this for initialization
 	void Start () {
 	

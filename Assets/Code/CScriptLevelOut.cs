@@ -28,7 +28,7 @@ public class CScriptLevelOut : MonoBehaviour
 	{
 		for(int i = 0 ; i < m_Game.m_nNbPlayer ; ++i)
 		{
-			if(other.gameObject == m_Game.getLevel().getPlayer(i).GetGameObject())
+			if(other.gameObject == m_Game.getLevel().getPlayer(i).GetGameObject() && m_Game.getLevel().getPlayer(i).GetIsAlive())
 			{
 				CPlayer.EIdPlayer eIdPlayer = CPlayer.EIdPlayer.e_IdPlayer_Player1;
 				switch(i)

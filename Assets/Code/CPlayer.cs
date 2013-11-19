@@ -665,7 +665,12 @@ public class CPlayer : CCharacter
 	public bool IsAlive()
 	{
 		return (m_bIsAlive || m_GameObject.active);
-	}	
+	}
+	
+	public bool GetIsAlive()
+	{
+		return m_bIsAlive;
+	}
 	
 	public void SetPosRespawn(Vector2 pos)
 	{
