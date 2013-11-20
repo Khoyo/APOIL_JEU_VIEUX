@@ -8,6 +8,7 @@ public class CMenu : MonoBehaviour{
 		e_menuState_splash,
 		e_menuState_main,
 		e_menuState_credits,
+		e_menuState_Bonus,
 		e_menuState_movie,
 		e_menuState_inGame,
 		e_menuState_menuWinLoose,
@@ -17,6 +18,7 @@ public class CMenu : MonoBehaviour{
 	{
 		e_Play,
 		e_Credit,
+		e_Bonus,
 		e_Menu,
 		e_Quit
 	}
@@ -27,6 +29,7 @@ public class CMenu : MonoBehaviour{
 	public Texture m_Texture_Fond;
 	public Texture m_Texture_ButtonPlay;
 	public Texture m_Texture_ButtonCredit;
+	public Texture m_Texture_ButtonBonus;
 	public Texture m_Texture_ButtonMenu;
 	public Texture m_Texture_ButtonQuit;
 	public Texture m_Texture_ButtonPause;
@@ -37,11 +40,16 @@ public class CMenu : MonoBehaviour{
 	public Texture m_Texture_Red;
 	public Texture m_Texture_Lost;
 	public MovieTexture m_Texture_movie_intro;
+	public MovieTexture m_Texture_movie_Bonus;
+	public AudioClip m_audio_Bonus;
 	Texture m_Texture_PlayerWin;
 	
+	const float m_fDeltatime = 1/60.0f;
 	float m_fTempsSplash;
 	const float m_fTempsSplashInit = 2.0f;
 	float m_fTempsVideoIntro;
+	float m_fTempsVideoBonus;
+	float m_fWaitingTimerVideoBonus;
 	bool m_bGamePaused;
 	CGame m_Game;
 	
@@ -100,8 +108,10 @@ public class CMenu : MonoBehaviour{
 		m_Game = gameObject.GetComponent<CGame>();
 		m_fTempsSplash = 0.0f;
 		m_fTempsVideoIntro = 0.0f;
+		m_fTempsVideoBonus = 0.0f;
 		m_bGamePaused = false;
 		m_fTimerMenuNavigation = 0.0f;
+		m_fWaitingTimerVideoBonus = 0.0f;
 		if(!m_Game.IsNotUseMasterGame())	
 		{
 			m_EState = EmenuState.e_menuState_splash;
@@ -109,7 +119,8 @@ public class CMenu : MonoBehaviour{
 			m_fTempsSplash = m_fTempsSplashInit;
 			m_EMainState = EMenuMain.e_Play;
 		}
-		else {
+		else 
+		{
 			m_EState = EmenuState.e_menuState_inGame;
 		}
 	}
@@ -180,6 +191,39 @@ public class CMenu : MonoBehaviour{
 				break;
 			}	
 			
+			case EmenuState.e_menuState_Bonus:
+			{
+				if(m_Texture_movie_Bonus != null)
+					GUI.DrawTexture(new Rect(0, 0, 1280, 800), m_Texture_movie_Bonus);
+				if(m_Texture_movie_Bonus != null && m_fTempsVideoBonus == 0.0f)
+				{
+					m_Texture_movie_Bonus.Play();
+				}	
+				if(m_Texture_movie_Bonus != null && m_Texture_movie_Bonus.isPlaying)
+				{
+					m_fTempsVideoBonus += Time.deltaTime;
+				}
+				else 
+				{
+					//m_Texture_movie_Bonus.Stop();
+					m_Texture_movie_Bonus.Stop();
+					m_EState = EmenuState.e_menuState_main;
+					//m_fTempsVideoBonus = 0.0f;
+				}
+				
+				if(m_fWaitingTimerVideoBonus < 1.0f)
+					m_fWaitingTimerVideoBonus += m_fDeltatime;
+				else if(CApoilInput.MenuValidate)
+				{
+					m_Texture_movie_Bonus.Stop();
+					m_EState = EmenuState.e_menuState_main;
+					m_fTimerMenuNavigation = 0.0f;
+					m_fWaitingTimerVideoBonus = 0.0f;
+				}
+			
+				break;	
+			}
+			
 			case EmenuState.e_menuState_inGame:
 			{
 				//if (GUI.Button(new Rect(940, 10, 200, 60), m_Texture_ButtonMenu))
@@ -206,6 +250,7 @@ public class CMenu : MonoBehaviour{
 	{
 		bool bPlay = false;
 		bool bCredit = false;
+		bool bBonus = false;
 		bool bMenu = false;
 		bool bQuit = false;
 		
@@ -266,7 +311,24 @@ public class CMenu : MonoBehaviour{
 						}
 						else if (CApoilInput.MenuDown)
 						{
+							m_EMainState = EMenuMain.e_Bonus;
+							m_fTimerMenuNavigation = 0.0f;
+						}
+						break;	
+					}
+					
+					case EMenuMain.e_Bonus :
+					{
+						if(CApoilInput.MenuValidate)
+							bBonus = true;
+						if(CApoilInput.MenuUp)
+						{
 							m_EMainState = EMenuMain.e_Credit;
+							m_fTimerMenuNavigation = 0.0f;
+						}
+						else if (CApoilInput.MenuDown)
+						{
+							m_EMainState = EMenuMain.e_Bonus;
 							m_fTimerMenuNavigation = 0.0f;
 						}
 						break;	
@@ -321,21 +383,23 @@ public class CMenu : MonoBehaviour{
 			}
 			else
 			{
-				m_fTimerMenuNavigation += 1/60.0f;
+				m_fTimerMenuNavigation += m_fDeltatime;
 			}			
 			
 			float fOffsetPlay = (m_EMainState == EMenuMain.e_Play) ? 0.5f : 0.0f;
 			float fOffsetCredit = (m_EMainState == EMenuMain.e_Credit) ? 0.5f : 0.0f;
+			float fOffsetBonus = (m_EMainState == EMenuMain.e_Bonus) ? 0.5f : 0.0f;
 			float fOffsetMenu = (m_EMainState == EMenuMain.e_Menu) ? 0.5f : 0.0f;
 			float fOffsetQuit = (m_EMainState == EMenuMain.e_Quit) ? 0.5f : 0.0f;
 			
 			GUI.DrawTextureWithTexCoords(new Rect(390, 100, 500, 150), m_Texture_ButtonPlay, new Rect(fOffsetPlay, 0, 0.5f, 1));
-			GUI.DrawTextureWithTexCoords(new Rect(390, 400, 500, 150), m_Texture_ButtonCredit, new Rect(fOffsetCredit, 0, 0.5f, 1));
+			GUI.DrawTextureWithTexCoords(new Rect(390, 300, 500, 150), m_Texture_ButtonCredit, new Rect(fOffsetCredit, 0, 0.5f, 1));
+			GUI.DrawTextureWithTexCoords(new Rect(390, 500, 500, 150), m_Texture_ButtonBonus, new Rect(fOffsetBonus, 0, 0.5f, 1));
 			GUI.DrawTextureWithTexCoords(new Rect(940, 10, 200, 60), m_Texture_ButtonMenu, new Rect(fOffsetMenu, 0, 0.5f, 1));
 			GUI.DrawTextureWithTexCoords(new Rect(1160, 10, 60, 60), m_Texture_ButtonQuit, new Rect(fOffsetQuit, 0, 0.5f, 1));
 		}
 		
-		NagigationMenuMain(bPlay, bCredit, bMenu, bQuit, false);
+		NagigationMenuMain(bPlay, bCredit, bBonus, bMenu, bQuit, false);
 		
 	}
 	
@@ -405,7 +469,7 @@ public class CMenu : MonoBehaviour{
 			}
 			else
 			{
-				m_fTimerMenuNavigation += 1/60.0f;
+				m_fTimerMenuNavigation += m_fDeltatime;
 			}			
 			
 			float fOffsetMenu = (m_EMainState == EMenuMain.e_Menu) ? 0.5f : 0.0f;
@@ -414,7 +478,7 @@ public class CMenu : MonoBehaviour{
 			GUI.DrawTextureWithTexCoords(new Rect(940, 10, 200, 60), m_Texture_ButtonMenu, new Rect(fOffsetMenu, 0, 0.5f, 1));
 			GUI.DrawTextureWithTexCoords(new Rect(1160, 10, 60, 60), m_Texture_ButtonQuit, new Rect(fOffsetQuit, 0, 0.5f, 1));	
 		}
-		NagigationMenuMain(false, false, bMenu, bQuit, false);
+		NagigationMenuMain(false, false, false, bMenu, bQuit, false);
 	}
 	
 	//-------------------------------------------------------------------------------
@@ -459,7 +523,7 @@ public class CMenu : MonoBehaviour{
 			}
 			else
 			{
-				m_fTimerMenuNavigation += 1.0f/60.0f;	
+				m_fTimerMenuNavigation += m_fDeltatime;	
 			}
 			
 			float fOffsetPauseX = m_bGamePaused ? 0.5f : 0;
@@ -468,7 +532,7 @@ public class CMenu : MonoBehaviour{
 			GUI.DrawTextureWithTexCoords(new Rect(1160, 10, 60, 60), m_Texture_ButtonPause, new Rect(fOffsetPauseX, 0, 0.5f, 1));	
 		}
 		
-		NagigationMenuMain(false, false, bMenu, bQuit, bPause);
+		NagigationMenuMain(false, false, false, bMenu, bQuit, bPause);
 	}
 	
 	//-------------------------------------------------------------------------------
@@ -518,10 +582,11 @@ public class CMenu : MonoBehaviour{
 		}
 	}
 	
+	
 	//-------------------------------------------------------------------------------
 	///
 	//-------------------------------------------------------------------------------
-	void NagigationMenuMain(bool bPlay, bool bCredit, bool bMenu, bool bQuit, bool bPause)
+	void NagigationMenuMain(bool bPlay, bool bCredit, bool bBonus, bool bMenu, bool bQuit, bool bPause)
 	{
 		if (bPlay)
 		{
@@ -533,6 +598,12 @@ public class CMenu : MonoBehaviour{
 		if (bCredit)
 		{
 			m_EState = EmenuState.e_menuState_credits;
+		}
+		
+		if (bBonus)
+		{
+			m_fTempsVideoBonus = 0.0f;
+			m_EState = EmenuState.e_menuState_Bonus;
 		}
 	
 		if (bMenu)
@@ -558,4 +629,6 @@ public class CMenu : MonoBehaviour{
 			}	
 		}
 	}
+	
+	
 }
