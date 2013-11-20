@@ -12,7 +12,7 @@ public struct SAnimationMonster
 
 public class CGravityMonster : CElement 
 {
-	enum EState
+	public enum EState
 	{
 		e_Veille,
 		e_Alerte,
@@ -117,6 +117,12 @@ public class CGravityMonster : CElement
 			}
 			case EState.e_Alerte:
 			{
+				if(m_bIsOnLight)
+				{
+					m_eState = EState.e_Eclaire;
+					SetAnimationState();
+				}
+			
 				if(m_fVeilleTimer < m_Game.m_fGravityVeilleTimerMax)
 					m_fVeilleTimer += fDeltatime;
 				else
@@ -128,11 +134,12 @@ public class CGravityMonster : CElement
 				{
 					m_fVeilleTimer = 0.0f;
 				}
+
 				break;	
 			}
 			case EState.e_Actif:
 			{
-				
+
 				break;	
 			}
 			case EState.e_Mange:
@@ -171,7 +178,9 @@ public class CGravityMonster : CElement
 		if(m_PlayerAttracted == null)
 		{
 			m_PlayerAttracted = player;
-			m_PlayerAttracted.SetMagnetData(m_GameObject.transform.position, m_ScriptGravityMonster.m_fForceMagnet);	
+			m_PlayerAttracted.SetMagnetData(m_GameObject.transform.position, m_ScriptGravityMonster.m_fForceMagnet);
+			m_eState = EState.e_Actif;
+			SetAnimationState();
 		}
 	}
 	
@@ -181,6 +190,9 @@ public class CGravityMonster : CElement
 		{
 			m_PlayerAttracted.StopMagnet();
 			m_PlayerAttracted = null;
+			m_eState = EState.e_Alerte;
+			SetAnimationState();
+			
 		}
 	}
 	
@@ -230,5 +242,10 @@ public class CGravityMonster : CElement
 				break;	
 			}
 		}	
+	}
+	
+	public bool IsInState(EState eState)
+	{
+		return (m_eState == eState);	
 	}
 }
