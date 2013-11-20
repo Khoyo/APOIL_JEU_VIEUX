@@ -123,6 +123,8 @@ public class CMenu : MonoBehaviour{
 		{
 			m_EState = EmenuState.e_menuState_inGame;
 		}
+		m_Texture_movie_Bonus.Stop();
+		m_Texture_movie_intro.Stop();
 	}
 	
 	//-------------------------------------------------------------------------------
