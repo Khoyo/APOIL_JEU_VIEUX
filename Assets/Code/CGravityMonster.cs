@@ -139,7 +139,11 @@ public class CGravityMonster : CElement
 			}
 			case EState.e_Actif:
 			{
-
+				if(m_bIsOnLight)
+				{
+					m_eState = EState.e_Eclaire;
+					SetAnimationState();
+				}
 				break;	
 			}
 			case EState.e_Mange:
@@ -159,6 +163,11 @@ public class CGravityMonster : CElement
 			}
 			case EState.e_Eclaire:
 			{
+				if(!m_bIsOnLight)
+				{
+					m_eState = EState.e_Veille;
+					SetAnimationState();
+				}
 				DropPlayer(m_PlayerAttracted);
 				break;	
 			}
