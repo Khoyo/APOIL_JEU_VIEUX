@@ -44,6 +44,7 @@ public class CMenu : MonoBehaviour{
 	public MovieTexture m_Texture_movie_Bonus;
 	public AudioClip m_audio_Bonus;
 	Texture m_Texture_PlayerWin;
+	GUIText m_TextLevelNum;
 	
 	const float m_fDeltatime = 1/60.0f;
 	float m_fTempsSplash;
@@ -128,6 +129,8 @@ public class CMenu : MonoBehaviour{
 		}
 		m_Texture_movie_Bonus.Stop();
 		m_Texture_movie_intro.Stop();
+		
+		m_TextLevelNum = new GUIText();
 	}
 	
 	//-------------------------------------------------------------------------------
@@ -634,6 +637,7 @@ public class CMenu : MonoBehaviour{
 					m_fTimerMenuNavigation = 0.0f;
 				}
 				
+				GUI.Label(new Rect(390, 100, 500, 150), System.Convert.ToString(m_nLevelToLoad));
 				
 			}
 			else
