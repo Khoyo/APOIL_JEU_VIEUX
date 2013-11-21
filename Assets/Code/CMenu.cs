@@ -10,6 +10,7 @@ public class CMenu : MonoBehaviour{
 		e_menuState_credits,
 		e_menuState_Bonus,
 		e_menuState_movie,
+		e_menuState_selectLevel,
 		e_menuState_inGame,
 		e_menuState_menuWinLoose,
 	}
@@ -52,6 +53,7 @@ public class CMenu : MonoBehaviour{
 	float m_fWaitingTimerVideoBonus;
 	bool m_bGamePaused;
 	CGame m_Game;
+	int m_nLevelToLoad;
 	
 	float m_fTimerMenuNavigation;
 	float m_fTimerMenuNavigationMax = 0.2f;
@@ -112,10 +114,11 @@ public class CMenu : MonoBehaviour{
 		m_bGamePaused = false;
 		m_fTimerMenuNavigation = 0.0f;
 		m_fWaitingTimerVideoBonus = 0.0f;
+		m_nLevelToLoad = 0;
 		if(!m_Game.IsNotUseMasterGame())	
 		{
-			m_EState = EmenuState.e_menuState_splash;
-			//m_EState = EmenuState.e_menuState_main;
+			//m_EState = EmenuState.e_menuState_splash;
+			m_EState = EmenuState.e_menuState_main;
 			m_fTempsSplash = m_fTempsSplashInit;
 			m_EMainState = EMenuMain.e_Play;
 		}
@@ -183,6 +186,15 @@ public class CMenu : MonoBehaviour{
 				
 				break;
 			}	
+			
+			case EmenuState.e_menuState_selectLevel:
+			{
+				GUI.DrawTexture(new Rect(0, 0, 1280, 800), m_Texture_Fond);
+			
+				GestionSelectLevel(m_Game.m_bPadXBox);
+				
+				break;
+			}
 			
 			case EmenuState.e_menuState_credits:
 			{
@@ -288,7 +300,10 @@ public class CMenu : MonoBehaviour{
 					case EMenuMain.e_Play :
 					{
 						if(CApoilInput.MenuValidate)
+						{
 							bPlay = true;
+							m_fTimerMenuNavigation = 0.0f;
+						}
 						if(CApoilInput.MenuUp)
 						{
 							m_EMainState = EMenuMain.e_Menu;
@@ -401,7 +416,7 @@ public class CMenu : MonoBehaviour{
 			GUI.DrawTextureWithTexCoords(new Rect(1160, 10, 60, 60), m_Texture_ButtonQuit, new Rect(fOffsetQuit, 0, 0.5f, 1));
 		}
 		
-		NagigationMenuMain(bPlay, bCredit, bBonus, bMenu, bQuit, false);
+		NagigationMenuMain(bPlay, bCredit, bBonus, bMenu, bQuit, false, false);
 		
 	}
 	
@@ -468,6 +483,13 @@ public class CMenu : MonoBehaviour{
 						m_EMainState = EMenuMain.e_Quit;
 						break;
 				}
+				
+				//alternate Back
+				if(CApoilInput.MenuBack)
+				{
+					bMenu = true;
+					m_fTimerMenuNavigation = 0.0f;
+				}
 			}
 			else
 			{
@@ -480,7 +502,7 @@ public class CMenu : MonoBehaviour{
 			GUI.DrawTextureWithTexCoords(new Rect(940, 10, 200, 60), m_Texture_ButtonMenu, new Rect(fOffsetMenu, 0, 0.5f, 1));
 			GUI.DrawTextureWithTexCoords(new Rect(1160, 10, 60, 60), m_Texture_ButtonQuit, new Rect(fOffsetQuit, 0, 0.5f, 1));	
 		}
-		NagigationMenuMain(false, false, false, bMenu, bQuit, false);
+		NagigationMenuMain(false, false, false, bMenu, bQuit, false, false);
 	}
 	
 	//-------------------------------------------------------------------------------
@@ -534,7 +556,7 @@ public class CMenu : MonoBehaviour{
 			GUI.DrawTextureWithTexCoords(new Rect(1160, 10, 60, 60), m_Texture_ButtonPause, new Rect(fOffsetPauseX, 0, 0.5f, 1));	
 		}
 		
-		NagigationMenuMain(false, false, false, bMenu, bQuit, bPause);
+		NagigationMenuMain(false, false, false, bMenu, bQuit, bPause, false);
 	}
 	
 	//-------------------------------------------------------------------------------
@@ -584,15 +606,60 @@ public class CMenu : MonoBehaviour{
 		}
 	}
 	
+	//-------------------------------------------------------------------------------
+	///
+	//-------------------------------------------------------------------------------
+	void GestionSelectLevel(bool bManette)
+	{
+		bool bSelect = false;
+		bool bMenu = false;
+		bool bQuit = false;
+		if(!bManette)
+		{
+
+		}
+		else
+		{
+			if(m_fTimerMenuNavigation > m_fTimerMenuNavigationMax)
+			{
+				if(CApoilInput.MenuValidate)
+				{
+					bSelect = true;
+					m_fTimerMenuNavigation = 0.0f;
+				}
+				
+				if(CApoilInput.MenuBack)
+				{
+					bMenu = true;
+					m_fTimerMenuNavigation = 0.0f;
+				}
+				
+				
+			}
+			else
+			{
+				m_fTimerMenuNavigation += m_fDeltatime;
+			}
+		}
+		
+		NagigationMenuMain(false, false, false, bMenu, false, false, bSelect);
+	}
+	
 	
 	//-------------------------------------------------------------------------------
 	///
 	//-------------------------------------------------------------------------------
-	void NagigationMenuMain(bool bPlay, bool bCredit, bool bBonus, bool bMenu, bool bQuit, bool bPause)
+	void NagigationMenuMain(bool bPlay, bool bCredit, bool bBonus, bool bMenu, bool bQuit, bool bPause, bool bSelect)
 	{
 		if (bPlay)
-		{
-            m_Game.StartGame();
+		{	
+			m_EState = EmenuState.e_menuState_selectLevel;
+		}
+		
+		if (bSelect)
+		{	
+			m_Game.GoToLevel(m_nLevelToLoad);
+			m_Game.StartGame();
 			ResumeGame();
 			m_EState = EmenuState.e_menuState_inGame;
 		}

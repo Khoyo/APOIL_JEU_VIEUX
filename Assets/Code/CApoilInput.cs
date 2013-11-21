@@ -33,6 +33,7 @@ public class CApoilInput
 	public static bool Quit;
 	
 	public static bool MenuValidate;
+	public static bool MenuBack;
 	public static bool MenuUp;
 	public static bool MenuDown;
 	public static bool MenuPause;
@@ -82,7 +83,8 @@ public class CApoilInput
 		Quit = Input.GetKey(KeyCode.Escape);
 		
 		MenuValidate = Input.GetKeyDown(KeyCode.JoystickButton0); //A
-		
+		MenuBack = Input.GetKeyDown(KeyCode.JoystickButton1); //B
+			
 		MenuUp = (Input.GetAxis("player1_MoveVertical")) < -fTolerance;
 		MenuDown = (Input.GetAxis("player1_MoveVertical")) > fTolerance;
 		

@@ -331,7 +331,6 @@ public class CGame : MonoBehaviour
 
 	public void GoToNextLevelOrRestart (bool bWin)
 	{
-		m_Level.DeleteCElements();
 		if(bWin)
 			GoToNextLevel();
 		else
@@ -343,16 +342,24 @@ public class CGame : MonoBehaviour
 		Debug.Log ("Exiting level " + Application.loadedLevel);
 		
 		if(m_bNotUseMasterGame)
-		{
-			Application.LoadLevel(Application.loadedLevel);
-		}
-		else if(Application.loadedLevel < Application.levelCount)
-			Application.LoadLevel(Application.loadedLevel+1);
+			GoToLevel(Application.loadedLevel);
+		else
+			GoToLevel(Application.loadedLevel+1);
 		
+	}
+	
+	public void GoToLevel(int nIdLevel)
+	{		
+		m_Level.DeleteCElements();
+		if(nIdLevel < Application.levelCount)
+		{
+			Application.LoadLevel(nIdLevel);
+		}	
 	}
 	
 	public void RestartLevel()
 	{
+		m_Level.DeleteCElements();
 		Debug.Log("Restarting level "+Application.loadedLevel);
 		Application.LoadLevel(Application.loadedLevel);
 		
