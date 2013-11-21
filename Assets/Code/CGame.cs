@@ -49,6 +49,12 @@ public class CGame : MonoBehaviour
 	public Material m_materialMonterGravityMange;
 	public Material m_materialMonterGravityVeille;
 	
+	public Material m_materialMonterCreepVeille;
+	public Material m_materialMonterCreepBouge;
+	public Material m_materialMonterCreepChoppe;
+	public Material m_materialMonterCreepDort;
+	public Material m_materialMonterCreepEclaire;
+	
 	// variables de LD
 	public bool m_bPadXBox = false;
 	public bool m_bDebug = false;
@@ -81,6 +87,7 @@ public class CGame : MonoBehaviour
 	
 	public float m_fCreepTimerParasiteMin = 4.0f;
 	public float m_fCreepTimerParasiteMax = 8.0f;
+	public float m_fCreepTimerSleep = 4.0f;
 	public float m_fCreepCoeffRalentissement = 0.5f;
 	public float m_fCreepVelocity = 100.0f;
 	

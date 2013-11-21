@@ -31,7 +31,7 @@ public class CScriptCreep : MonoBehaviour
 		{
 			if(other.gameObject == m_Game.getLevel().getPlayer(i).GetGameObject())
 			{
-				if(/*!m_Creep.IsOnPlayer()*/m_Creep.CanParasitizedPlayer() && m_Creep.GetParasitizedPlayer() != m_Game.getLevel().getPlayer(i))
+				if(m_Creep.CanParasitizedPlayer() && m_Creep.GetParasitizedPlayer() != m_Game.getLevel().getPlayer(i) && !m_Creep.IsInState(CCreep.EState.e_Sleep) )
 				{
 					m_Creep.SetPlayerParasitized(m_Game.getLevel().getPlayer(i));
 				}
