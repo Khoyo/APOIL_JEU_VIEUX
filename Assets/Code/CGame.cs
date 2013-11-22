@@ -120,6 +120,9 @@ public class CGame : MonoBehaviour
 	CSoundEngine m_SoundEngine;
 	GameObject[] m_pLevelIn;
 	
+	//sauvegarde
+	CApoilSaveManger m_SaveManager;
+	
 	static int m_instanceCount = 0;
 	bool m_bStartCalled = false;
 	//-------------------------------------------------------------------------------
@@ -149,6 +152,8 @@ public class CGame : MonoBehaviour
 		m_nScreenHeight = 800;
 		m_Camera = new CCamera();
 		m_Camera.Init();	
+		
+		m_SaveManager = new CApoilSaveManger();
 		
 		Object.DontDestroyOnLoad(transform.gameObject);
 	}
@@ -180,7 +185,7 @@ public class CGame : MonoBehaviour
 			
 			//Quit on Escape
 			if(CApoilInput.Quit)
-				Application.Quit();
+				QuitGame();
 			
 			//Debug
 			if(CApoilInput.DebugF9)
@@ -337,7 +342,11 @@ public class CGame : MonoBehaviour
 	public void GoToNextLevelOrRestart (bool bWin)
 	{
 		if(bWin)
+		{
 			GoToNextLevel();
+			Debug.Log (Application.loadedLevel+2);
+			m_SaveManager.SetLastLevelUnlock(Application.loadedLevel+2);
+		}
 		else
 			RestartLevel();
 	}
@@ -389,6 +398,14 @@ public class CGame : MonoBehaviour
 		if(bLoose)
 			FinishLevel(false, CPlayer.EIdPlayer.e_IdPlayer_Player1);
 	}
+	
+	//-------------------------------------------------------------------------------
+	/// 	
+	//-------------------------------------------------------------------------------
+	public void QuitGame()
+	{
+		Application.Quit();	
+	}	
 	
 	//-------------------------------------------------------------------------------
 	/// Unity
@@ -476,5 +493,10 @@ public class CGame : MonoBehaviour
 	public bool LightIsOn()
 	{
 		return m_bLightIsOn;	
+	}
+	
+	public CApoilSaveManger GetSaveManager()
+	{
+		return m_SaveManager;	
 	}
 }
