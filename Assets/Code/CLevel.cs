@@ -76,16 +76,22 @@ public class CLevel
 		
 		GestionCameraFromPlayers();
 		
-
-		if(Input.GetKey(KeyCode.L) && m_bTimerLightSwitch <= 0){
+		/*
+		if(Input.GetKey(KeyCode.L) && m_bTimerLightSwitch <= 0)
+		{
 			m_bTimerLightSwitch = 10f;
 			
 			if(m_Game.m_bLightIsOn == false)
 				TurnLight(true);
 			else
 				TurnLight(false);
+		}*/
+		
+		if(Input.GetKey(KeyCode.L))
+		{
+			SetPlayerPosition();	
 		}
-
+		
 		if(m_bTimerLightSwitch > 0.0f)
 			m_bTimerLightSwitch -= 0.5f;
 		

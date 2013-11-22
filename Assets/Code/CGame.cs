@@ -154,6 +154,7 @@ public class CGame : MonoBehaviour
 		m_Camera.Init();	
 		
 		m_SaveManager = new CApoilSaveManger();
+		m_SaveManager.Load();
 		
 		Object.DontDestroyOnLoad(transform.gameObject);
 	}
@@ -344,7 +345,6 @@ public class CGame : MonoBehaviour
 		if(bWin)
 		{
 			GoToNextLevel();
-			Debug.Log (Application.loadedLevel+2);
 			m_SaveManager.SetLastLevelUnlock(Application.loadedLevel+2);
 		}
 		else
@@ -404,6 +404,7 @@ public class CGame : MonoBehaviour
 	//-------------------------------------------------------------------------------
 	public void QuitGame()
 	{
+		m_SaveManager.Save();
 		Application.Quit();	
 	}	
 	

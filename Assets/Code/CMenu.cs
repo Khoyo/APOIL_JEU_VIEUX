@@ -643,8 +643,7 @@ public class CMenu : MonoBehaviour{
 				
 				if(CApoilInput.MenuRight)
 				{
-					Debug.Log (m_nLevelToLoad+" "+m_Game.GetSaveManager().GetSaveData().m_nLastLevelUnlock);
-					if(/*m_nLevelToLoad < Application.levelCount-1 && */m_nLevelToLoad < m_Game.GetSaveManager().GetSaveData().m_nLastLevelUnlock-1)
+					if(m_nLevelToLoad < Application.levelCount-1 && m_nLevelToLoad < m_Game.GetSaveManager().GetSaveData().m_nLastLevelUnlock-1)
 						++m_nLevelToLoad;
 					m_fTimerMenuNavigation = 0.0f;
 				}			

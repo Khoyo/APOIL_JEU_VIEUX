@@ -629,6 +629,7 @@ public class CPlayer : CCharacter
 	public void ResetPosInit(Vector2 posInit)
 	{
 		m_posInit = posInit;	
+		m_posRespawn = posInit;
 	}
 	
 	//-------------------------------------------------------------------------------
