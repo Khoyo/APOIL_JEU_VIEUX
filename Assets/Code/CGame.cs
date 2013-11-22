@@ -12,6 +12,10 @@ public class CGame : MonoBehaviour
 	public int m_nNbLevel;
 	//public GameObject m_ObjLevel1;
 	
+	//fonts
+	public Font m_Font;
+	public Font m_DebugFont;
+	
 	// materials
 	public Material m_materialPlayer1Repos;
 	
@@ -195,6 +199,7 @@ public class CGame : MonoBehaviour
 	//-------------------------------------------------------------------------------
 	void DisplayDebug()
 	{
+		GUI.skin.label.font = m_DebugFont;
 		GUI.Label(new Rect(10, 10, 100, 20), System.Convert.ToString(Time.deltaTime));
 		GUI.Label(new Rect(10, 30, 100, 20), System.Convert.ToString(1f/Time.deltaTime));
 	//	GUI.Label(new Rect(10, 50, 300, 20), System.Convert.ToString(getLevel().getPlayer(0).GetAnimation()));

@@ -57,7 +57,7 @@ public class CMenu : MonoBehaviour{
 	int m_nLevelToLoad;
 	
 	float m_fTimerMenuNavigation;
-	float m_fTimerMenuNavigationMax = 0.2f;
+	float m_fTimerMenuNavigationMax = 0.4f;
 	
 	//-------------------------------------------------------------------------------
 	/// 
@@ -637,7 +637,19 @@ public class CMenu : MonoBehaviour{
 					m_fTimerMenuNavigation = 0.0f;
 				}
 				
-				GUI.Label(new Rect(390, 100, 500, 150), System.Convert.ToString(m_nLevelToLoad));
+				if(CApoilInput.MenuLeft)
+				{
+					if(m_nLevelToLoad > 0)
+						--m_nLevelToLoad;
+					m_fTimerMenuNavigation = 0.0f;
+				}
+				
+				if(CApoilInput.MenuRight)
+				{
+					if(m_nLevelToLoad < Application.levelCount-1)
+						++m_nLevelToLoad;
+					m_fTimerMenuNavigation = 0.0f;
+				}			
 				
 			}
 			else
@@ -645,6 +657,14 @@ public class CMenu : MonoBehaviour{
 				m_fTimerMenuNavigation += m_fDeltatime;
 			}
 		}
+		
+		string texturePath = "_ScreenLevel/level_"+System.Convert.ToString(m_nLevelToLoad+1);
+		Texture textLevel = (Texture)Resources.Load(texturePath, typeof(Texture)); 
+
+		GUI.DrawTexture(new Rect(390, 100, 480, 360), textLevel);
+		
+		GUI.skin.label.font = m_Game.m_Font;
+		GUI.Label(new Rect(390, 100, 500, 150), System.Convert.ToString(m_nLevelToLoad));
 		
 		NagigationMenuMain(false, false, false, bMenu, false, false, bSelect);
 	}
