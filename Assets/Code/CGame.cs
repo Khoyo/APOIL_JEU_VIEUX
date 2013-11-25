@@ -351,6 +351,7 @@ public class CGame : MonoBehaviour
 		{
 			GoToNextLevel();
 			m_SaveManager.SetLastLevelUnlock(Application.loadedLevel+2);
+			Save();
 		}
 		else
 			RestartLevel();
@@ -487,7 +488,8 @@ public class CGame : MonoBehaviour
 		return m_Camera;	
 	}
 	
-	public CSoundEngine getSoundEngine(){
+	public CSoundEngine getSoundEngine()
+	{
 		return m_SoundEngine;
 	}
 	

@@ -40,9 +40,10 @@ public class CMenu : MonoBehaviour{
 	public Texture m_Texture_Blue;
 	public Texture m_Texture_Red;
 	public Texture m_Texture_Lost;
+	public Texture m_Texture_LoadSave;
 	public MovieTexture m_Texture_movie_intro;
 	public MovieTexture m_Texture_movie_Bonus;
-	public AudioClip m_audio_Bonus;
+	//public AudioClip m_audio_Bonus;
 	Texture m_Texture_PlayerWin;
 	
 	const float m_fDeltatime = 1/60.0f;
@@ -673,17 +674,26 @@ public class CMenu : MonoBehaviour{
 	//-------------------------------------------------------------------------------
 	void GestionSave()
 	{
+		Vector2 posSave = new Vector2(20,20);
 		if(m_Game.GetSaveManager().CantSave() && m_fTempsErrorMessage > 0.0f)
 		{
 			GUI.skin.label.font = m_Game.m_ErrorFont;
-			GUI.Label(new Rect(20, 20, 800, 300), "Dude! je peux pas sauvegarder, le dossier du jeu est protégé en écriture!");
+			GUI.Label(new Rect(posSave.x, posSave.y, 800, 300), "Dude! je peux pas sauvegarder, le dossier du jeu est protégé en écriture!");
 			m_fTempsErrorMessage -= m_fDeltatime;
 		}	
 		else
 			if(!m_Game.GetSaveManager().CantSave() && m_fTempsErrorMessage > 0.0f)
 			{
+				float fAngle = m_fTempsErrorMessage * 360.0f / m_Game.m_fTimerMenuError;
+				float fSizeText = 50.0f;
+			
 				GUI.skin.label.font = m_Game.m_ErrorFont;
-				GUI.Label(new Rect(20, 20, 1080, 300), "Sauvegarde en cours!");
+				GUI.Label(new Rect(posSave.x + fSizeText, posSave.y, 1080, 300), "Sauvegarde en cours!");
+			
+				
+				GUIUtility.RotateAroundPivot (fAngle, new Vector2(posSave.x + fSizeText/2.0f, posSave.y + fSizeText/2.0f)); 
+				GUI.DrawTexture(new Rect(posSave.x, posSave.y, fSizeText, fSizeText), m_Texture_LoadSave, ScaleMode.StretchToFill, true, 0);
+			
 				m_fTempsErrorMessage -= m_fDeltatime;
 			}
 	}
