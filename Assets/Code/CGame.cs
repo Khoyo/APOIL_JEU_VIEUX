@@ -15,6 +15,7 @@ public class CGame : MonoBehaviour
 	//fonts
 	public Font m_Font;
 	public Font m_DebugFont;
+	public Font m_ErrorFont;
 	
 	// materials
 	public Material m_materialPlayer1Repos;
@@ -87,6 +88,7 @@ public class CGame : MonoBehaviour
 	public float m_fCameraDezoomMin = 400.0f;
 	
 	public float m_fTimerDestructionPont = 2.0f;
+	public float m_fTimerMenuError = 4.0f;
 	public int m_nNbImpactMaxCaisse = 4;
 	
 	public float m_fCreepTimerParasiteMin = 4.0f;
@@ -120,6 +122,7 @@ public class CGame : MonoBehaviour
 	CSoundEngine m_SoundEngine;
 	GameObject[] m_pLevelIn;
 	
+	CMenu m_Menu;
 	//sauvegarde
 	CApoilSaveManger m_SaveManager;
 	
@@ -147,6 +150,8 @@ public class CGame : MonoBehaviour
 		
 		m_Level.SetObjetLevel(levelObj.gameObject);
 		m_Level.Init();
+		
+		m_Menu = gameObject.GetComponent<CMenu>();
 		
 		m_nScreenWidth = 1280;
 		m_nScreenHeight = 800;
@@ -289,7 +294,7 @@ public class CGame : MonoBehaviour
 	{
 		m_bInGame = false;
 		m_bWin = bWin;
-		CMenu menu = gameObject.GetComponent<CMenu>();
+		
 		Texture TexturePlayerWin = m_materialPlayer1Repos.mainTexture;;
 		if(m_bWin)
 		{	
@@ -317,10 +322,10 @@ public class CGame : MonoBehaviour
 				}
 			}
 			
-			menu.SetTexturePlayerWin(TexturePlayerWin);
+			m_Menu.SetTexturePlayerWin(TexturePlayerWin);
 		}
 
-		menu.SetMenuState(CMenu.EmenuState.e_menuState_menuWinLoose);
+		m_Menu.SetMenuState(CMenu.EmenuState.e_menuState_menuWinLoose);
 		
 		//m_Level.DeleteCElements();
 		
@@ -404,7 +409,7 @@ public class CGame : MonoBehaviour
 	//-------------------------------------------------------------------------------
 	public void QuitGame()
 	{
-		m_SaveManager.Save();
+		Save();
 		Application.Quit();	
 	}	
 	
@@ -466,8 +471,13 @@ public class CGame : MonoBehaviour
 		if(!m_bStartCalled)
 			return;
 		StartLevel();
-		
     }
+	
+	void Save()
+	{
+		m_Menu.SaveGame();
+		m_SaveManager.Save();
+	}
 	
 	//-------------------------------------------------------------------------------
 	/// 

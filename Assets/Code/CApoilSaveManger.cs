@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections;
 using System.IO;
+using System;
 
 
 public struct SSaveData
@@ -11,6 +12,7 @@ public struct SSaveData
 public class CApoilSaveManger
 {
 	SSaveData m_SaveData;
+	bool m_bCantSave;
 	string pathFile = "Test.txt";
 	string pathFolder = "Save";
 	string path;
@@ -19,6 +21,7 @@ public class CApoilSaveManger
 	{
 		m_SaveData = new SSaveData();
 		path = pathFolder+"/"+pathFile;
+		m_bCantSave = false;
 	}
 	
 	public void Save()
@@ -28,12 +31,20 @@ public class CApoilSaveManger
 		
 		FileInfo theSourceFile = new FileInfo (path);	
 		
-		StreamWriter writte = new StreamWriter(path);
+		try
+		{
+			StreamWriter writte = new StreamWriter(path);		
 		
-		writte.WriteLine(m_SaveData.m_nLastLevelUnlock);
-		writte.WriteLine("end");
+			writte.WriteLine(m_SaveData.m_nLastLevelUnlock);
+			writte.WriteLine("end");
 
-		writte.Close();
+			writte.Close();
+		}
+		catch (Exception e)
+		{
+		   // throw new Exception(e.ToString());
+			m_bCantSave = true;
+		}
 	}
 	
 	public void Load()
@@ -55,7 +66,11 @@ public class CApoilSaveManger
 		
 		text = reader.ReadLine();
 		
-		SetLastLevelUnlock(int.Parse(text));
+		int nNbLevel = 1;
+		if(int.TryParse(text,out nNbLevel))
+			nNbLevel = int.Parse(text);
+		
+		SetLastLevelUnlock(nNbLevel);
 		reader.Close();
 	}
 		
@@ -68,6 +83,11 @@ public class CApoilSaveManger
 	public SSaveData GetSaveData()
 	{
 		return m_SaveData;	
+	}
+	
+	public bool CantSave()
+	{
+		return m_bCantSave;
 	}
 	
 }
