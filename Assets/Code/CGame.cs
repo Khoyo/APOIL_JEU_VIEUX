@@ -156,6 +156,8 @@ public class CGame : MonoBehaviour
 		m_SaveManager = new CApoilSaveManger();
 		m_SaveManager.Load();
 		
+		CApoilInput.Init ();
+		
 		Object.DontDestroyOnLoad(transform.gameObject);
 	}
 	
