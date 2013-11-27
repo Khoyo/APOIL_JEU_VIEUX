@@ -476,8 +476,11 @@ public class CGame : MonoBehaviour
 	
 	void Save()
 	{
-		m_Menu.SaveGame();
-		m_SaveManager.Save();
+		if( m_SaveManager.ReadSaveData().m_nLastLevelUnlock < m_SaveManager.GetSaveData().m_nLastLevelUnlock)
+		{
+			m_Menu.SaveGame();
+			m_SaveManager.Save();
+		}
 	}
 	
 	//-------------------------------------------------------------------------------

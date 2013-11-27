@@ -73,6 +73,25 @@ public class CApoilSaveManger
 		SetLastLevelUnlock(nNbLevel);
 		reader.Close();
 	}
+	
+	public SSaveData ReadSaveData()
+	{
+		SSaveData Data = new SSaveData();
+		FileInfo theSourceFile = new FileInfo (path);
+		StreamReader reader = theSourceFile.OpenText();
+		string text;
+		
+		text = reader.ReadLine();
+		
+		int nNbLevel = 1;
+		if(int.TryParse(text,out nNbLevel))
+			nNbLevel = int.Parse(text);
+		
+		Data.m_nLastLevelUnlock = nNbLevel;
+		
+		reader.Close();
+		return Data;
+	}
 		
 	
 	public void SetLastLevelUnlock(int nLastLevelUnlock)
