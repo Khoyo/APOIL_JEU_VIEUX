@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 using System.Collections;
 
 public class CMenu : MonoBehaviour{
@@ -40,9 +40,10 @@ public class CMenu : MonoBehaviour{
 	public Texture m_Texture_Blue;
 	public Texture m_Texture_Red;
 	public Texture m_Texture_Lost;
+	public Texture m_Texture_LoadSave;
 	public MovieTexture m_Texture_movie_intro;
 	public MovieTexture m_Texture_movie_Bonus;
-	public AudioClip m_audio_Bonus;
+	//public AudioClip m_audio_Bonus;
 	Texture m_Texture_PlayerWin;
 	
 	const float m_fDeltatime = 1/60.0f;
@@ -50,6 +51,7 @@ public class CMenu : MonoBehaviour{
 	const float m_fTempsSplashInit = 2.0f;
 	float m_fTempsVideoIntro;
 	float m_fTempsVideoBonus;
+	float m_fTempsErrorMessage;
 	float m_fWaitingTimerVideoBonus;
 	bool m_bGamePaused;
 	CGame m_Game;
@@ -114,6 +116,7 @@ public class CMenu : MonoBehaviour{
 		m_bGamePaused = false;
 		m_fTimerMenuNavigation = 0.0f;
 		m_fWaitingTimerVideoBonus = 0.0f;
+		m_fTempsErrorMessage = 0.0f;
 		m_nLevelToLoad = 0;
 		if(!m_Game.IsNotUseMasterGame())	
 		{
@@ -183,7 +186,7 @@ public class CMenu : MonoBehaviour{
 				GUI.DrawTexture(new Rect(0, 0, 1280, 800), m_Texture_Fond);
 			
 				GestionMenuMain(m_Game.m_bPadXBox);
-				
+				GestionSave();
 				break;
 			}	
 			
@@ -243,7 +246,7 @@ public class CMenu : MonoBehaviour{
 				//if (GUI.Button(new Rect(940, 10, 200, 60), m_Texture_ButtonMenu))
 				
 				GestionMenuInGame(m_Game.m_bPadXBox);
-			
+				GestionSave();
 				break;
 			}	
 			case EmenuState.e_menuState_menuWinLoose:
@@ -666,6 +669,35 @@ public class CMenu : MonoBehaviour{
 		NagigationMenuMain(false, false, false, bMenu, false, false, bSelect, false);
 	}
 	
+	//-------------------------------------------------------------------------------
+	///
+	//-------------------------------------------------------------------------------
+	void GestionSave()
+	{
+		Vector2 posSave = new Vector2(20,20);
+		if(m_Game.GetSaveManager().CantSave() && m_fTempsErrorMessage > 0.0f)
+		{
+			GUI.skin.label.font = m_Game.m_ErrorFont;
+			GUI.Label(new Rect(posSave.x, posSave.y, 800, 300), "Dude! je peux pas sauvegarder, le dossier du jeu est protégé en écriture!");
+			m_fTempsErrorMessage -= m_fDeltatime;
+		}	
+		else
+			if(!m_Game.GetSaveManager().CantSave() && m_fTempsErrorMessage > 0.0f)
+			{
+				float fAngle = m_fTempsErrorMessage * 360.0f / m_Game.m_fTimerMenuError;
+				float fSizeText = 50.0f;
+			
+				GUI.skin.label.font = m_Game.m_ErrorFont;
+				GUI.Label(new Rect(posSave.x + fSizeText, posSave.y, 1080, 300), "Sauvegarde en cours!");
+			
+				
+				GUIUtility.RotateAroundPivot (fAngle, new Vector2(posSave.x + fSizeText/2.0f, posSave.y + fSizeText/2.0f)); 
+				GUI.DrawTexture(new Rect(posSave.x, posSave.y, fSizeText, fSizeText), m_Texture_LoadSave, ScaleMode.StretchToFill, true, 0);
+			
+				m_fTempsErrorMessage -= m_fDeltatime;
+			}
+	}
+	
 	
 	//-------------------------------------------------------------------------------
 	///
@@ -723,6 +755,11 @@ public class CMenu : MonoBehaviour{
 				ResumeGame();
 			}	
 		}
+	}
+	
+	public void SaveGame()
+	{
+		m_fTempsErrorMessage = m_Game.m_fTimerMenuError;	
 	}
 	
 	
