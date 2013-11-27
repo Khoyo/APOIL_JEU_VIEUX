@@ -48,7 +48,9 @@ public class CApoilInput
 	public static bool DebugF12;
 	
 	static CGame m_Game = GameObject.Find("_Game").GetComponent<CGame>();
-
+	
+	public static void Init(){
+	}
 	//-------------------------------------------------------------------------------
 	///
 	//-------------------------------------------------------------------------------
