@@ -67,7 +67,8 @@ public class CPlayer : CCharacter
 	bool m_bLookDown;
 	
 	float m_fBatteryLevel = 600;
-
+	
+	CPositionsPlayer m_PastPositions;
 	CCercleDiscretion m_CercleDiscretion;
 	CTakeElement m_heldElement;
 	SPlayerInput m_PlayerInput;
@@ -109,6 +110,7 @@ public class CPlayer : CCharacter
 		m_Game = GameObject.Find("_Game").GetComponent<CGame>();
 		GameObject prefab = m_Game.prefabPlayer;
 		m_GameObject = GameObject.Instantiate(prefab) as GameObject;
+		m_PastPositions = new CPositionsPlayer();
 		SetPosition2D(posInit);
 		m_posInit = posInit;
 		
@@ -161,7 +163,8 @@ public class CPlayer : CCharacter
 		m_CercleDiscretion.Init(this);
 
 		PrepareStargate();
-		m_Game.getSoundEngine().setSwitch("Sol", "Metal02", m_GameObject);
+		m_PastPositions.Init(m_Game.m_nPositionBufferSize);
+		m_Game.getSoundEngine().setSwitch("Sol", "Metal  02", m_GameObject);
 
 	}
 
@@ -216,7 +219,7 @@ public class CPlayer : CCharacter
 
 			if(m_PlayerInput.ActivateLight)
 			{
-				m_bLightIsOn = !m_bLightIsOn;	
+				m_bLightIsOn = !m_bLightIsOn;
 			}			
 					
 			CScriptBattery scriptBattery = m_heldElement != null ? (m_heldElement.GetGameObject().GetComponent<CScriptBattery>() ?? null) : null;
@@ -243,12 +246,19 @@ public class CPlayer : CCharacter
 			/*if(m_bMainCharacter)
 				m_ConeVision.Process();*/
 			
+			m_PastPositions.Add(new Vector2(m_GameObject.transform.position.x, m_GameObject.transform.position.y));
+			
 			m_CercleDiscretion.Process();
 			if(m_bIsRespawn)
 				m_bIsRespawn = false;
 		}
 		else 
 			GestionDie(fDeltatime);
+	}
+	
+	void BackInTime(int frameNumber)
+	{
+		SetPosition2D(m_PastPositions.RollBackNFrameOrBest(frameNumber));
 	}
 	
 	void PrepareStargate()
@@ -490,7 +500,7 @@ public class CPlayer : CCharacter
 			}
 			
 			m_GameObject.transform.position += /*m_fSpeed * velocity * fDeltatime + */m_fForceMagnet * MagnetDeviation;
-			m_GameObject.rigidbody.velocity = m_fSpeed * velocity;
+			m_GameObject.rigidbody.velocity = m_fSpeed * velocity; 
 		}
 		else
 		{

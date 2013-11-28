@@ -110,6 +110,8 @@ public class CGame : MonoBehaviour
 	
 	public float m_fTimeToDischargeInSec = 15;
 	
+	public int m_nPositionBufferSize = 900;
+	
 	// variables
 	bool m_bInGame;
 	bool m_bGameStarted;
