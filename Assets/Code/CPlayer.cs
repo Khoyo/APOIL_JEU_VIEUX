@@ -595,6 +595,7 @@ public class CPlayer : CCharacter
 			m_spriteSheet.AnimationStart();
 			m_fTimerDead = 0.0f;
 			m_bResetSubElements = true;
+			SetPosRespawn(m_PastPositions.RollBackNFrameOrBest(120));
 		}
 	}
 	
