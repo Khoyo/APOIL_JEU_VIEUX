@@ -36,7 +36,7 @@ public class CMachineActiveZone : MonoBehaviour {
 			
 			if(other.gameObject ==  m_Game.getLevel().getPlayer(i).GetGameObject() && m_Game.getLevel().getPlayer(i).GetPlayerInput().ActivateMachineContinuous)
 			{
-				SendMessageUpwards("ActivateContinuous", m_Game.getLevel().getPlayer(i), SendMessageOptions.RequireReceiver);
+				SendMessageUpwards("ActivateContinuous", m_Game.getLevel().getPlayer(i), SendMessageOptions.DontRequireReceiver);
 			}
 		}
 	}
