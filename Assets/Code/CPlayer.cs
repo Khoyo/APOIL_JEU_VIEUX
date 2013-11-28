@@ -201,6 +201,7 @@ public class CPlayer : CCharacter
 				m_eMoveModState = EMoveModState.e_MoveModState_attente;
 				m_GameObject.rigidbody.velocity = Vector3.zero;	
 			}
+			
 			GestionTorche(fDeltatime);
 			
 			if(m_Game.IsDebug())
@@ -214,26 +215,7 @@ public class CPlayer : CCharacter
 
 				}
 			}
-						
-			//gestion de la lampe torche
 
-			if(m_PlayerInput.ActivateLight)
-			{
-				m_bLightIsOn = !m_bLightIsOn;
-			}			
-					
-			CScriptBattery scriptBattery = m_heldElement != null ? (m_heldElement.GetGameObject().GetComponent<CScriptBattery>() ?? null) : null;
-			if(m_bLightIsOn && scriptBattery != null && scriptBattery.m_fChargeLevel > 0)
-			{
-				m_Torche.SetActiveRecursively(true);
-				m_heldElement.GetGameObject().GetComponent<CScriptBattery>().UseBattery();
-			}
-			else
-			{
-				m_Torche.SetActiveRecursively(false);
-			}
-			
-			
 			//gestion si on tiens un objet
 			if(m_bHaveObject)
 			{
@@ -555,6 +537,24 @@ public class CPlayer : CCharacter
 		
 		m_fAngleCone += 3.14159f/2.0f;
 		m_Torche.transform.RotateAround(new Vector3(0,0,1),  m_fAngleCone - fAngleOld);
+		
+		
+		if(m_PlayerInput.ActivateLight)
+		{
+			m_bLightIsOn = !m_bLightIsOn;	
+		}			
+				
+		CScriptBattery scriptBattery = m_heldElement != null ? (m_heldElement.GetGameObject().GetComponent<CScriptBattery>() ?? null) : null;
+		if(m_bLightIsOn && scriptBattery != null && scriptBattery.m_fChargeLevel > 0)
+		{
+			m_Torche.SetActiveRecursively(true);
+			m_heldElement.GetGameObject().GetComponent<CScriptBattery>().UseBattery();
+		}
+		else
+		{
+			m_Torche.SetActiveRecursively(false);
+		}
+		
 	}
 	
 	//-------------------------------------------------------------------------------
@@ -739,4 +739,9 @@ public class CPlayer : CCharacter
 		m_spriteSheet.SetAnimation(m_AnimPlayer.AnimRepos);
 		m_spriteSheet.AnimationStart();
 	}	
+	
+	public bool HaveTorche()
+	{
+		return (((m_heldElement != null) ? (m_heldElement.GetGameObject().GetComponent<CScriptBattery>() ?? null) : null) != null);	
+	}
 }

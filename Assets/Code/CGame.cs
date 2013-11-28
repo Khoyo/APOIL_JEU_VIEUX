@@ -138,6 +138,8 @@ public class CGame : MonoBehaviour
 		//Make _Game (and CGame) persitent beetween scenes
 		Object.DontDestroyOnLoad(this);
 		
+		CApoilInput.Init();
+		
 		m_nIdLevel = 0;
 		m_pLevelIn = null;
 		
@@ -162,8 +164,6 @@ public class CGame : MonoBehaviour
 		
 		m_SaveManager = new CApoilSaveManger();
 		m_SaveManager.Load();
-		
-		CApoilInput.Init ();
 		
 		Object.DontDestroyOnLoad(transform.gameObject);
 	}
@@ -480,8 +480,11 @@ public class CGame : MonoBehaviour
 	
 	void Save()
 	{
-		m_Menu.SaveGame();
-		m_SaveManager.Save();
+		if( m_SaveManager.ReadSaveData().m_nLastLevelUnlock < m_SaveManager.GetSaveData().m_nLastLevelUnlock)
+		{
+			m_Menu.SaveGame();
+			m_SaveManager.Save();
+		}
 	}
 	
 	//-------------------------------------------------------------------------------
