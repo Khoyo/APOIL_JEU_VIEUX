@@ -58,7 +58,7 @@ public class CScriptLight : MonoBehaviour
 			if(Physics.Raycast( m_Transform.position, dir, out hit, m_fDistance, m_Mask ) ) // Si on touche, on rétrécit le rayon
 			{
 				// CGameObject objet = hit.collider.gameObject.GetComponent<CGameObject>();	
-				if(!hit.collider.gameObject.tag.Equals("player") && hit.collider.gameObject.GetComponent<CGameObject>() != null)
+				//if(!hit.collider.gameObject.tag.Equals("player") && hit.collider.gameObject.GetComponent<CGameObject>() != null)
 				{
 					dist = hit.distance;
 					//objet.SetVisible();
