@@ -97,8 +97,8 @@ public class CScriptLight : MonoBehaviour
 		
 		(m_gameObject.AddComponent( typeof( MeshFilter )) as MeshFilter).mesh = m_pSightMesh;
 		(m_gameObject.AddComponent( typeof( MeshRenderer )) as MeshRenderer).material = m_Material;
-		m_gameObject.layer = LayerMask.NameToLayer("Cone");
-		m_gameObject.tag = "cone";
+		m_gameObject.layer = LayerMask.NameToLayer("ZoneLight");
+		m_gameObject.tag = "ZoneLight";
 		m_Transform = gameObject.transform; //transform; // histoire de limiter les getcomponent dans la boucle
 		
 		// Préparation des rayons
