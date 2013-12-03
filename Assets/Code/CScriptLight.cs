@@ -91,7 +91,8 @@ public class CScriptLight : MonoBehaviour
 		m_fDistance = m_Game.m_fDistanceConeDeVision;
 		m_nPrecision = 100;
 		// Initialisation du cone
-		m_gameObject = new GameObject( "ConeSight" );
+		m_gameObject = new GameObject( "ZoneCollider" );
+		m_gameObject.transform.parent = gameObject.transform;
 		m_pSightMesh = new Mesh();
 		
 		(m_gameObject.AddComponent( typeof( MeshFilter )) as MeshFilter).mesh = m_pSightMesh;
