@@ -10,14 +10,14 @@ public class CConeVision : MonoBehaviour
 	public bool debug = false; 		// Dessine les rayons dans la scene view
 	public LayerMask mask;		 	// Layers qui vont bloquer la vue
    
-	Vector3[] directions; // va contenir les rayons, déterminés par precision, distance et angle
-	Mesh sightMesh; // Le mesh dont les vertex seront modifiés selons les obstacles
+	Vector3[] directions;	// va contenir les rayons, déterminés par precision, distance et angle
+	Mesh sightMesh;			// Le mesh dont les vertex seront modifiés selons les obstacles
 	Transform m_Transform;
 	GameObject m_gameObject;
     
-	float angle; // Angle d'ouverture, degré
+	float angle; 	// Angle d'ouverture, degré
 	float distance;
-	int precision; // Nombre de rayons lancé dans l'angle ci dessus
+	int precision; 	// Nombre de rayons lancé dans l'angle ci dessus
 	int nbPoints;
 	int nbTriangle;
 	int nbFace;
