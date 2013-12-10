@@ -170,6 +170,8 @@ public class CLevel
 			AnimPlayer[i].AnimDieHeadCut = new CAnimation(	m_Game.m_materialPlayer1DieHeadCut, 3, 2, 1.0f);
 			AnimPlayer[i].AnimDieFall = new CAnimation(	m_Game.m_materialPlayer1DieFall, 3, 2, 3.0f);
 			AnimPlayer[i].AnimDieGravity = new CAnimation(	m_Game.m_materialPlayer1DieGravity, 8, 1, 3.0f);
+			
+			AnimPlayer[i].AnimGhost = new CAnimation(m_Game.m_materialPlayer1Ghost, 1, 1, 1);
 		}
 		
 		for(int i = 0 ; i < m_Game.m_nNbPlayer ; ++i)
