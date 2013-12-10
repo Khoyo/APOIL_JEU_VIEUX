@@ -195,7 +195,7 @@ public class CGravityMonster : CElement
 	
 	public void DropPlayer(CPlayer player)
 	{
-		if(m_PlayerAttracted == player)
+		if(m_PlayerAttracted == player && m_PlayerAttracted != null)
 		{
 			m_PlayerAttracted.StopMagnet();
 			m_PlayerAttracted = null;

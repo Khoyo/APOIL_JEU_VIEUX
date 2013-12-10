@@ -10,6 +10,7 @@ public class CScriptLight : MonoBehaviour
 	public Material m_Material; 	// Mat appliqué au mesh de vue
 	public bool m_bDebug = false; 		// Dessine les rayons dans la scene view
 	public LayerMask m_Mask;		 	// Layers qui vont bloquer la vue
+	MeshCollider m_Collider;
    
 	Vector3[] m_pDirections;	// va contenir les rayons, déterminés par precision, distance et angle
 	Mesh m_pSightMesh;			// Le mesh dont les vertex seront modifiés selons les obstacles
@@ -58,7 +59,7 @@ public class CScriptLight : MonoBehaviour
 			if(Physics.Raycast( m_Transform.position, dir, out hit, m_fDistance, m_Mask ) ) // Si on touche, on rétrécit le rayon
 			{
 				// CGameObject objet = hit.collider.gameObject.GetComponent<CGameObject>();	
-				//if(!hit.collider.gameObject.tag.Equals("player") && hit.collider.gameObject.GetComponent<CGameObject>() != null)
+				//if(!hit.collider.gameObject.tag.Equals("") && hit.collider.gameObject.GetComponent<CGameObject>() != null)
 				{
 					dist = hit.distance;
 					//objet.SetVisible();
@@ -71,13 +72,15 @@ public class CScriptLight : MonoBehaviour
 			
 			// Positionnement du vertex
 			m_pPoints[i] = dir * dist;
-			m_pPoints[i+m_nPrecision] = Vector3.zero;
+			m_pPoints[i + m_nPrecision] = Vector3.zero;
 		}
 		
 		// On réaffecte les vertices
 		m_pSightMesh.vertices = m_pPoints;  
-		m_pSightMesh.RecalculateNormals(); // normales doivent être calculé pour tout changement 
-		                      			// du tableau vertices, même si on travaille sur un plan*/
+		m_pSightMesh.RecalculateNormals();	// normales doivent être calculé pour tout changement 
+		                      				// du tableau vertices, même si on travaille sur un plan*/
+		
+		m_Collider.sharedMesh = m_pSightMesh;
 		
 		//translate le centre a la position du player!!! J'AI PASSE 3 PUTAINS DE JOUR POUR TROUVER QU'IL FALLAIT FAIRE LE CONE EN (0,0) ET LE TRANSLATER ENSUITE!!!
 		m_gameObject.transform.position = m_Transform.position;
@@ -91,12 +94,18 @@ public class CScriptLight : MonoBehaviour
 		m_fDistance = m_Game.m_fDistanceConeDeVision;
 		m_nPrecision = 100;
 		// Initialisation du cone
-		m_gameObject = new GameObject( "ZoneCollider" );
+		m_gameObject = new GameObject("ZoneCollider");
 		m_gameObject.transform.parent = gameObject.transform;
 		m_pSightMesh = new Mesh();
 		
 		(m_gameObject.AddComponent( typeof( MeshFilter )) as MeshFilter).mesh = m_pSightMesh;
 		(m_gameObject.AddComponent( typeof( MeshRenderer )) as MeshRenderer).material = m_Material;
+		m_gameObject.AddComponent<Rigidbody>();
+		m_Collider = m_gameObject.AddComponent("MeshCollider") as MeshCollider;
+		//Vector3 size = new Vector3(1000, 1000, 100);
+		//m_Collider.size = size;
+		
+		m_Collider.isTrigger = true;
 		m_gameObject.layer = LayerMask.NameToLayer("ZoneLight");
 		m_gameObject.tag = "ZoneLight";
 		m_Transform = gameObject.transform; //transform; // histoire de limiter les getcomponent dans la boucle
@@ -105,7 +114,7 @@ public class CScriptLight : MonoBehaviour
 		setDirection();
 		
 		// préparations des outils de manipulation du mesh
-		int nbPoints =  m_nPrecision*2;
+		int nbPoints =  m_nPrecision * 2;
 		int nbTriangle = nbPoints - 2;
 		int nbFace = nbTriangle / 2;
 		int nbIndice =  nbTriangle * 3;
@@ -116,22 +125,30 @@ public class CScriptLight : MonoBehaviour
 		
 		for( int i = 0; i < nbFace; i++ )
 		{
-			m_pIndices[i*6+0] = i+0;
-			m_pIndices[i*6+1] = i+1;
-			m_pIndices[i*6+2] = i+row;
-			m_pIndices[i*6+3] = i+1;
-			m_pIndices[i*6+4] = i+row+1;
-			m_pIndices[i*6+5] = i+row;
+			m_pIndices[i*6 + 0] = i + 0;
+			m_pIndices[i*6 + 1] = i + 1;
+			m_pIndices[i*6 + 2] = i + row;
+			m_pIndices[i*6 + 3] = i + 1;
+			m_pIndices[i*6 + 4] = i + row + 1;
+			m_pIndices[i*6 + 5] = i + row;
 		}
 		
 		m_pSightMesh.vertices = new Vector3[nbPoints];
 		m_pSightMesh.uv = new Vector2[nbPoints];
-		m_pSightMesh.triangles = m_pIndices;    
+		m_pSightMesh.triangles = m_pIndices;   
+		
+		
+		//m_Collider.sharedMesh.vertices = m_pPoints;
 	}
 	
 	// Update is called once per frame
 	void Update () 
 	{
 		UpdateSightMesh();
+	}
+	
+	void OnCollisionEnter(Collision other) 
+	{
+		Debug.Log("collision");
 	}
 }

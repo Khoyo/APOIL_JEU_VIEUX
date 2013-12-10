@@ -37,6 +37,19 @@ public class CScriptGravityMonster : MonoBehaviour
 		}
 	}
 	
+	void OnTriggerEnter(Collider other)
+	{
+	
+		if(other.gameObject.CompareTag("ZoneLight"))
+		{
+			m_GravityMonster.SetLightStatus(true);
+		}
+		else
+		{
+			//m_GravityMonster.SetLightStatus(false);
+		}	
+	}
+	
 	//-------------------------------------------------------------------------------
 	///
 	//-------------------------------------------------------------------------------
