@@ -43,6 +43,7 @@ public class CGame : MonoBehaviour
 	public Material m_materialPlayer1DieHeadCut;
 	public Material m_materialPlayer1DieFall;
 	public Material m_materialPlayer1DieGravity;
+	public Material m_materialPlayer1Ghost;
 	
 	public Material m_materialPlayer2Repos;
 	public Material m_materialPlayer3Repos;

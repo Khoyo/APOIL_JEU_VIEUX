@@ -57,6 +57,25 @@ class CPositionsPlayer
 		return m_Positions[m_currentIndex];
 	}
 	
+	public Vector2 Pop()
+	{
+		if(m_bIsEmpty)
+			throw new CPositionPlayerEmptyException("Player position list is closed");
+		
+		if(m_currentIndex==m_baseIndex)
+		{
+			return m_Positions[m_currentIndex];
+		}
+		
+		Vector2 popped = m_Positions[m_currentIndex];
+		//Debug.Log ("Popped "+popped);
+		//DebugPrint();
+		m_currentIndex = (m_currentIndex-1)%m_PositionHoldNumber;
+		if(m_currentIndex >= m_PositionHoldNumber || m_currentIndex < 0)
+			Debug.LogWarning("PUTE ET FRACTION "+m_currentIndex+"  "+m_PositionHoldNumber);
+		return popped;
+	} 
+	
 	public Vector2 Get(int i)
 	{
 		return m_Positions[i];
@@ -86,7 +105,13 @@ class CPositionsPlayer
 		
 	}
 }
-			
+
+class CPositionPlayerEmptyException : System.Exception
+{
+	public CPositionPlayerEmptyException(string message) : base(message)
+	{
+	}
+}
 			
 class CPositionsPlayerTest
 {

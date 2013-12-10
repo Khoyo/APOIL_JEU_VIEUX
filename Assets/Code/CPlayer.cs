@@ -28,6 +28,8 @@ public struct SAnimationPlayer //AnimAB A = mouvement de deplacement, B = mouvem
 	public CAnimation AnimDieHeadCut;
 	public CAnimation AnimDieFall;
 	public CAnimation AnimDieGravity;
+	
+	public CAnimation AnimGhost;
 }
 
 public class CPlayer : CCharacter 
@@ -240,7 +242,7 @@ public class CPlayer : CCharacter
 	
 	void BackInTime(int frameNumber)
 	{
-		SetPosition2D(m_PastPositions.RollBackNFrameOrBest(frameNumber));
+		//SetPosition2D(m_PastPositions.RollBackNFrameOrBest(frameNumber));
 	}
 	
 	void PrepareStargate()
@@ -266,22 +268,10 @@ public class CPlayer : CCharacter
 		{
 			m_spriteSheet.Process();
 			m_fTimerDead += fDeltatime;
-			if(m_bHaveDirectionToDie)
-			{
-				float fX;
-				float fY;
-				if(m_fTimerDead < m_fTimerDeadMax / 2.0f)
-				{
-					fX = CApoilMath.InterpolationLinear(m_fTimerDead, 0.0f, m_fTimerDeadMax / 2.0f, m_posOfDie.x, m_posGoToDie.x);
-					fY = CApoilMath.InterpolationLinear(m_fTimerDead, 0.0f, m_fTimerDeadMax / 2.0f, m_posOfDie.y, m_posGoToDie.y);
-				}
-				else
-				{
-					fX = m_posGoToDie.x;
-					fY = m_posGoToDie.y;
-				}
-				SetPosition2D(new Vector2(fX, fY)); 
-			}
+			Vector2 pos = m_PastPositions.Pop();
+			SetPosition2D(pos); 
+			SetPosRespawn(pos);
+			
 		}
 		else 
 		{
@@ -589,13 +579,13 @@ public class CPlayer : CCharacter
 		{
 			DropElement();
 			m_bIsAlive = false;
-			m_spriteSheet.SetAnimation(m_AnimPlayer.AnimDieHeadCut);
+			m_spriteSheet.SetAnimation(m_AnimPlayer.AnimGhost);
 			m_spriteSheet.setEndCondition(CSpriteSheet.EEndCondition.e_Stop);
 			m_spriteSheet.Reset();
 			m_spriteSheet.AnimationStart();
 			m_fTimerDead = 0.0f;
 			m_bResetSubElements = true;
-			SetPosRespawn(m_PastPositions.RollBackNFrameOrBest(120));
+			//SetPosRespawn(m_PastPositions.RollBackNFrameOrBest(120));
 		}
 	}
 	
