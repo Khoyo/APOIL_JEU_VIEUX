@@ -19,5 +19,15 @@ public class CScriptPlayer : MonoBehaviour
 		{	
 			Physics.IgnoreCollision(other.collider, collider); 	
 		}
+		
+		
+	}
+	
+	void OnTriggerEnter(Collider other)
+	{
+		if (other.gameObject.tag == "ZoneLight") 
+		{	
+			Debug.Log ("on a bientot fini le jeu!");
+		}	
 	}
 }

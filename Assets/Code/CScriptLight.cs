@@ -16,6 +16,7 @@ public class CScriptLight : MonoBehaviour
 	Mesh m_pSightMesh;			// Le mesh dont les vertex seront modifiés selons les obstacles
 	Transform m_Transform;
 	GameObject m_gameObject;
+	GameObject[] m_pCollider;
     
 	float m_fAngleMax; 	// Angle d'ouverture, degré
 	float m_fDistance;
@@ -66,21 +67,28 @@ public class CScriptLight : MonoBehaviour
 				}
 				
 			}
-			 
+			float fSize = dist/2.0f;
+			Vector3 ScaleParent = m_Transform.lossyScale;
+			m_pCollider[i].transform.position = m_Transform.position + fSize * m_Transform.TransformDirection(m_pDirections[i]);
+			m_pCollider[i].transform.localScale = new Vector3(1, fSize/ScaleParent.z,1);
+			
+			/* 
 			if(m_bDebug)
 				Debug.DrawRay( m_Transform.position, dir * dist );
-			
+			*/
 			// Positionnement du vertex
-			m_pPoints[i] = dir * dist;
-			m_pPoints[i + m_nPrecision] = Vector3.zero;
+			//m_pPoints[i] = dir * dist;
+			//m_pPoints[i + m_nPrecision] = Vector3.zero;
 		}
 		
-		// On réaffecte les vertices
-		m_pSightMesh.vertices = m_pPoints;  
-		m_pSightMesh.RecalculateNormals();	// normales doivent être calculé pour tout changement 
-		                      				// du tableau vertices, même si on travaille sur un plan*/
+		Set3DPolygon();
 		
-		m_Collider.sharedMesh = m_pSightMesh;
+		for(int i = 0 ; i < m_nPrecision ; i++)
+		{
+			Debug.DrawRay( m_Transform.position, m_fDistance * m_Transform.TransformDirection(m_pDirections[i]));
+		}
+		
+		//m_Collider.sharedMesh = m_pSightMesh;
 		
 		//translate le centre a la position du player!!! J'AI PASSE 3 PUTAINS DE JOUR POUR TROUVER QU'IL FALLAIT FAIRE LE CONE EN (0,0) ET LE TRANSLATER ENSUITE!!!
 		m_gameObject.transform.position = m_Transform.position;
@@ -92,12 +100,14 @@ public class CScriptLight : MonoBehaviour
 		m_Game = GameObject.Find("_Game").GetComponent<CGame>();
 		m_fAngleMax = 360.0f;
 		m_fDistance = m_Game.m_fDistanceConeDeVision;
-		m_nPrecision = 100;
+		m_nPrecision = 50;
 		// Initialisation du cone
 		m_gameObject = new GameObject("ZoneCollider");
 		m_gameObject.transform.parent = gameObject.transform;
-		m_pSightMesh = new Mesh();
 		
+		
+		
+		/*
 		(m_gameObject.AddComponent( typeof( MeshFilter )) as MeshFilter).mesh = m_pSightMesh;
 		(m_gameObject.AddComponent( typeof( MeshRenderer )) as MeshRenderer).material = m_Material;
 		m_gameObject.AddComponent<Rigidbody>();
@@ -108,11 +118,33 @@ public class CScriptLight : MonoBehaviour
 		m_Collider.isTrigger = true;
 		m_gameObject.layer = LayerMask.NameToLayer("ZoneLight");
 		m_gameObject.tag = "ZoneLight";
+		*/
 		m_Transform = gameObject.transform; //transform; // histoire de limiter les getcomponent dans la boucle
 		
 		// Préparation des rayons
 		setDirection();
 		
+		m_pCollider = new GameObject[m_nPrecision];
+		
+		float angle_step = m_fAngleMax / (m_nPrecision-1);
+		for(int i = 0 ; i < m_nPrecision ; i++)
+		{
+			GameObject cylinder = GameObject.CreatePrimitive(PrimitiveType.Cylinder);
+			cylinder.collider.isTrigger = true;
+			cylinder.transform.parent = gameObject.transform;
+			float fSize = m_fDistance/2.0f;
+			cylinder.transform.position = m_Transform.position + fSize * m_Transform.TransformDirection(m_pDirections[i]);
+			cylinder.transform.RotateAround(new Vector3(0,0,1), i*angle_step * 2.0f*3.14f/360f);
+			
+			Vector3 ScaleParent = m_Transform.lossyScale;
+			cylinder.transform.localScale = new Vector3(1,fSize / ScaleParent.z,1);
+			cylinder.layer = LayerMask.NameToLayer("ZoneLight");
+			cylinder.tag = "ZoneLight";
+			cylinder.renderer.material = m_Material;
+			m_pCollider[i] = cylinder;
+		}
+		
+		/*
 		// préparations des outils de manipulation du mesh
 		int nbPoints =  m_nPrecision * 2;
 		int nbTriangle = nbPoints - 2;
@@ -136,9 +168,17 @@ public class CScriptLight : MonoBehaviour
 		m_pSightMesh.vertices = new Vector3[nbPoints];
 		m_pSightMesh.uv = new Vector2[nbPoints];
 		m_pSightMesh.triangles = m_pIndices;   
-		
+		*/
 		
 		//m_Collider.sharedMesh.vertices = m_pPoints;
+	}
+	
+	void Set3DPolygon()
+	{
+				// On réaffecte les vertices
+		//m_pSightMesh.vertices = m_pPoints;  
+		//m_pSightMesh.RecalculateNormals();	// normales doivent être calculé pour tout changement 
+		                      				// du tableau vertices, même si on travaille sur un plan*/
 	}
 	
 	// Update is called once per frame
