@@ -8,6 +8,7 @@ public struct SAnimationCreep
 	public CAnimation AnimChoppe;
 	public CAnimation AnimDort;
 	public CAnimation AnimEclaire;
+	public CAnimation AnimAttraper;
 }
 
 public class CCreep : CElement 
@@ -46,6 +47,7 @@ public class CCreep : CElement
 		m_PlayerParasitized = null;
 		m_bIsOnPlayer = false;
 		m_bCanParasitizedPlayer = true;
+		m_bIsOnLight = false;
 		m_fTimerParasite = 0.0f;
 		m_fVelocity = 0.0f;
 		m_fTimerTakePlayer = 0.0f;
@@ -69,6 +71,7 @@ public class CCreep : CElement
 		m_AnimationCreep.AnimDort = new CAnimation(m_Game.m_materialMonterCreepDort, 2, 2, 1.0f);
 		m_AnimationCreep.AnimEclaire = new CAnimation(m_Game.m_materialMonterCreepEclaire, 2, 2, 1.0f);
 		m_AnimationCreep.AnimVeille = new CAnimation(m_Game.m_materialMonterCreepVeille, 2, 2, 1.0f);
+		m_AnimationCreep.AnimAttraper = new CAnimation(m_Game.m_materialMonterCreepAttraper, 2, 2, 1.0f);
 		
 		m_SpriteSheet = new CSpriteSheet(m_GameObject);
 		m_Game = GameObject.Find("_Game").GetComponent<CGame>();
@@ -284,7 +287,7 @@ public class CCreep : CElement
 			}
 			case EState.e_TakePlayer:
 			{
-				m_SpriteSheet.SetAnimation(m_AnimationCreep.AnimBouge);
+				m_SpriteSheet.SetAnimation(m_AnimationCreep.AnimAttraper);
 				break;	
 			}
 		}	
@@ -308,6 +311,16 @@ public class CCreep : CElement
 	public void SetIsOnLight(bool bIsOnLight)
 	{
 		m_bIsOnLight = bIsOnLight;	
+	}
+	
+	public bool IsOnLight()
+	{
+		return m_bIsOnLight;	
+	}
+	
+	public bool CanTakePlayer()
+	{
+		return (!IsInState(CCreep.EState.e_Sleep) && !IsInState(CCreep.EState.e_OnLight));
 	}
 	
 	public bool IsInState(EState eState)

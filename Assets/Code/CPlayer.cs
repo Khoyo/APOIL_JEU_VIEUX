@@ -226,9 +226,6 @@ public class CPlayer : CCharacter
 		
 			//Appel a la main des scripts du gameObject
 			m_spriteSheet.Process();
-		
-			/*if(m_bMainCharacter)
-				m_ConeVision.Process();*/
 			
 			m_PastPositions.Add(new Vector2(m_GameObject.transform.position.x, m_GameObject.transform.position.y));
 			

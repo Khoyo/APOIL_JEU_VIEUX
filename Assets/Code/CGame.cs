@@ -60,6 +60,7 @@ public class CGame : MonoBehaviour
 	public Material m_materialMonterCreepChoppe;
 	public Material m_materialMonterCreepDort;
 	public Material m_materialMonterCreepEclaire;
+	public Material m_materialMonterCreepAttraper;
 	
 	// variables de LD
 	public bool m_bPadXBox = false;

@@ -28,7 +28,7 @@ public class CScriptCreepZone : MonoBehaviour
 		{
 			if(other.gameObject == m_Game.getLevel().getPlayer(i).GetGameObject())
 			{
-				if(!m_Creep.IsOnPlayer() && !m_Creep.IsInState(CCreep.EState.e_Sleep))
+				if(!m_Creep.IsOnPlayer() && m_Creep.CanTakePlayer())
 				{
 					m_Creep.SetPositionToGo(m_Game.getLevel().getPlayer(i).GetPosition2D());
 				}
