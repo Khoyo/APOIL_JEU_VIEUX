@@ -221,6 +221,16 @@ public class CGravityMonster : CElement
 		m_bIsOnLight = bIsLight;	
 	}
 	
+	public bool IsOnLight()
+	{
+		return m_bIsOnLight;	
+	}
+	
+	public bool CanTakePlayer()
+	{
+		return !IsInState(CGravityMonster.EState.e_Eclaire);
+	}
+	
 	void SetAnimationState()
 	{
 		switch(m_eState)

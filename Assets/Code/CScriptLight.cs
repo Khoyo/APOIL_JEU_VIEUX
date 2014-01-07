@@ -83,10 +83,11 @@ public class CScriptLight : MonoBehaviour
 		
 		Set3DPolygon();
 		
-		for(int i = 0 ; i < m_nPrecision ; i++)
-		{
-			Debug.DrawRay( m_Transform.position, m_fDistance * m_Transform.TransformDirection(m_pDirections[i]));
-		}
+		if(m_bDebug)
+			for(int i = 0 ; i < m_nPrecision ; i++)
+			{
+				Debug.DrawRay( m_Transform.position, m_fDistance * m_Transform.TransformDirection(m_pDirections[i]));
+			}
 		
 		//m_Collider.sharedMesh = m_pSightMesh;
 		

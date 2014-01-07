@@ -22,16 +22,6 @@ public class CScriptGravityMonsterZoneVision : MonoBehaviour
 	
 	}
 	
-	void OnTriggerEnter(Collider other) 
-	{
-		for(int i = 0 ; i < m_Game.m_nNbPlayer ; ++i)
-		{
-			if(other.gameObject == m_Game.getLevel().getPlayer(i).GetGameObject())
-			{
-			}
-		}
-	}
-	
 	void OnTriggerStay(Collider other) 
 	{
 		bool bHavePlayerInZone = false;

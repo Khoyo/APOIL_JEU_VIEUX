@@ -22,12 +22,4 @@ public class CScriptPlayer : MonoBehaviour
 		
 		
 	}
-	
-	void OnTriggerEnter(Collider other)
-	{
-		if (other.gameObject.tag == "ZoneLight") 
-		{	
-			Debug.Log ("on a bientot fini le jeu!");
-		}	
-	}
 }

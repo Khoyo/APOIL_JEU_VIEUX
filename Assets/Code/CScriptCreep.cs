@@ -26,10 +26,10 @@ public class CScriptCreep : MonoBehaviour
 	void Update () 
 	{
 		if(!m_Creep.IsOnLight() && m_fTimeToTurnLightOff > 0.0f)
-			m_Creep.SetIsOnLight(true);
+			m_Creep.SetLightStatus(true);
 		
 		else if(m_Creep.IsOnLight() && m_fTimeToTurnLightOff < 0.0f)
-			m_Creep.SetIsOnLight(false);
+			m_Creep.SetLightStatus(false);
 		
 		m_fTimeToTurnLightOff -= Time.deltaTime;
 	}

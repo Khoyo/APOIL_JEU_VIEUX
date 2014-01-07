@@ -308,7 +308,7 @@ public class CCreep : CElement
 		return m_PlayerParasitized;
 	}
 	
-	public void SetIsOnLight(bool bIsOnLight)
+	public void SetLightStatus(bool bIsOnLight)
 	{
 		m_bIsOnLight = bIsOnLight;	
 	}
