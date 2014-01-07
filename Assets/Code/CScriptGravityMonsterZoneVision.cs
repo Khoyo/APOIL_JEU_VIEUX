@@ -7,32 +7,37 @@ public class CScriptGravityMonsterZoneVision : MonoBehaviour
 	CGame m_Game;
 	CGravityMonster m_GravityMonster;
 	bool m_bHavePlayerInZone;
+	float m_fTimeToTurnOff;
+	const float m_fTimeToTurnOffMax = 0.5f;
 	
 	// Use this for initialization
 	void Start () 
 	{
 		m_bHavePlayerInZone = false;
 		m_Game = GameObject.Find("_Game").GetComponent<CGame>();
-		
+		m_fTimeToTurnOff = 0.0f;
 	}
 	
 	// Update is called once per frame
 	void Update () 
 	{
-	
+		if(m_fTimeToTurnOff < 0.0f)
+			m_bHavePlayerInZone = false;
+		else
+			m_bHavePlayerInZone = true;
+		
+		m_fTimeToTurnOff -= Time.deltaTime;
 	}
 	
 	void OnTriggerStay(Collider other) 
 	{
-		bool bHavePlayerInZone = false;
 		for(int i = 0 ; i < m_Game.m_nNbPlayer ; ++i)
 		{
 			if(other.gameObject == m_Game.getLevel().getPlayer(i).GetGameObject())
 			{
-				bHavePlayerInZone = true;
+				m_fTimeToTurnOff = m_fTimeToTurnOffMax;		
 			}
-		}
-		m_bHavePlayerInZone = bHavePlayerInZone;
+		}	
 	}
 
 	

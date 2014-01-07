@@ -10,6 +10,8 @@ public class CScriptZoneInGame : MonoBehaviour
 	List<CScriptButton> m_ButtonsDoor;
 	public bool m_bPowerLightOn = true;
 	public bool m_bPowerDoorOn = true;
+	bool m_bCheckGravityMonster;
+	CGame m_Game;
 	// Use this for initialization
 	void Start () 
 	{
@@ -17,14 +19,21 @@ public class CScriptZoneInGame : MonoBehaviour
 		m_Portes = new List<CScriptZoneOpenDoor>();
 		m_ButtonsDoor = new List<CScriptButton>();
 		m_ButtonsLight = new List<CScriptButton>();
+		m_Game = GameObject.Find("_Game").GetComponent<CGame>();
 		SetObjectsInZone();
 		TurnLight(m_bPowerLightOn);
 		TurnDoor(m_bPowerDoorOn);
+		m_bCheckGravityMonster = false;
 	}
 	
 	// Update is called once per frame
 	void Update () 
 	{
+		if(m_bCheckGravityMonster)
+		{
+			CheckGravityMonster();
+			m_bCheckGravityMonster = true;
+		}	
 	}
 	
 	public void SetObjectsInZone()
@@ -76,11 +85,14 @@ public class CScriptZoneInGame : MonoBehaviour
 			if(bOn)
 			{
 				currentLight.SetActiveRecursively(true);
+				m_bCheckGravityMonster = true;
+				CheckGravityMonster();
 			}
 			else
 			{
 				currentLight.SetActiveRecursively(false);
 				currentLight.active = true;
+				
 			}
 		}
 	}
@@ -115,5 +127,19 @@ public class CScriptZoneInGame : MonoBehaviour
 		
 		foreach(CScriptButton currentButton in m_ButtonsDoor)
 			currentButton.SetSprite();
+	}
+	
+	void CheckGravityMonster()
+	{	
+		GameObject[] pGavityMonsterTab = m_Game.getLevel().GetGavityMonsterTab();
+		foreach(GameObject GravityMonster in pGavityMonsterTab)
+		{
+			if(m_bCheckGravityMonster)
+			{
+				GravityMonster.collider.isTrigger = true;
+			}
+			else
+				GravityMonster.collider.isTrigger = false;
+		}
 	}
 }

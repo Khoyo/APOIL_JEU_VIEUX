@@ -10,6 +10,7 @@ public class CLevel
 	GameObject m_ObjetLevel;
 	List<CScriptZoneInGame> m_pObjetsZone;
 	List<CElement> m_pElement;
+	GameObject[] m_pGravityMonster;
 	
 	//-------------------------------------------------------------------------------
 	///
@@ -23,7 +24,8 @@ public class CLevel
 		m_bTimerLightSwitch = 0;
 		
 		m_pElement = new List<CElement>();		
-		m_pObjetsZone = new List<CScriptZoneInGame>();;
+		m_pObjetsZone = new List<CScriptZoneInGame>();
+		m_pGravityMonster = GameObject.FindGameObjectsWithTag("GravityMonster");
 		
 	}
 	
@@ -295,4 +297,8 @@ public class CLevel
 		m_pElement.Clear();
 	}
 	
+	public GameObject[] GetGavityMonsterTab()
+	{
+		return m_pGravityMonster;	
+	}
 }
