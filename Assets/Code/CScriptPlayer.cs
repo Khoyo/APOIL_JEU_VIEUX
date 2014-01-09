@@ -40,7 +40,6 @@ public class CScriptPlayer : MonoBehaviour
 		if(other.gameObject.tag == "ZoneLight") 
 		{	
 			m_fTimeToTurnLightOff = m_fTimeToTurnLightOffMax;	
-			Debug.Log("player eclairé");
 		}
 	}
 	
