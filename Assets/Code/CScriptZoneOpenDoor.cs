@@ -27,7 +27,7 @@ public class CScriptZoneOpenDoor : MonoBehaviour
 				gameObject.transform.parent.gameObject.GetComponent<CMachinePorte>().StopBlockClose();
 			else
 				m_fTimerClose -= Time.deltaTime;
-		}
+		}		
 	}
 	
 	void OnTriggerStay(Collider other)
@@ -35,7 +35,7 @@ public class CScriptZoneOpenDoor : MonoBehaviour
 		bool bCanOpen = false;	
 		bool bIsOnLight = m_bIsOnLight;
 		bool bIsOnLightOfPlayer = true;
-		float fAngle = 75.0f;
+		float fAngle = 75.0f;	
 		
 		if(m_Game.getLevel() != null)
 		{
@@ -83,8 +83,14 @@ public class CScriptZoneOpenDoor : MonoBehaviour
 		}
 	}
 	
+	
 	public void SetPowerStatus(bool bOn)
 	{
 		m_bPowerOn = bOn;	
+	}
+	
+	public bool GetPowerStatus()
+	{
+		return m_bPowerOn;	
 	}
 }

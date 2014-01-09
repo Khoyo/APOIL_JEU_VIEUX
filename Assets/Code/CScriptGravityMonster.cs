@@ -35,7 +35,7 @@ public class CScriptGravityMonster : MonoBehaviour
 		m_fTimeToTurnLightOff -= Time.deltaTime;
 	}
 	
-	void OnCollisionEnter(Collision other) 
+	void OnTriggerEnter(Collider other) 
 	{
 		for(int i = 0 ; i < m_Game.m_nNbPlayer ; ++i)
 		{
