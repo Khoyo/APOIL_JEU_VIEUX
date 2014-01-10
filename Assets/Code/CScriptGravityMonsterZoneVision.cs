@@ -36,6 +36,12 @@ public class CScriptGravityMonsterZoneVision : MonoBehaviour
 			if(other.gameObject == m_Game.getLevel().getPlayer(i).GetGameObject())
 			{
 				m_fTimeToTurnOff = m_fTimeToTurnOffMax;		
+				
+				if(m_Game.getLevel().getPlayer(i).TorchlightCollideWithElement(gameObject.transform.position))
+					m_GravityMonster.SetLightStatus(true);
+				else
+					m_GravityMonster.SetLightStatus(false);
+				
 			}
 		}	
 	}
