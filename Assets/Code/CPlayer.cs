@@ -67,9 +67,7 @@ public class CPlayer : CCharacter
 	bool m_bLookRight;
 	bool m_bLookUp;
 	bool m_bLookDown;
-	
-	float m_fBatteryLevel = 600;
-	
+		
 	CPositionsPlayer m_PastPositions;
 	CCercleDiscretion m_CercleDiscretion;
 	CTakeElement m_heldElement;
@@ -126,7 +124,6 @@ public class CPlayer : CCharacter
 		
 		m_eMoveModState = EMoveModState.e_MoveModState_marche;
 		m_eIdPlayer = eIdPlayer;
-		
 		SetPlayerInput();
 		
 		m_heldElement = null;
@@ -731,5 +728,39 @@ public class CPlayer : CCharacter
 	public bool HaveTorche()
 	{
 		return (((m_heldElement != null) ? (m_heldElement.GetGameObject().GetComponent<CScriptBattery>() ?? null) : null) != null);	
+	}
+	
+	public bool TorchlightCollideWithElement(Vector3 posElement)
+	{
+		bool bRet = true;
+		if(m_heldElement != null)
+		{
+			if(HaveTorche() && m_bLightIsOn)
+			{
+				bool bHaveNRJ = m_heldElement.GetGameObject().GetComponent<CScriptBattery>().HaveEnergie();
+				if(bHaveNRJ)
+				{
+					float fAngle = m_Game.m_fAngleConeDeVision;	
+				
+					Vector3 PosPlayer = GetGameObject().transform.position;
+					Vector3 DirectionRegard = GetDirectionRegard();
+					
+					Vector3 DirectionDetecteur = posElement - PosPlayer; 
+					
+					float fDotProduct = Vector3.Dot(DirectionRegard.normalized, DirectionDetecteur.normalized);
+					
+					if(fDotProduct < Mathf.Cos(CApoilMath.ConvertDegreeToRadian((fAngle/2.0f))))
+					{
+						Debug.Log ("test negatif");
+						bRet = false;
+					}
+					else
+						Debug.Log ("test positif");
+				}
+			}
+			else
+				bRet = false;
+		}
+		return bRet;
 	}
 }

@@ -17,6 +17,11 @@ public class CScriptBattery : MonoBehaviour {
 	public void UseBattery() {
 		m_fChargeLevel -= Time.deltaTime*100/m_fTimeToDischarge;
 	}
+	
+	public bool HaveEnergie()
+	{
+		return !(m_fChargeLevel < 0.0f);
+	}
 }
 
 

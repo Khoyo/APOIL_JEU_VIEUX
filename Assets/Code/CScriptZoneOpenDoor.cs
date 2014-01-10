@@ -6,6 +6,7 @@ public class CScriptZoneOpenDoor : MonoBehaviour
 	bool m_bNoPlayerInZone;
 	bool m_bPowerOn; // si la zone est allimenté en energie
 	bool m_bIsOnLight;
+	bool m_bIsOnLightOfPlayer;
 	float m_fTimerClose;
 	
 	CGame m_Game;
@@ -16,6 +17,7 @@ public class CScriptZoneOpenDoor : MonoBehaviour
 		m_Game = GameObject.Find("_Game").GetComponent<CGame>();
 		m_bPowerOn = true;
 		m_bIsOnLight = true;
+		m_bIsOnLightOfPlayer = false;
 	}
 	
 	// Update is called once per frame
@@ -33,38 +35,17 @@ public class CScriptZoneOpenDoor : MonoBehaviour
 	void OnTriggerStay(Collider other)
 	{
 		bool bCanOpen = false;	
-		bool bIsOnLight = m_bIsOnLight;
-		bool bIsOnLightOfPlayer = true;
-		float fAngle = 75.0f;	
+		bool bIsOnLight = m_bIsOnLight;		
 		
 		if(m_Game.getLevel() != null)
 		{
 			m_bNoPlayerInZone = true;
 			
 			for(int i = 0 ; i < m_Game.m_nNbPlayer ; ++i)
-			{
-				if(!m_bIsOnLight)
-				{		
-					if(m_Game.getLevel().getPlayer(i).HaveTorche())
-					{
-						Vector3 PosPlayer = m_Game.getLevel().getPlayer(i).GetGameObject().transform.position;
-						Vector3 DirectionRegard = m_Game.getLevel().getPlayer(i).GetDirectionRegard();
-						Vector3 DirectionDetecteur = gameObject.transform.parent.gameObject.transform.FindChild("Detecteur").position - PosPlayer;
-						
-						float fDotProduct = Vector3.Dot(DirectionRegard.normalized, DirectionDetecteur.normalized);
-						
-						if(fDotProduct < Mathf.Cos(CApoilMath.ConvertDegreeToRadian((fAngle/2.0f))))
-						{
-							bIsOnLightOfPlayer = false;
-						}	
-					}	
-					else
-						bIsOnLightOfPlayer = false;
-				}
-				else
-					bIsOnLightOfPlayer = false;
+			{	
+				m_bIsOnLightOfPlayer = m_Game.getLevel().getPlayer(i).TorchlightCollideWithElement(gameObject.transform.parent.gameObject.transform.FindChild("Detecteur").position);		
 				
-				if(bIsOnLight || bIsOnLightOfPlayer)
+				if(bIsOnLight || m_bIsOnLightOfPlayer)
 					bCanOpen = true;
 
 			
@@ -92,5 +73,10 @@ public class CScriptZoneOpenDoor : MonoBehaviour
 	public bool GetPowerStatus()
 	{
 		return m_bPowerOn;	
+	}
+	
+	public bool DetecteurIsOn()
+	{
+		return (m_bPowerOn || m_bIsOnLightOfPlayer);
 	}
 }

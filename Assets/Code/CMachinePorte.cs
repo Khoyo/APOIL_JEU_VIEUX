@@ -50,11 +50,6 @@ public class CMachinePorte : MonoBehaviour, IMachineAction
 			else
 				Close();
 		}
-		
-		if(m_bTargetIsOpen)	
-			gameObject.transform.FindChild("Detecteur").FindChild("light").light.enabled = true;
-		else
-			gameObject.transform.FindChild("Detecteur").FindChild("light").light.enabled = false;
 	}
 	
 	//-------------------------------------------------------------------------------

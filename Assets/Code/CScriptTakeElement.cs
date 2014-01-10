@@ -43,7 +43,7 @@ public class CScriptTakeElement : MonoBehaviour
 	//-------------------------------------------------------------------------------
 	void OnTriggerStay(Collider other)
 	{	
-		if(m_Game != null)
+		if(m_Game.getLevel() != null)
 		{
 			// ramasser un objet
 			if(m_Game.m_nNbPlayer > 0 && other.gameObject == m_Game.getLevel().getPlayer(0).GetGameObject() && CApoilInput.InputPlayer1.PickUpObject)	

@@ -8,6 +8,7 @@ public class CScriptZoneInGame : MonoBehaviour
 	List<CScriptZoneOpenDoor> m_Portes;
 	List<CScriptButton> m_ButtonsLight;
 	List<CScriptButton> m_ButtonsDoor;
+	List<GameObject> m_ObjPortes;
 	public bool m_bPowerLightOn = true;
 	public bool m_bPowerDoorOn = true;
 	bool m_bCheckGravityMonster;
@@ -16,6 +17,7 @@ public class CScriptZoneInGame : MonoBehaviour
 	void Start () 
 	{
 		m_Lights = new List<GameObject>();	
+		m_ObjPortes = new List<GameObject>();
 		m_Portes = new List<CScriptZoneOpenDoor>();
 		m_ButtonsDoor = new List<CScriptButton>();
 		m_ButtonsLight = new List<CScriptButton>();
@@ -32,6 +34,7 @@ public class CScriptZoneInGame : MonoBehaviour
 		if(m_bCheckGravityMonster)
 		{
 			CheckGravityMonster();
+			CheckPorte();
 			m_bCheckGravityMonster = true;
 		}	
 	}
@@ -58,6 +61,7 @@ public class CScriptZoneInGame : MonoBehaviour
 				if(currentPorte.transform.parent.gameObject == gameObject)
 					m_Portes.Add(currentPorte.transform.GetComponentInChildren<CScriptZoneOpenDoor>());
 			}
+			m_ObjPortes.Add(currentPorte);
 		}
 		
 		foreach(GameObject currentButton in Buttons)
@@ -87,6 +91,7 @@ public class CScriptZoneInGame : MonoBehaviour
 				currentLight.SetActiveRecursively(true);
 				m_bCheckGravityMonster = true;
 				CheckGravityMonster();
+				CheckPorte();
 			}
 			else
 			{
@@ -140,6 +145,19 @@ public class CScriptZoneInGame : MonoBehaviour
 			}
 			else
 				GravityMonster.collider.isTrigger = false;
+		}
+	}
+	
+	void CheckPorte()
+	{	
+		foreach(GameObject porte in m_ObjPortes)
+		{
+			if(m_bCheckGravityMonster)
+			{
+				porte.transform.FindChild("Detecteur").collider.isTrigger = true;
+			}
+			else
+				porte.transform.FindChild("Detecteur").collider.isTrigger = false;
 		}
 	}
 }
