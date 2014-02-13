@@ -5,8 +5,8 @@ public struct SPlayerInput
 {
 	public bool MoveLeft;
 	public bool MoveRight;
-	public bool MoveForward;
-	public bool MoveBackward;
+	public bool MoveUp;
+	public bool MoveDown;
 }
 
 public class CApoilInput
@@ -24,8 +24,8 @@ public class CApoilInput
 	
 	public static void Init()
 	{
-		if(!Application.isEditor)
-			Screen.lockCursor = true;
+		/*if(!Application.isEditor)
+			Screen.lockCursor = true;*/
 	}
 	
 	//-------------------------------------------------------------------------------
@@ -33,8 +33,8 @@ public class CApoilInput
 	//-------------------------------------------------------------------------------
 	public static void Process(float fDeltatime) 
 	{	
-		InputPlayer.MoveForward = Input.GetKey(KeyCode.Z) | Input.GetKey(KeyCode.W);
-		InputPlayer.MoveBackward = Input.GetKey (KeyCode.S);
+		InputPlayer.MoveUp = Input.GetKey(KeyCode.Z) | Input.GetKey(KeyCode.W);
+		InputPlayer.MoveDown = Input.GetKey (KeyCode.S);
 		InputPlayer.MoveLeft = Input.GetKey(KeyCode.Q) || Input.GetKey(KeyCode.A);
 		InputPlayer.MoveRight = Input.GetKey(KeyCode.D);		
 		

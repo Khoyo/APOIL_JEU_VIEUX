@@ -6,10 +6,13 @@ public class CGameCreator : MonoBehaviour {
 	static int m_instanceCount = 0;
 	public GameObject m_prefabGame;
 
+	public float LD_VelocityPlayer = 10.0f;
+
 	void Awake() {
 		if(m_instanceCount++ == 0)
 		{
-			CGame game = ((GameObject) GameObject.Instantiate(m_prefabGame)).GetComponent<CGame>();
+			((GameObject) GameObject.Instantiate(m_prefabGame)).GetComponent<CGame>();
+			CGame.m_fVelocityPlayer = LD_VelocityPlayer;
 		}
 		
 	}
