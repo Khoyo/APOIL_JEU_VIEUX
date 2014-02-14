@@ -21,7 +21,9 @@ public class CApoilInput
 	public static bool DebugF11;
 	public static bool DebugF12;
 	
-	
+	//-------------------------------------------------------------------------------
+	/// 
+	//-------------------------------------------------------------------------------
 	public static void Init()
 	{
 		/*if(!Application.isEditor)
