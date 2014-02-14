@@ -46,8 +46,7 @@ public class CPlayer : MonoBehaviour {
 			velocity = new Vector2(m_PlayerInput.MoveHorizontal, m_PlayerInput.MoveVertical);
 
 			m_Direction = new Vector2(m_PlayerInput.DirectionHorizontal, m_PlayerInput.DirectionVertical);
-			Debug.Log (m_Direction);
-			Debug.DrawRay(transform.position, 100 * new Vector3(m_Direction.x, m_Direction.y, 0));
+			Debug.DrawRay(transform.position, 2 * new Vector3(m_Direction.x, m_Direction.y, 0));
 			/*
 			if (m_PlayerInput.MoveUp)
 			{

@@ -38,8 +38,8 @@ public class CApoilInput
 	{	
 		ProcessPlayer (0, "Joystick1");
 		ProcessPlayer (1, "Joystick2");
-		//	ProcessPlayer (2, "Joystick3");
-		//	ProcessPlayer (3, "Joystick4");
+		ProcessPlayer (2, "Joystick3");
+		ProcessPlayer (3, "Joystick4");
 
 		Quit = Input.GetKeyDown(KeyCode.Escape);
 
