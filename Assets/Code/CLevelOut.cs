@@ -1,15 +1,42 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 
 public class CLevelOut : MonoBehaviour {
 
-	// Use this for initialization
+	//-------------------------------------------------------------------------------
+	/// Unity
+	//-------------------------------------------------------------------------------
 	void Start () {
 	
 	}
 	
-	// Update is called once per frame
+	//-------------------------------------------------------------------------------
+	/// Unity
+	//-------------------------------------------------------------------------------
 	void Update () {
 	
 	}
+
+	//-------------------------------------------------------------------------------
+	/// Unity
+	//-------------------------------------------------------------------------------
+	void OnTriggerEnter(Collider other) 
+	{
+		Debug.Log ("trigger");
+		if(other.CompareTag("Player"))
+		{
+			CPlayer player = other.gameObject.GetComponent<CPlayer>();
+			GameObject.Find ("Game").GetComponent<CGame> ().WinLevel (player.GetIdPlayer());
+		}
+	}
+	void OnCollisionEnter(Collision other) 
+	{
+		Debug.Log ("collider");
+		if(other.collider.CompareTag("Player"))
+		{
+			CPlayer player = other.gameObject.GetComponent<CPlayer>();
+			GameObject.Find ("Game").GetComponent<CGame> ().WinLevel (player.GetIdPlayer());
+		}
+	}
+
 }

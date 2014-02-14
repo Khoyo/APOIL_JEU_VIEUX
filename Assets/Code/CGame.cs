@@ -36,6 +36,22 @@ public class CGame : MonoBehaviour
 	//-------------------------------------------------------------------------------
 	/// 
 	//-------------------------------------------------------------------------------
+	public void GoToNextLevel()
+	{
+
+	}
+
+	//-------------------------------------------------------------------------------
+	/// 
+	//-------------------------------------------------------------------------------
+	public void WinLevel(CPlayer.EIdPlayer eId)
+	{
+		Debug.Log ("win dude!");
+	}
+
+	//-------------------------------------------------------------------------------
+	/// 
+	//-------------------------------------------------------------------------------
 	void CreatePlayers()
 	{
 		for(int i = 0 ; i < CGame.ms_nNbPlayer ; ++i)
@@ -59,8 +75,7 @@ public class CGame : MonoBehaviour
 		posPlayer[1] = new Vector2(pos3D.x + fSizePlayer / 2.0f, pos3D.y - fSizePlayer / 2.0f);
 		posPlayer[2] = new Vector2(pos3D.x + fSizePlayer / 2.0f, pos3D.y + fSizePlayer / 2.0f);
 		posPlayer[3] = new Vector2(pos3D.x - fSizePlayer / 2.0f, pos3D.y + fSizePlayer / 2.0f);
-		//Vector2 posInit = new Vector2 (0,0);
-		
+
 		for(int i = 0 ; i < CGame.ms_nNbPlayer ; ++i)
 		{
 			m_Players[i].SetPosition2D(posPlayer[i]);

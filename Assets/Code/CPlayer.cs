@@ -90,7 +90,7 @@ public class CPlayer : MonoBehaviour {
 		}
 	}
 
-	EIdPlayer GetIdPlayer()
+	public EIdPlayer GetIdPlayer()
 	{
 		return m_eIdPlayer;
 	}
