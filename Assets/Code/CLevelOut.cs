@@ -6,14 +6,16 @@ public class CLevelOut : MonoBehaviour {
 	//-------------------------------------------------------------------------------
 	/// Unity
 	//-------------------------------------------------------------------------------
-	void Start () {
+	void Start () 
+	{
 	
 	}
 	
 	//-------------------------------------------------------------------------------
 	/// Unity
 	//-------------------------------------------------------------------------------
-	void Update () {
+	void Update () 
+	{
 	
 	}
 
@@ -22,7 +24,6 @@ public class CLevelOut : MonoBehaviour {
 	//-------------------------------------------------------------------------------
 	void OnTriggerEnter2D(Collider2D other) 
 	{
-		Debug.Log ("trigger");
 		if(other.CompareTag("Player"))
 		{
 			CPlayer player = other.gameObject.GetComponent<CPlayer>();

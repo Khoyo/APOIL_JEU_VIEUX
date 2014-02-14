@@ -3,15 +3,15 @@ using System.Collections;
 
 public struct SPlayerInput
 {
-	public bool MoveLeft;
-	public bool MoveRight;
-	public bool MoveUp;
-	public bool MoveDown;
+	public float MoveHorizontal;
+	public float MoveVertical;
+	public float DirectionHorizontal;
+	public float DirectionVertical;
 }
 
 public class CApoilInput
 {
-	public static SPlayerInput InputPlayer;
+	public static SPlayerInput[] InputPlayer;
 	
 	public static bool Quit;
 
@@ -26,6 +26,7 @@ public class CApoilInput
 	//-------------------------------------------------------------------------------
 	public static void Init()
 	{
+		InputPlayer = new SPlayerInput[4];
 		/*if(!Application.isEditor)
 			Screen.lockCursor = true;*/
 	}
@@ -35,11 +36,11 @@ public class CApoilInput
 	//-------------------------------------------------------------------------------
 	public static void Process(float fDeltatime) 
 	{	
-		InputPlayer.MoveUp = Input.GetKey(KeyCode.Z) | Input.GetKey(KeyCode.W);
-		InputPlayer.MoveDown = Input.GetKey (KeyCode.S);
-		InputPlayer.MoveLeft = Input.GetKey(KeyCode.Q) || Input.GetKey(KeyCode.A);
-		InputPlayer.MoveRight = Input.GetKey(KeyCode.D);		
-		
+		ProcessPlayer (0, "Joystick1");
+		ProcessPlayer (1, "Joystick2");
+		//	ProcessPlayer (2, "Joystick3");
+		//	ProcessPlayer (3, "Joystick4");
+
 		Quit = Input.GetKeyDown(KeyCode.Escape);
 
 		DebugF9 = Input.GetKeyDown(KeyCode.F9);
@@ -47,5 +48,13 @@ public class CApoilInput
 		DebugF11 = Input.GetKeyDown(KeyCode.F11);
 		DebugF12 = Input.GetKeyDown(KeyCode.F12);
 	}	
+
+	public static void ProcessPlayer(int nId, string name)
+	{
+		InputPlayer [nId].MoveHorizontal = Input.GetAxis (name+"_LeftXAxis");
+		InputPlayer [nId].MoveVertical = Input.GetAxis (name+"_LeftYAxis");
+		InputPlayer [nId].DirectionHorizontal = Input.GetAxis (name+"_RightXAxis");
+		InputPlayer [nId].DirectionVertical = Input.GetAxis (name+"_RightYAxis");
+	}
 
 }
