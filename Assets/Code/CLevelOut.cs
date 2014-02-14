@@ -20,7 +20,7 @@ public class CLevelOut : MonoBehaviour {
 	//-------------------------------------------------------------------------------
 	/// Unity
 	//-------------------------------------------------------------------------------
-	void OnTriggerEnter(Collider other) 
+	void OnTriggerEnter2D(Collider2D other) 
 	{
 		Debug.Log ("trigger");
 		if(other.CompareTag("Player"))
@@ -29,14 +29,4 @@ public class CLevelOut : MonoBehaviour {
 			GameObject.Find ("Game").GetComponent<CGame> ().WinLevel (player.GetIdPlayer());
 		}
 	}
-	void OnCollisionEnter(Collision other) 
-	{
-		Debug.Log ("collider");
-		if(other.collider.CompareTag("Player"))
-		{
-			CPlayer player = other.gameObject.GetComponent<CPlayer>();
-			GameObject.Find ("Game").GetComponent<CGame> ().WinLevel (player.GetIdPlayer());
-		}
-	}
-
 }

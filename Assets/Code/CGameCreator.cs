@@ -15,7 +15,8 @@ public class CGameCreator : MonoBehaviour {
 	void Awake() {
 		if(m_instanceCount++ == 0)
 		{
-			((GameObject) GameObject.Instantiate(m_prefabGame)).GetComponent<CGame>();
+			GameObject game = ((GameObject) GameObject.Instantiate(m_prefabGame));/*.GetComponent<CGame>();*/
+			game.name = "Game";
 			CGame.ms_fVelocityPlayer = LD_VelocityPlayer;
 			CGame.ms_nNbPlayer = LD_NbPlyer;
 		}
