@@ -47,24 +47,6 @@ public class CPlayer : MonoBehaviour {
 
 			m_Direction = new Vector2(m_PlayerInput.DirectionHorizontal, m_PlayerInput.DirectionVertical);
 			Debug.DrawRay(transform.position, 2 * new Vector3(m_Direction.x, m_Direction.y, 0));
-			/*
-			if (m_PlayerInput.MoveUp)
-			{
-				velocity += new Vector2(0,1);
-			}
-			else if (m_PlayerInput.MoveDown)
-			{
-				velocity += new Vector2(0,-1);
-			}
-			if (m_PlayerInput.MoveLeft)
-			{
-				velocity += new Vector2(-1,0);
-			}
-			else if (m_PlayerInput.MoveRight)
-			{
-				velocity += new Vector2(1,0);
-			}
-			*/
 
 			gameObject.rigidbody2D.velocity = CGame.ms_fVelocityPlayer * velocity;
 		}
@@ -132,5 +114,13 @@ public class CPlayer : MonoBehaviour {
 	public void SetPositionInit(Vector2 pos2D)
 	{
 		m_PositionInit = pos2D;
+	}
+
+	void OnCollisionEnter2D(Collision2D other)
+	{
+		if (other.gameObject.tag == "player") 
+		{	
+			//Physics2D.IgnoreLayerCollision(other.collider, collider); 	
+		}
 	}
 }
