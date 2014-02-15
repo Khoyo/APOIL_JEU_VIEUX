@@ -115,12 +115,4 @@ public class CPlayer : MonoBehaviour {
 	{
 		m_PositionInit = pos2D;
 	}
-
-	void OnCollisionEnter2D(Collision2D other)
-	{
-		if (other.gameObject.tag == "player") 
-		{	
-			//Physics2D.IgnoreLayerCollision(other.collider, collider); 	
-		}
-	}
 }
