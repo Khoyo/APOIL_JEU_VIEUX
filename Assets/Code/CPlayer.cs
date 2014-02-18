@@ -11,10 +11,20 @@ public class CPlayer : MonoBehaviour {
 		e_IdPlayer_Player4,
 	}
 
+	enum EStateMove
+	{
+		e_Attente,
+		e_Marche,
+		e_Cours
+	}
+
 	EIdPlayer m_eIdPlayer;
+	EStateMove m_eStateMove;
 	SPlayerInput m_PlayerInput;
 	Vector2 m_PositionInit;
+	Vector2 m_Move;
 	Vector2 m_Direction;
+	float m_fSpeed;
 
 	//-------------------------------------------------------------------------------
 	/// Unity
@@ -23,6 +33,8 @@ public class CPlayer : MonoBehaviour {
 	{
 		SetPlayerInput ();
 		m_PositionInit = new Vector2 (0, 0);
+		m_fSpeed = 1.0f;
+		m_eStateMove = EStateMove.e_Attente;
 	}
 	
 	//-------------------------------------------------------------------------------
@@ -31,8 +43,9 @@ public class CPlayer : MonoBehaviour {
 	void Update () 
 	{
 		SetPlayerInput ();
+		SetStateMove ();
 		Move ();
-	
+		
 	}
 
 	//-------------------------------------------------------------------------------
@@ -42,14 +55,50 @@ public class CPlayer : MonoBehaviour {
 	{
 		if(gameObject.rigidbody2D != null)
 		{
-			Vector2 velocity = Vector2.zero;
-			velocity = new Vector2(m_PlayerInput.MoveHorizontal, m_PlayerInput.MoveVertical);
+			m_Move = Vector2.zero;
+			m_Move = new Vector2(m_PlayerInput.MoveHorizontal, m_PlayerInput.MoveVertical);
 
-			m_Direction = new Vector2(m_PlayerInput.DirectionHorizontal, m_PlayerInput.DirectionVertical);
+			if(Mathf.Abs(m_PlayerInput.DirectionHorizontal) > 0.25f || Mathf.Abs(m_PlayerInput.DirectionVertical) > 0.25f)
+				m_Direction = new Vector2(m_PlayerInput.DirectionHorizontal, m_PlayerInput.DirectionVertical);
+			m_Direction.Normalize();
+
 			Debug.DrawRay(transform.position, 2 * new Vector3(m_Direction.x, m_Direction.y, 0));
 
-			gameObject.rigidbody2D.velocity = CGame.ms_fVelocityPlayer * velocity;
+			CalculateVelocity();
+
+			gameObject.rigidbody2D.velocity = m_fSpeed * m_Move;
 		}
+	}
+
+	void CalculateVelocity()
+	{
+		float fVelocityState = 1.0f;
+		float fVelocityAttitude = 1.0f;
+		float fCoeffDirection = 1.0f;
+
+		switch(m_eStateMove)
+		{
+			case EStateMove.e_Attente:
+			{
+				fVelocityState = 0.0f;
+				break;
+			}
+			case EStateMove.e_Marche:
+			{
+				fVelocityState = 1.0f;
+				break;
+			}
+			case EStateMove.e_Cours:
+			{
+				fVelocityState = CGame.ms_fCoeffRun;
+				break;
+			}
+		}
+
+		fCoeffDirection = Vector2.Dot (m_Direction, m_Move);
+		fCoeffDirection = CGame.ms_fCoeffReverseWalk + (1 - CGame.ms_fCoeffReverseWalk) * (fCoeffDirection + 1.0f) / 2.0f;
+
+		m_fSpeed = CGame.ms_fVelocityPlayer * fVelocityState * fVelocityAttitude * fCoeffDirection;
 	}
 
 	//-------------------------------------------------------------------------------
@@ -76,6 +125,23 @@ public class CPlayer : MonoBehaviour {
 		m_PlayerInput = CApoilInput.InputPlayer[idPlayer];
 	}
 
+	void SetStateMove()
+	{
+		if(Mathf.Abs(m_PlayerInput.MoveHorizontal) > 0.1 ||  Mathf.Abs(m_PlayerInput.MoveVertical) > 0.1)
+		{
+			m_eStateMove = EStateMove.e_Marche;
+			if(m_PlayerInput.Run)
+				m_eStateMove = EStateMove.e_Cours;
+		}
+		else
+		{	
+			m_eStateMove = EStateMove.e_Attente;
+		}
+	}
+
+	//-------------------------------------------------------------------------------
+	/// 
+	//-------------------------------------------------------------------------------
 	public void SetIdPlayer(int nId)
 	{
 		switch(nId)

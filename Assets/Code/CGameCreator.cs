@@ -7,6 +7,8 @@ public class CGameCreator : MonoBehaviour {
 	public GameObject m_prefabGame;
 
 	public float LD_VelocityPlayer = 10.0f;
+	public float LD_CoeffReverseWalk = 1.0f;
+	public float LD_CoeffRun = 1.0f;
 	public int LD_NbPlyer = 1;
 
 	//-------------------------------------------------------------------------------
@@ -19,6 +21,8 @@ public class CGameCreator : MonoBehaviour {
 			game.name = "Game";
 			CGame.ms_fVelocityPlayer = LD_VelocityPlayer;
 			CGame.ms_nNbPlayer = LD_NbPlyer;
+			CGame.ms_fCoeffReverseWalk = LD_CoeffReverseWalk;
+			CGame.ms_fCoeffRun = LD_CoeffRun;
 		}
 		
 	}

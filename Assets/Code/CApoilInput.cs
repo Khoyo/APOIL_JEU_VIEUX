@@ -7,6 +7,7 @@ public struct SPlayerInput
 	public float MoveVertical;
 	public float DirectionHorizontal;
 	public float DirectionVertical;
+	public bool Run;
 }
 
 public class CApoilInput
@@ -41,6 +42,11 @@ public class CApoilInput
 		ProcessPlayer (2, "Joystick3");
 		ProcessPlayer (3, "Joystick4");
 
+		InputPlayer [0].Run = Input.GetKey (KeyCode.Joystick1Button5);
+		InputPlayer [1].Run = Input.GetKey (KeyCode.Joystick2Button5);
+		InputPlayer [2].Run = Input.GetKey (KeyCode.Joystick3Button5);
+		InputPlayer [3].Run = Input.GetKey (KeyCode.Joystick4Button5);
+
 		Quit = Input.GetKeyDown(KeyCode.Escape);
 
 		DebugF9 = Input.GetKeyDown(KeyCode.F9);
@@ -48,13 +54,14 @@ public class CApoilInput
 		DebugF11 = Input.GetKeyDown(KeyCode.F11);
 		DebugF12 = Input.GetKeyDown(KeyCode.F12);
 	}	
-
+	 
 	public static void ProcessPlayer(int nId, string name)
 	{
 		InputPlayer [nId].MoveHorizontal = Input.GetAxis (name+"_LeftXAxis");
 		InputPlayer [nId].MoveVertical = Input.GetAxis (name+"_LeftYAxis");
 		InputPlayer [nId].DirectionHorizontal = Input.GetAxis (name+"_RightXAxis");
 		InputPlayer [nId].DirectionVertical = Input.GetAxis (name+"_RightYAxis");
+
 	}
 
 }

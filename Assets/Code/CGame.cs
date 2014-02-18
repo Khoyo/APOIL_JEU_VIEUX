@@ -6,6 +6,8 @@ public class CGame : MonoBehaviour
 	public GameObject m_prefabPlayer;
 
 	public static float ms_fVelocityPlayer;
+	public static float ms_fCoeffReverseWalk;
+	public static float ms_fCoeffRun;
 	public static int ms_nNbPlayer;
 	public static GameObject ms_LevelIn;
 
