@@ -38,6 +38,7 @@ public class CGame : MonoBehaviour
 	void Update () 
 	{
 		CApoilInput.Process (Time.deltaTime);
+		SetPositionCameraFromPlayers ();
 	}
 
 	void OnGUI()
@@ -106,4 +107,15 @@ public class CGame : MonoBehaviour
 			m_Players[i].SetPositionInit(posPlayer[i]);
 		}
 	}
+
+	//-------------------------------------------------------------------------------
+	/// 
+	//-------------------------------------------------------------------------------
+	void SetPositionCameraFromPlayers()
+	{
+		Vector3 pos = m_Players [0].transform.position;
+		pos.z = CGame.ms_Camera.transform.position.z;
+		CGame.ms_Camera.transform.position = pos;
+	}
+
 }
