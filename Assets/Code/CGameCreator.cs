@@ -5,6 +5,7 @@ public class CGameCreator : MonoBehaviour {
 
 	static int m_instanceCount = 0;
 	public GameObject m_prefabGame;
+	public Font m_FontDebug;
 
 	public float LD_VelocityPlayer = 10.0f;
 	public float LD_CoeffReverseWalk = 1.0f;
@@ -23,6 +24,7 @@ public class CGameCreator : MonoBehaviour {
 			CGame.ms_nNbPlayer = LD_NbPlyer;
 			CGame.ms_fCoeffReverseWalk = LD_CoeffReverseWalk;
 			CGame.ms_fCoeffRun = LD_CoeffRun;
+			CGame.ms_FontDebug = m_FontDebug;
 		}
 		
 	}

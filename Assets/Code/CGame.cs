@@ -4,12 +4,16 @@ using System.Collections;
 public class CGame : MonoBehaviour 
 {
 	public GameObject m_prefabPlayer;
+	public GameObject m_prefabCamera;
 
 	public static float ms_fVelocityPlayer;
 	public static float ms_fCoeffReverseWalk;
 	public static float ms_fCoeffRun;
 	public static int ms_nNbPlayer;
 	public static GameObject ms_LevelIn;
+	public static GameObject ms_Camera;
+	public static Font ms_FontDebug;
+
 
 	CPlayer[] m_Players;
 
@@ -25,6 +29,7 @@ public class CGame : MonoBehaviour
 		m_Players = new CPlayer[CGame.ms_nNbPlayer];
 
 		CreatePlayers();
+		CreateCamera ();
 	}
 	
 	//-------------------------------------------------------------------------------
@@ -33,6 +38,18 @@ public class CGame : MonoBehaviour
 	void Update () 
 	{
 		CApoilInput.Process (Time.deltaTime);
+	}
+
+	void OnGUI()
+	{
+		GameObject LevelIn = GameObject.Find ("_LevelIn");
+		GameObject LevelOut = GameObject.Find ("_LevelOut");
+		if(LevelIn == null || LevelOut == null)
+		{
+			GUI.skin.label.font = CGame.ms_FontDebug; 
+			GUI.Label(new Rect( 50, 50, 800, 600), "Putain Pierre!!");
+			Debug.Log ("il faut mettre un LevelIn et un LevelOut pour que ca marche!");
+		}
 	}
 
 	//-------------------------------------------------------------------------------
@@ -63,6 +80,11 @@ public class CGame : MonoBehaviour
 			m_Players[i] = player;
 		}
 		SetPlayerInitPosition ();
+	}
+
+	void CreateCamera()
+	{
+		ms_Camera = ((GameObject) GameObject.Instantiate(m_prefabCamera));
 	}
 
 	//-------------------------------------------------------------------------------
