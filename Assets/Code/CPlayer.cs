@@ -3,6 +3,9 @@ using System.Collections;
 
 public class CPlayer : MonoBehaviour {
 
+	public GameObject objetRender;
+
+
 	public enum EIdPlayer 
 	{
 		e_IdPlayer_Player1,
@@ -159,6 +162,7 @@ public class CPlayer : MonoBehaviour {
 				m_eIdPlayer = EIdPlayer.e_IdPlayer_Player4;
 				break;
 		}
+		objetRender.renderer.sortingOrder = 50+nId;
 	}
 
 	public EIdPlayer GetIdPlayer()
