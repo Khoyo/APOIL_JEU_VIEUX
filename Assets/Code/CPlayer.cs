@@ -4,7 +4,7 @@ using System.Collections;
 public class CPlayer : MonoBehaviour {
 
 	public GameObject objetRender;
-
+	public GameObject objetTorchLight;
 
 	public enum EIdPlayer 
 	{
@@ -28,6 +28,9 @@ public class CPlayer : MonoBehaviour {
 	Vector2 m_Move;
 	Vector2 m_Direction;
 	float m_fSpeed;
+	float m_fAngleCone;
+	int m_nEnergieTorchLight;
+	bool m_bActiveTorchLight;
 
 	//-------------------------------------------------------------------------------
 	/// Unity
@@ -38,6 +41,9 @@ public class CPlayer : MonoBehaviour {
 		m_PositionInit = new Vector2 (0, 0);
 		m_fSpeed = 1.0f;
 		m_eStateMove = EStateMove.e_Attente;
+		m_nEnergieTorchLight = CGame.ms_nEnergieTorchLightMax;
+		m_bActiveTorchLight = true;
+		m_fAngleCone = 0.0f;
 	}
 	
 	//-------------------------------------------------------------------------------
@@ -48,7 +54,7 @@ public class CPlayer : MonoBehaviour {
 		SetPlayerInput ();
 		SetStateMove ();
 		Move ();
-		
+		ProcessTorchLight ();
 	}
 
 	//-------------------------------------------------------------------------------
@@ -62,8 +68,10 @@ public class CPlayer : MonoBehaviour {
 			m_Move = new Vector2(m_PlayerInput.MoveHorizontal, m_PlayerInput.MoveVertical);
 
 			if(Mathf.Abs(m_PlayerInput.DirectionHorizontal) > 0.25f || Mathf.Abs(m_PlayerInput.DirectionVertical) > 0.25f)
+			{
 				m_Direction = new Vector2(m_PlayerInput.DirectionHorizontal, m_PlayerInput.DirectionVertical);
-			m_Direction.Normalize();
+				m_Direction.Normalize();
+			}
 
 			Debug.DrawRay(transform.position, 2 * new Vector3(m_Direction.x, m_Direction.y, 0));
 
@@ -102,6 +110,29 @@ public class CPlayer : MonoBehaviour {
 		fCoeffDirection = CGame.ms_fCoeffReverseWalk + (1 - CGame.ms_fCoeffReverseWalk) * (fCoeffDirection + 1.0f) / 2.0f;
 
 		m_fSpeed = CGame.ms_fVelocityPlayer * fVelocityState * fVelocityAttitude * fCoeffDirection;
+	}
+
+	void ProcessTorchLight()
+	{
+		if(m_bActiveTorchLight && m_nEnergieTorchLight > 0)
+		{
+			float fAngleOld = m_fAngleCone;
+
+			if(!objetTorchLight.activeSelf)
+				objetTorchLight.SetActive(true);
+
+
+			m_fAngleCone = CApoilMath.ConvertCartesianToPolar(m_Direction).y;
+
+			objetTorchLight.transform.RotateAround(new Vector3(0,0,1),  m_fAngleCone - fAngleOld);
+
+			//m_nEnergieTorchLight--;
+		}
+		else
+		{
+			if(objetTorchLight.activeSelf)
+				objetTorchLight.SetActive(false);
+		}
 	}
 
 	//-------------------------------------------------------------------------------
@@ -162,6 +193,8 @@ public class CPlayer : MonoBehaviour {
 				m_eIdPlayer = EIdPlayer.e_IdPlayer_Player4;
 				break;
 		}
+
+		//ordonner en Z pour eviter les chevauchements
 		objetRender.renderer.sortingOrder = 50+nId;
 	}
 

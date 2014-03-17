@@ -15,21 +15,21 @@ public class CApoilMath
 		float fR = Mathf.Sqrt(fX * fX + fY * fY);
 		float fTheta = 0;
 
-		if(coordCartesian.x > 0)
+		if(fX > 0)
 		{
-			if(coordCartesian.y >= 0)
+			if(fY >= 0)
 				fTheta = Mathf.Atan(fY / fX);
 			else
 				fTheta = Mathf.Atan(fY / fX) + 2 * m_fPi;
 		}
-		else if(coordCartesian.x != 0)
+		else if(fX != 0)
 			fTheta = Mathf.Atan(fY / fX) + m_fPi;
 		else
 		{
-			if(coordCartesian.y > 0)
+			if(fY > 0)
 				fTheta = m_fPi / 2.0f;
 			else
-				fTheta = 3 * fTheta / 2.0f;
+				fTheta = -m_fPi / 2.0f;
 		}
 		
 		return new Vector2(fR, fTheta);

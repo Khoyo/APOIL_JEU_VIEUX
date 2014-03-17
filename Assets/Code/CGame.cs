@@ -10,6 +10,7 @@ public class CGame : MonoBehaviour
 	public static float ms_fCoeffReverseWalk;
 	public static float ms_fCoeffRun;
 	public static int ms_nNbPlayer;
+	public static int ms_nEnergieTorchLightMax;
 	public static GameObject ms_LevelIn;
 	public static GameObject ms_Camera;
 	public static Font ms_FontDebug;

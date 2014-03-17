@@ -11,6 +11,7 @@ public class CGameCreator : MonoBehaviour {
 	public float LD_CoeffReverseWalk = 1.0f;
 	public float LD_CoeffRun = 1.0f;
 	public int LD_NbPlyer = 1;
+	public int LD_EnergirMaxTorchLight = 100;
 
 	//-------------------------------------------------------------------------------
 	/// Unity
@@ -25,6 +26,7 @@ public class CGameCreator : MonoBehaviour {
 			CGame.ms_fCoeffReverseWalk = LD_CoeffReverseWalk;
 			CGame.ms_fCoeffRun = LD_CoeffRun;
 			CGame.ms_FontDebug = m_FontDebug;
+			CGame.ms_nEnergieTorchLightMax = LD_EnergirMaxTorchLight;
 		}
 		
 	}
