@@ -44,6 +44,7 @@ public class CPlayer : MonoBehaviour {
 		m_nEnergieTorchLight = CGame.ms_nEnergieTorchLightMax;
 		m_bActiveTorchLight = true;
 		m_fAngleCone = 0.0f;
+		m_Direction = new Vector2 (1.0f, 0.0f);
 	}
 	
 	//-------------------------------------------------------------------------------
