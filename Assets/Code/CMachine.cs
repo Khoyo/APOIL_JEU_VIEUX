@@ -41,4 +41,8 @@ public class CMachine : MonoBehaviour
 				action.Activate(player);
 		}
 	}
+
+	public void ActivateContinuous()
+	{
+	}
 }
