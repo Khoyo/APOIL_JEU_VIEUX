@@ -8,8 +8,13 @@ public struct SPlayerInput
 	public float DirectionHorizontal;
 	public float DirectionVertical;
 	public bool Run;
+<<<<<<< HEAD
 	public bool ActivateMachine;
 	public bool ActivateMachineContinuous;
+=======
+	public bool ACtivateMachine;
+	public bool ACtivateMachineContinuous;
+>>>>>>> 5c108fb28a8e2d004bc2379143157f37fe357846
 }
 
 public class CApoilInput
