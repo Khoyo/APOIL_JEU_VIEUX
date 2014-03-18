@@ -219,4 +219,9 @@ public class CPlayer : MonoBehaviour {
 	{
 		m_PositionInit = pos2D;
 	}
+
+	public Vector2 GetPosition()
+	{
+		return new Vector2(gameObject.transform.position.x, gameObject.transform.position.y);
+	}
 }

@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 
 public class CGame : MonoBehaviour 
@@ -9,6 +9,7 @@ public class CGame : MonoBehaviour
 	public static float ms_fVelocityPlayer;
 	public static float ms_fCoeffReverseWalk;
 	public static float ms_fCoeffRun;
+	public static float ms_fVelocityCreep;
 	public static int ms_nNbPlayer;
 	public static int ms_nEnergieTorchLightMax;
 	public static GameObject ms_LevelIn;
