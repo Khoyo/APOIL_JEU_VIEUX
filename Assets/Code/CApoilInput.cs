@@ -45,7 +45,7 @@ public class CApoilInput
 		ProcessPlayer (2, "Joystick3");
 		ProcessPlayer (3, "Joystick4");
 
-		for(int i = 0; i < 4; i++)
+		for(int i = 0; i < 4; i++) //T'a vu Tim, c'est une boucle... C'est pratique avec les tableaux et tout
 		{
 			InputPlayer[i].Run = Input.GetKey(KeyCode.Joystick1Button5);
 
