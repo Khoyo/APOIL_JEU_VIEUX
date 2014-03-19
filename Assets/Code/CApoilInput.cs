@@ -49,8 +49,8 @@ public class CApoilInput
 		{
 			InputPlayer[i].Run = Input.GetKey(KeyCode.Joystick1Button5);
 
-			InputPlayer[i].ActivateMachine = Input.GetKeyDown(KeyCode.Joystick2Button0); //A
-			InputPlayer[i].ActivateMachineContinuous = Input.GetKey(KeyCode.Joystick2Button0); //A
+			InputPlayer[i].ActivateMachine = Input.GetKeyDown(KeyCode.Joystick1Button0+20*i); //Twenty button by joysticks, UGLY hack
+			InputPlayer[i].ActivateMachineContinuous = Input.GetKey(KeyCode.Joystick1Button0+20*i); //A
 		}
 
 		Quit = Input.GetKeyDown(KeyCode.Escape);
@@ -69,5 +69,11 @@ public class CApoilInput
 		InputPlayer [nId].DirectionVertical = Input.GetAxis (name+"_RightYAxis");
 
 	}
+
+	public static SPlayerInput GetInput(CPlayer.EIdPlayer id)
+	{
+		return InputPlayer[(int)id];
+	}
+
 
 }

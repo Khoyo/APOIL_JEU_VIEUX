@@ -42,7 +42,7 @@ public class CMachine : MonoBehaviour
 		}
 	}
 
-	public void ActivateContinuous()
+	public void ActivateContinuous(CPlayer player)
 	{
 	}
 }
