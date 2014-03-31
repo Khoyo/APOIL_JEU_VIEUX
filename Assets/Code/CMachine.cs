@@ -44,5 +44,12 @@ public class CMachine : MonoBehaviour
 
 	public void ActivateContinuous(CPlayer player)
 	{
+		Component[] components = gameObject.GetComponents<Component>();
+		
+		foreach(Component component in components){
+			IMachineAction action = component as IMachineAction;
+			if(action != null)
+				action.ActivateContinuous(player);
+		}
 	}
 }
