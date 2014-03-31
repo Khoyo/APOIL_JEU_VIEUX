@@ -11,6 +11,7 @@ public class CGameCreator : MonoBehaviour {
 	public float LD_CoeffReverseWalk = 1.0f;
 	public float LD_CoeffRun = 1.0f;
 	public float LD_VelocityCreep = 1.0f;
+	public float LD_GravityMonsterForce = 1.0f;
 	public int LD_NbPlyer = 1;
 	public int LD_EnergirMaxTorchLight = 100;
 
@@ -27,6 +28,7 @@ public class CGameCreator : MonoBehaviour {
 			CGame.ms_fCoeffReverseWalk = LD_CoeffReverseWalk;
 			CGame.ms_fCoeffRun = LD_CoeffRun;
 			CGame.ms_fVelocityCreep = LD_VelocityCreep;
+			CGame.ms_fGravityMonsterForce = LD_GravityMonsterForce;
 			CGame.ms_FontDebug = m_FontDebug;
 			CGame.ms_nEnergieTorchLightMax = LD_EnergirMaxTorchLight;
 		}
