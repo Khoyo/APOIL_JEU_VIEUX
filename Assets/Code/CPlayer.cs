@@ -41,6 +41,7 @@ public class CPlayer : MonoBehaviour {
 	int m_nEnergieTorchLight;
 	bool m_bActiveTorchLight;
 	bool m_bGravity;
+	bool m_bParazitized;
 
 
 	//-------------------------------------------------------------------------------
@@ -54,6 +55,7 @@ public class CPlayer : MonoBehaviour {
 		m_nEnergieTorchLight = CGame.ms_nEnergieTorchLightMax;
 		m_bActiveTorchLight = true;
 		m_bGravity = false;
+		m_bParazitized = false;
 		m_fAngleCone = 0.0f;
 		m_Direction = new Vector2 (1.0f, 0.0f);
 		m_eState = EState.e_Normal;
@@ -154,7 +156,11 @@ public class CPlayer : MonoBehaviour {
 		fCoeffDirection = Vector2.Dot (m_Direction, m_Move);
 		fCoeffDirection = CGame.ms_fCoeffReverseWalk + (1 - CGame.ms_fCoeffReverseWalk) * (fCoeffDirection + 1.0f) / 2.0f;
 
-		m_fSpeed = CGame.ms_fVelocityPlayer * fVelocityState * fVelocityAttitude * fCoeffDirection;
+		float fCoeffParasitized = 1.0f;
+		if(m_bParazitized)
+			fCoeffParasitized = CGame.ms_fCoeffPararsitized;
+
+		m_fSpeed = CGame.ms_fVelocityPlayer * fVelocityState * fVelocityAttitude * fCoeffDirection * fCoeffParasitized;
 	}
 
 	void ProcessTorchLight()
@@ -287,6 +293,16 @@ public class CPlayer : MonoBehaviour {
 		m_bGravity = false;
 	}
 
+	public void setParasitized()
+	{
+		m_bParazitized = true;
+	}
+
+	public void setCreepDrop()
+	{
+		m_bParazitized = false;
+	}
+	
 	public void DieHeadCut()
 	{
 		m_eState = EState.e_DieHeadCut;

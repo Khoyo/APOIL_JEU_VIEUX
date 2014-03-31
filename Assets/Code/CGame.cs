@@ -11,6 +11,7 @@ public class CGame : MonoBehaviour
 	public static float ms_fCoeffRun;
 	public static float ms_fVelocityCreep;
 	public static float ms_fGravityMonsterForce;
+	public static float ms_fCoeffPararsitized;
 	public static int ms_nNbPlayer;
 	public static int ms_nEnergieTorchLightMax;
 	public static GameObject ms_LevelIn;

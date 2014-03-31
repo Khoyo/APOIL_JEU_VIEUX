@@ -104,6 +104,7 @@ public class CCreep : MonoBehaviour {
 				else
 				{
 					setState(EState.e_OnPlayer);
+					m_objPlayerParasitized.GetComponent<CPlayer>().setParasitized();
 					m_fTimerSleep = CGame.ms_fCreepTimerYeute + CGame.ms_fCreepTimerSleep;
 				}
 				break;
@@ -225,6 +226,7 @@ public class CCreep : MonoBehaviour {
 
 	public void DropPlayer()
 	{
+		m_objPlayerParasitized.GetComponent<CPlayer> ().setCreepDrop ();
 		m_objPlayerParasitized = null;
 	}
 
