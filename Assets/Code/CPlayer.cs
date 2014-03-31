@@ -224,4 +224,9 @@ public class CPlayer : MonoBehaviour {
 	{
 		return new Vector2(gameObject.transform.position.x, gameObject.transform.position.y);
 	}
+
+	public GameObject GetGameObject()
+	{
+		return gameObject;
+	}
 }

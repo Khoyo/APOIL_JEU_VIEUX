@@ -16,6 +16,10 @@ public class CGame : MonoBehaviour
 	public static GameObject ms_Camera;
 	public static Font ms_FontDebug;
 
+	public static float ms_fCreepTimerYeute;
+	public static float ms_fCreepTimerSleep;
+	public static float ms_fCreepTimerWakeUp;
+	public static float ms_fCreepTimerTake;
 
 	CPlayer[] m_Players;
 
@@ -32,6 +36,11 @@ public class CGame : MonoBehaviour
 
 		CreatePlayers();
 		CreateCamera ();
+
+		CGame.ms_fCreepTimerYeute = 2.0f;
+		CGame.ms_fCreepTimerSleep = 2.0f;
+		CGame.ms_fCreepTimerWakeUp = 2.0f;
+		CGame.ms_fCreepTimerTake = 1.0f;
 	}
 	
 	//-------------------------------------------------------------------------------
