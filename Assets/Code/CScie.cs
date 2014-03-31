@@ -19,7 +19,7 @@ public class CScie : MonoBehaviour {
 		if(useTimer)
 		{
 			if(m_fFiredTime+m_fTimer < Time.time)
-				gameObject.SetActive(false);
+				Destroy(gameObject);
 		}
 	}
 
@@ -30,13 +30,13 @@ public class CScie : MonoBehaviour {
 			Debug.Log("Nice");
 			if(other.gameObject.CompareTag("Solid"))
 			{
-				gameObject.SetActive(false);	
+				Destroy(gameObject);
 			}
 
 			CPlayer player = other.gameObject.GetComponent<CPlayer>();
 			if(player != null)
 			{
-				gameObject.SetActive(false);
+				Destroy(gameObject);
 				//player.DieHeadCut();
 				Debug.Log("Executed player "+player.GetIdPlayer());
 			}
