@@ -45,6 +45,7 @@ public class CPlayer : MonoBehaviour {
 	bool m_bActiveTorchLight;
 	bool m_bGravity;
 	bool m_bParazitized;
+	bool m_bLightIsOn;
 
 
 	//-------------------------------------------------------------------------------
@@ -59,6 +60,8 @@ public class CPlayer : MonoBehaviour {
 		m_bActiveTorchLight = true;
 		m_bGravity = false;
 		m_bParazitized = false;
+		m_bLightIsOn = false;
+		objetTorchLight.SetActive(m_bLightIsOn);
 		m_fAngleCone = 0.0f;
 		m_Direction = new Vector2 (1.0f, 0.0f);
 		m_eState = EState.e_Normal;
@@ -81,7 +84,15 @@ public class CPlayer : MonoBehaviour {
 			case EState.e_Normal:
 			{
 				Move ();
-				ProcessTorchLight ();
+
+				if(m_PlayerInput.SwitchTorchlightOnOff)
+				{
+					m_bLightIsOn = !m_bLightIsOn;
+					objetTorchLight.SetActive(m_bLightIsOn);
+				}
+
+				if(m_bLightIsOn)
+			  		ProcessTorchLight ();
 				break;
 			}
 			case EState.e_DieEat:
@@ -96,10 +107,7 @@ public class CPlayer : MonoBehaviour {
 				Respawn();
 				break;
 			}
-
 		}
-
-
 	}
 
 	//-------------------------------------------------------------------------------
@@ -175,7 +183,6 @@ public class CPlayer : MonoBehaviour {
 
 			if(!objetTorchLight.activeSelf)
 				objetTorchLight.SetActive(true);
-
 
 			m_fAngleCone = CApoilMath.ConvertCartesianToPolar(m_Direction).y;
 
