@@ -20,9 +20,11 @@ public class CCreep : MonoBehaviour {
 	float m_fTimerTakePlayer;
 	float m_fTimerSleep;
 	float m_fTimerWakeUp;
+	float m_fTimerStopLight;
 	bool m_bFollowPlayer;
 	bool m_bTakePlayer;
 	bool m_bIsOnPlayer;
+	bool m_bLight;
 
 
 
@@ -38,26 +40,32 @@ public class CCreep : MonoBehaviour {
 		m_fTimerTakePlayer = 0.0f;
 		m_fTimerSleep = 0.0f;
 		m_fTimerWakeUp = 0.0f;
+		m_fTimerStopLight = 0.0f;
+		m_bLight = false;
 		m_bIsOnPlayer = false;
 		m_bFollowPlayer = false;
 		m_bTakePlayer = false;
+
 	}
 	
 	//-------------------------------------------------------------------------------
 	/// Unity
 	//-------------------------------------------------------------------------------
 	void Update () {
-
-		//Debug.Log (m_eState);
-
 		switch(m_eState)
 		{
 			case EState.e_Nothing :
 			{
+				gameObject.rigidbody2D.velocity = Vector2.zero;
 				if(m_bFollowPlayer)
 				{
 					setState(EState.e_FollowPlayer);
 					m_bFollowPlayer = false;
+				}
+
+				if(m_bLight)
+				{
+					setState(EState.e_OnLight);
 				}
 				break;
 			}
@@ -80,6 +88,11 @@ public class CCreep : MonoBehaviour {
 					setState(EState.e_TakePlayer);
 					m_fTimerTakePlayer = CGame.ms_fCreepTimerTake;
 					m_bTakePlayer = false;
+				}
+				
+				if(m_bLight)
+				{
+					setState(EState.e_OnLight);
 				}
 
 				break;
@@ -107,6 +120,12 @@ public class CCreep : MonoBehaviour {
 					m_objPlayerParasitized.GetComponent<CPlayer>().setParasitized();
 					m_fTimerSleep = CGame.ms_fCreepTimerYeute + CGame.ms_fCreepTimerSleep;
 				}
+
+				if(m_bLight)
+				{
+					setState(EState.e_OnLight);
+				}	
+
 				break;
 			}
 			case EState.e_OnPlayer :
@@ -127,6 +146,8 @@ public class CCreep : MonoBehaviour {
 					{
 
 					}
+
+
 					m_fTimerSleep -= Time.deltaTime;
 				}
 				else
@@ -147,16 +168,33 @@ public class CCreep : MonoBehaviour {
 				else
 				{
 					setState(EState.e_Nothing);
-					
 				}
+				
+				if(m_bLight)
+				{
+					setState(EState.e_OnLight);
+				}
+
 				break;
 			}
 			case EState.e_OnLight :
 			{
+				gameObject.rigidbody2D.velocity = Vector2.zero;
+				if(!m_bLight)
+				{
+					setState(EState.e_Nothing);
+				}
+
 				break;
 			}
 		}
 
+		m_fTimerStopLight += Time.deltaTime;
+		if(m_fTimerStopLight > 1.0f)
+		{
+			m_fTimerStopLight = 0.0f;
+			m_bLight = false;
+		}
 	}
 
 	//-------------------------------------------------------------------------------
@@ -228,6 +266,11 @@ public class CCreep : MonoBehaviour {
 	{
 		m_objPlayerParasitized.GetComponent<CPlayer> ().setCreepDrop ();
 		m_objPlayerParasitized = null;
+	}
+
+	public void CollideWithLight()
+	{
+		m_bLight = true;
 	}
 
 	//-------------------------------------------------------------------------------

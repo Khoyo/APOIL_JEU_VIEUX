@@ -17,6 +17,7 @@ public class CGame : MonoBehaviour
 	public static GameObject ms_LevelIn;
 	public static GameObject ms_Camera;
 	public static Font ms_FontDebug;
+	public static LayerMask ms_LayerMaskLight;
 
 	public static float ms_fCreepTimerYeute;
 	public static float ms_fCreepTimerSleep;
@@ -26,6 +27,7 @@ public class CGame : MonoBehaviour
 	public static float ms_fMonsterTimerStopActif;
 	public static float ms_fMonsterTimerEat;
 	public static float ms_fMonsterTimerStopEat;
+
 
 	CPlayer[] m_Players;
 

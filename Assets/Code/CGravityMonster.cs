@@ -18,12 +18,14 @@ public class CGravityMonster : MonoBehaviour {
 	bool m_bEat;
 	bool m_bPlayerAreInZone;
 	bool m_bDropPlayer;
+	bool m_bLight;
 	GameObject m_objetPlayerParasitized;
 	GameObject m_objetPlayerEat;
 	float m_fTimerStopAlerte;
 	float m_fTimerStopActif;
 	float m_fTimerEat;
-
+	float m_fTimerStopLight;
+	
 	//-------------------------------------------------------------------------------
 	/// Unity
 	//-------------------------------------------------------------------------------
@@ -35,6 +37,8 @@ public class CGravityMonster : MonoBehaviour {
 		m_bPlayerAreInZone = false;
 		m_fTimerStopAlerte = 0.0f;
 		m_fTimerStopActif = 0.0f;
+		m_fTimerStopLight = 0.0f;
+		m_bLight = false;
 	}
 	
 	//-------------------------------------------------------------------------------
@@ -42,8 +46,6 @@ public class CGravityMonster : MonoBehaviour {
 	//-------------------------------------------------------------------------------
 	void Update () 
 	{
-		Debug.Log (m_eState);
-
 		switch(m_eState)
 		{
 			case EState.e_veille :
@@ -52,6 +54,11 @@ public class CGravityMonster : MonoBehaviour {
 				{
 					SetState(EState.e_alerte);
 					m_bAlerte = false;
+				}
+
+				if(m_bLight)
+				{
+					SetState(EState.e_eclaire);
 				}
 				break;
 			}
@@ -72,6 +79,11 @@ public class CGravityMonster : MonoBehaviour {
 					m_bChoppe = false;
 					m_fTimerStopActif = CGame.ms_fMonsterTimerStopActif;
 				}
+
+				if(m_bLight)
+				{
+					SetState(EState.e_eclaire);
+				}
 				break;
 			}
 			case EState.e_actif :
@@ -87,6 +99,7 @@ public class CGravityMonster : MonoBehaviour {
 						m_fTimerStopAlerte = CGame.ms_fMonsterTimerStopAlerte;
 						m_objetPlayerParasitized.GetComponent<CPlayer>().StopGravity();
 					}
+
 				}
 
 				if(m_bEat)
@@ -98,6 +111,15 @@ public class CGravityMonster : MonoBehaviour {
 					m_bDropPlayer = false;
 					
 				}
+
+				if(m_bLight)
+				{
+					SetState(EState.e_eclaire);
+					m_fTimerStopAlerte = CGame.ms_fMonsterTimerStopAlerte;
+					m_objetPlayerParasitized.GetComponent<CPlayer>().StopGravity();
+					m_bDropPlayer = false;
+				}
+
 				break;
 			}
 			case EState.e_mange :
@@ -126,8 +148,19 @@ public class CGravityMonster : MonoBehaviour {
 			}
 			case EState.e_eclaire :
 			{
+				if(!m_bLight)
+				{
+					SetState(EState.e_veille);
+				}
 				break;
 			}
+		}
+
+		m_fTimerStopLight += Time.deltaTime;
+		if(m_fTimerStopLight > 1.0f)
+		{
+			m_fTimerStopLight = 0.0f;
+			m_bLight = false;
 		}
 	}
 
@@ -206,5 +239,10 @@ public class CGravityMonster : MonoBehaviour {
 	public void SetPlayerAreInZone(bool bPlayerAreInZone)
 	{
 		m_bPlayerAreInZone = bPlayerAreInZone;
+	}
+
+	public void CollideWithLight()
+	{
+		m_bLight = true;
 	}
 }
