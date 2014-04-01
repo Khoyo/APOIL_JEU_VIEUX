@@ -21,16 +21,27 @@ public class CPlayer : MonoBehaviour {
 		e_Cours
 	}
 
+	enum EState
+	{
+		e_Normal,
+		e_DieEat,
+		e_DieHeadCut,
+	}
+
 	EIdPlayer m_eIdPlayer;
 	EStateMove m_eStateMove;
+	EState m_eState;
 	SPlayerInput m_PlayerInput;
 	Vector2 m_PositionInit;
+	Vector2 m_PositionGravityMonster;
 	Vector2 m_Move;
 	Vector2 m_Direction;
 	float m_fSpeed;
 	float m_fAngleCone;
 	int m_nEnergieTorchLight;
 	bool m_bActiveTorchLight;
+	bool m_bGravity;
+
 
 	//-------------------------------------------------------------------------------
 	/// Unity
@@ -38,13 +49,14 @@ public class CPlayer : MonoBehaviour {
 	void Start () 
 	{
 		SetPlayerInput ();
-		m_PositionInit = new Vector2 (0, 0);
 		m_fSpeed = 1.0f;
 		m_eStateMove = EStateMove.e_Attente;
 		m_nEnergieTorchLight = CGame.ms_nEnergieTorchLightMax;
 		m_bActiveTorchLight = true;
+		m_bGravity = false;
 		m_fAngleCone = 0.0f;
 		m_Direction = new Vector2 (1.0f, 0.0f);
+		m_eState = EState.e_Normal;
 	}
 	
 	//-------------------------------------------------------------------------------
@@ -54,8 +66,31 @@ public class CPlayer : MonoBehaviour {
 	{
 		SetPlayerInput ();
 		SetStateMove ();
-		Move ();
-		ProcessTorchLight ();
+
+		switch(m_eState)
+		{
+			case EState.e_Normal:
+			{
+				Move ();
+				ProcessTorchLight ();
+				break;
+			}
+			case EState.e_DieEat:
+			{
+				gameObject.rigidbody2D.velocity = Vector2.zero;
+				break;
+			}
+			case EState.e_DieHeadCut:
+			{
+				gameObject.rigidbody2D.velocity = Vector2.zero;
+				//playAnimHeadCut
+				Respawn();
+				break;
+			}
+
+		}
+
+
 	}
 
 	//-------------------------------------------------------------------------------
@@ -78,7 +113,16 @@ public class CPlayer : MonoBehaviour {
 
 			CalculateVelocity();
 
-			gameObject.rigidbody2D.velocity = m_fSpeed * m_Move;
+			Vector2 directionGravity = Vector2.zero;
+			if(m_bGravity)
+			{
+				Vector2 posPlayer = new Vector2(gameObject.transform.position.x, gameObject.transform.position.y);
+				directionGravity = m_PositionGravityMonster - posPlayer;
+				Debug.DrawRay(new Vector3(posPlayer.x, posPlayer.y, 0), new Vector3(directionGravity.x, directionGravity.y, 0));
+				directionGravity.Normalize();
+			}
+
+			gameObject.rigidbody2D.velocity = m_fSpeed * m_Move + directionGravity * CGame.ms_fGravityMonsterForce;
 		}
 	}
 
@@ -204,6 +248,12 @@ public class CPlayer : MonoBehaviour {
 		return m_eIdPlayer;
 	}
 
+	public void Respawn()
+	{
+		SetPosition2D (m_PositionInit);
+		m_eState = EState.e_Normal;
+	}
+
 	//-------------------------------------------------------------------------------
 	/// 
 	//-------------------------------------------------------------------------------
@@ -218,6 +268,28 @@ public class CPlayer : MonoBehaviour {
 	public void SetPositionInit(Vector2 pos2D)
 	{
 		m_PositionInit = pos2D;
+	}
+
+	public void SetEat()
+	{
+		m_eState = EState.e_DieEat;
+	}
+
+	public void SetGravityPosition(Vector2 pos)
+	{
+		m_PositionGravityMonster = pos;
+		m_bGravity = true;
+	}
+
+	public void StopGravity()
+	{
+		m_PositionGravityMonster = Vector2.zero;
+		m_bGravity = false;
+	}
+
+	public void DieHeadCut()
+	{
+		m_eState = EState.e_DieHeadCut;
 	}
 
 	public Vector2 GetPosition()

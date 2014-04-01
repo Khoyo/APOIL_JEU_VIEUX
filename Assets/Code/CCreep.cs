@@ -26,7 +26,9 @@ public class CCreep : MonoBehaviour {
 
 
 
-	// Use this for initialization
+	//-------------------------------------------------------------------------------
+	/// Unity
+	//-------------------------------------------------------------------------------
 	void Start () 
 	{
 		m_eState = EState.e_Nothing;
@@ -41,7 +43,9 @@ public class CCreep : MonoBehaviour {
 		m_bTakePlayer = false;
 	}
 	
-	// Update is called once per frame
+	//-------------------------------------------------------------------------------
+	/// Unity
+	//-------------------------------------------------------------------------------
 	void Update () {
 
 		//Debug.Log (m_eState);
@@ -154,6 +158,9 @@ public class CCreep : MonoBehaviour {
 
 	}
 
+	//-------------------------------------------------------------------------------
+	/// 
+	//-------------------------------------------------------------------------------
 	void setState(EState eState)
 	{
 		m_eState = eState;
@@ -187,6 +194,9 @@ public class CCreep : MonoBehaviour {
 		}
 	}
 
+	//-------------------------------------------------------------------------------
+	/// 
+	//-------------------------------------------------------------------------------
 	bool canTakePlayer()
 	{
 		return (m_eState == EState.e_Nothing) || (m_eState == EState.e_FollowPlayer && m_fTimerSleep < CGame.ms_fCreepTimerSleep);
@@ -206,7 +216,7 @@ public class CCreep : MonoBehaviour {
 
 	public void TakePlayer(CPlayer player)
 	{
-		if(canTakePlayer()/* && m_objPlayerParasitized != player.GetGameObject()*/)
+		if(canTakePlayer())
 		{
 			m_bTakePlayer = true;
 			m_objPlayerParasitized = player.GetGameObject();
@@ -218,6 +228,9 @@ public class CCreep : MonoBehaviour {
 		m_objPlayerParasitized = null;
 	}
 
+	//-------------------------------------------------------------------------------
+	/// Unity
+	//-------------------------------------------------------------------------------
 	void OnTriggerStay2D(Collider2D other) 
 	{
 		if(other.CompareTag("Player"))
