@@ -38,9 +38,14 @@ public class CPlayer : MonoBehaviour {
 	Vector2 m_Direction;
 	float m_fSpeed;
 	float m_fAngleCone;
+	float m_fAngleTorchLight;
+	float m_fDistance;
 	int m_nEnergieTorchLight;
+	int m_nPrecision = 10;
 	bool m_bActiveTorchLight;
 	bool m_bGravity;
+	bool m_bParazitized;
+	bool m_bLightIsOn;
 
 
 	//-------------------------------------------------------------------------------
@@ -54,9 +59,16 @@ public class CPlayer : MonoBehaviour {
 		m_nEnergieTorchLight = CGame.ms_nEnergieTorchLightMax;
 		m_bActiveTorchLight = true;
 		m_bGravity = false;
+		m_bParazitized = false;
+		m_bLightIsOn = false;
+		objetTorchLight.SetActive(m_bLightIsOn);
 		m_fAngleCone = 0.0f;
 		m_Direction = new Vector2 (1.0f, 0.0f);
 		m_eState = EState.e_Normal;
+
+		m_fAngleTorchLight = gameObject.transform.FindChild ("TorchLight").FindChild ("Spotlight").GetComponent<Light> ().spotAngle;
+
+		m_fDistance = gameObject.transform.FindChild ("TorchLight").FindChild ("Spotlight").GetComponent<Light> ().range * 2.0f/3.0f;
 	}
 	
 	//-------------------------------------------------------------------------------
@@ -72,7 +84,15 @@ public class CPlayer : MonoBehaviour {
 			case EState.e_Normal:
 			{
 				Move ();
-				ProcessTorchLight ();
+
+				if(m_PlayerInput.SwitchTorchlightOnOff)
+				{
+					m_bLightIsOn = !m_bLightIsOn;
+					objetTorchLight.SetActive(m_bLightIsOn);
+				}
+
+				if(m_bLightIsOn)
+			  		ProcessTorchLight ();
 				break;
 			}
 			case EState.e_DieEat:
@@ -87,10 +107,7 @@ public class CPlayer : MonoBehaviour {
 				Respawn();
 				break;
 			}
-
 		}
-
-
 	}
 
 	//-------------------------------------------------------------------------------
@@ -109,8 +126,6 @@ public class CPlayer : MonoBehaviour {
 				m_Direction.Normalize();
 			}
 
-			Debug.DrawRay(transform.position, 2 * new Vector3(m_Direction.x, m_Direction.y, 0));
-
 			CalculateVelocity();
 
 			Vector2 directionGravity = Vector2.zero;
@@ -118,7 +133,6 @@ public class CPlayer : MonoBehaviour {
 			{
 				Vector2 posPlayer = new Vector2(gameObject.transform.position.x, gameObject.transform.position.y);
 				directionGravity = m_PositionGravityMonster - posPlayer;
-				Debug.DrawRay(new Vector3(posPlayer.x, posPlayer.y, 0), new Vector3(directionGravity.x, directionGravity.y, 0));
 				directionGravity.Normalize();
 			}
 
@@ -154,7 +168,11 @@ public class CPlayer : MonoBehaviour {
 		fCoeffDirection = Vector2.Dot (m_Direction, m_Move);
 		fCoeffDirection = CGame.ms_fCoeffReverseWalk + (1 - CGame.ms_fCoeffReverseWalk) * (fCoeffDirection + 1.0f) / 2.0f;
 
-		m_fSpeed = CGame.ms_fVelocityPlayer * fVelocityState * fVelocityAttitude * fCoeffDirection;
+		float fCoeffParasitized = 1.0f;
+		if(m_bParazitized)
+			fCoeffParasitized = CGame.ms_fCoeffPararsitized;
+
+		m_fSpeed = CGame.ms_fVelocityPlayer * fVelocityState * fVelocityAttitude * fCoeffDirection * fCoeffParasitized;
 	}
 
 	void ProcessTorchLight()
@@ -166,10 +184,11 @@ public class CPlayer : MonoBehaviour {
 			if(!objetTorchLight.activeSelf)
 				objetTorchLight.SetActive(true);
 
-
 			m_fAngleCone = CApoilMath.ConvertCartesianToPolar(m_Direction).y;
 
-			objetTorchLight.transform.RotateAround(new Vector3(0,0,1),  m_fAngleCone - fAngleOld);
+			objetTorchLight.transform.RotateAround(new Vector3(0, 0, 1),  m_fAngleCone - fAngleOld);
+
+			ProcessColliderLight();
 
 			//m_nEnergieTorchLight--;
 		}
@@ -177,6 +196,32 @@ public class CPlayer : MonoBehaviour {
 		{
 			if(objetTorchLight.activeSelf)
 				objetTorchLight.SetActive(false);
+		}
+	}
+
+	void ProcessColliderLight()
+	{
+		for(int i = 0 ; i < m_nPrecision ; ++i)
+		{
+			float fAngle = CApoilMath.InterpolationLinear(i, 0, m_nPrecision, -m_fAngleTorchLight/2.0f, m_fAngleTorchLight/2.0f);
+			Matrix4x4 mat = Matrix4x4.TRS( Vector3.zero, Quaternion.Euler(0, 0, fAngle), Vector3.one);
+			
+			RaycastHit2D hit = Physics2D.Raycast(transform.position, mat * m_Direction, m_fDistance, CGame.ms_LayerMaskLight);
+			//Debug.DrawRay(transform.position, m_fDistance * (mat*m_Direction));
+			
+			if(hit.collider != null)
+			{
+				//Debug.Log (hit.collider.name);
+				if(hit.collider.CompareTag("GravityMonster"))
+				{
+					hit.collider.gameObject.GetComponent<CGravityMonster>().CollideWithLight();
+				}
+				
+				if(hit.collider.CompareTag("Creep"))
+				{
+					hit.collider.gameObject.GetComponent<CCreep>().CollideWithLight();
+				}
+			}
 		}
 	}
 
@@ -287,6 +332,16 @@ public class CPlayer : MonoBehaviour {
 		m_bGravity = false;
 	}
 
+	public void setParasitized()
+	{
+		m_bParazitized = true;
+	}
+
+	public void setCreepDrop()
+	{
+		m_bParazitized = false;
+	}
+	
 	public void DieHeadCut()
 	{
 		m_eState = EState.e_DieHeadCut;

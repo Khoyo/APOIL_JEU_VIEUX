@@ -11,6 +11,8 @@ public struct SPlayerInput
 
 	public bool ActivateMachine;
 	public bool ActivateMachineContinuous;
+
+	public bool SwitchTorchlightOnOff;
 }
 
 public class CApoilInput
@@ -45,14 +47,6 @@ public class CApoilInput
 		ProcessPlayer (2, "Joystick3");
 		ProcessPlayer (3, "Joystick4");
 
-		for(int i = 0; i < 4; i++) //T'a vu Tim, c'est une boucle... C'est pratique avec les tableaux et tout
-		{
-			InputPlayer[i].Run = Input.GetKey(KeyCode.Joystick1Button5);
-
-			InputPlayer[i].ActivateMachine = Input.GetKeyDown(KeyCode.Joystick1Button0+20*i); //Twenty button by joysticks, UGLY hack
-			InputPlayer[i].ActivateMachineContinuous = Input.GetKey(KeyCode.Joystick1Button0+20*i); //A
-		}
-
 		Quit = Input.GetKeyDown(KeyCode.Escape);
 
 		DebugF9 = Input.GetKeyDown(KeyCode.F9);
@@ -67,6 +61,11 @@ public class CApoilInput
 		InputPlayer [nId].MoveVertical = Input.GetAxis (name+"_LeftYAxis");
 		InputPlayer [nId].DirectionHorizontal = Input.GetAxis (name+"_RightXAxis");
 		InputPlayer [nId].DirectionVertical = Input.GetAxis (name+"_RightYAxis");
+
+		InputPlayer [nId].ActivateMachine = Input.GetKeyDown(KeyCode.Joystick1Button0+20*nId); //Twenty button by joysticks, UGLY hack
+		InputPlayer [nId].ActivateMachineContinuous = Input.GetKey(KeyCode.Joystick1Button0+20*nId); //A
+		InputPlayer [nId].Run = Input.GetKey(KeyCode.Joystick1Button5+20*nId); 							//
+		InputPlayer [nId].SwitchTorchlightOnOff = Input.GetKeyDown(KeyCode.Joystick1Button2+20*nId); //X
 
 	}
 

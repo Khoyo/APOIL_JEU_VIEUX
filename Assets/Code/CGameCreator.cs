@@ -10,10 +10,12 @@ public class CGameCreator : MonoBehaviour {
 	public float LD_VelocityPlayer = 10.0f;
 	public float LD_CoeffReverseWalk = 1.0f;
 	public float LD_CoeffRun = 1.0f;
+	public float LD_CoeffPararsitized = 0.5f;
 	public float LD_VelocityCreep = 1.0f;
 	public float LD_GravityMonsterForce = 1.0f;
 	public int LD_NbPlyer = 1;
 	public int LD_EnergirMaxTorchLight = 100;
+	public LayerMask LD_LayerMaskLight;
 
 	//-------------------------------------------------------------------------------
 	/// Unity
@@ -29,8 +31,10 @@ public class CGameCreator : MonoBehaviour {
 			CGame.ms_fCoeffRun = LD_CoeffRun;
 			CGame.ms_fVelocityCreep = LD_VelocityCreep;
 			CGame.ms_fGravityMonsterForce = LD_GravityMonsterForce;
+			CGame.ms_fCoeffPararsitized = LD_CoeffPararsitized;
 			CGame.ms_FontDebug = m_FontDebug;
 			CGame.ms_nEnergieTorchLightMax = LD_EnergirMaxTorchLight;
+			CGame.ms_LayerMaskLight = LD_LayerMaskLight;
 		}
 		
 	}

@@ -11,11 +11,13 @@ public class CGame : MonoBehaviour
 	public static float ms_fCoeffRun;
 	public static float ms_fVelocityCreep;
 	public static float ms_fGravityMonsterForce;
+	public static float ms_fCoeffPararsitized;
 	public static int ms_nNbPlayer;
 	public static int ms_nEnergieTorchLightMax;
 	public static GameObject ms_LevelIn;
 	public static GameObject ms_Camera;
 	public static Font ms_FontDebug;
+	public static LayerMask ms_LayerMaskLight;
 
 	public static float ms_fCreepTimerYeute;
 	public static float ms_fCreepTimerSleep;
@@ -25,6 +27,7 @@ public class CGame : MonoBehaviour
 	public static float ms_fMonsterTimerStopActif;
 	public static float ms_fMonsterTimerEat;
 	public static float ms_fMonsterTimerStopEat;
+
 
 	CPlayer[] m_Players;
 
