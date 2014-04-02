@@ -3,10 +3,6 @@ using System.Collections;
 
 public class CTourelleLaser : MonoBehaviour {
 	
-	bool m_detectedThisFrame;
-	public int m_frameSinceLastDetection;
-	public int m_frameSinceNotDetected;
-
 	CPlayer m_trackedPlayer;
 	bool m_tracking;
 
@@ -16,7 +12,9 @@ public class CTourelleLaser : MonoBehaviour {
 
 	public float m_range;
 
-	public float threshold = 1/10;
+	public float m_threshold = 1/10;
+
+	public float m_firingWindows;
 
 	// Use this for initialization
 	void Start () {
@@ -36,8 +34,8 @@ public class CTourelleLaser : MonoBehaviour {
 
 			float dist = Mathf.Abs(destAngle - sourceAngle);
 
-			if((m_angularSpeed / dist) > threshold) {
-					m_angularSpeed = threshold * dist;
+			if((m_angularSpeed / dist) > m_threshold) {
+					m_angularSpeed = m_threshold * dist;
 			} else
 					m_angularSpeed += m_accelerationFactor;
 
