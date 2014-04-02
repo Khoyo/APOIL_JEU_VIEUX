@@ -29,19 +29,7 @@ public class CTourelleLaser : MonoBehaviour {
 		ClearGun();
 	}
 
-	public void PlayerInDarkZone(CPlayer player)
-	{
-		DetectedPlayer(player);
-	}
-
-	public void PlayerInLightZone(CPlayer player)
-	{
-		if(true /*TODO : check if player is lighted*/){
-			DetectedPlayer(player);
-		}
-	}
-
-	void DetectedPlayer(CPlayer player)
+	public void DetectedPlayer(CPlayer player)
 	{
 		Debug.Log("Detected "+player.name); 
 		if((player.transform.position - transform.position).magnitude < m_minDistance) {
@@ -50,6 +38,16 @@ public class CTourelleLaser : MonoBehaviour {
 			m_minDistance = (player.transform.position - transform.position).magnitude;
 			Debug.Log("Locked "+player.name);
 		}
+	}
+
+	public void PlayerEnter(CPlayer player)
+	{
+		CSoundEngine.postEvent("TourelleZoneOn", gameObject);
+	}
+
+	public void PlayerExit(CPlayer player)
+	{
+		CSoundEngine.postEvent("TourelleZoneOff", gameObject);
 	}
 
 	void ClearGun()

@@ -9,7 +9,27 @@ public class CTourelleLaserZoneLumiere : MonoBehaviour {
 		
 		if(player != null)
 		{
-			transform.parent.GetComponent<CTourelleLaser>().PlayerInLightZone(player);
+			transform.parent.GetComponent<CTourelleLaser>().DetectedPlayer(player);
+		}
+	}
+
+	void OnTriggerEnter2D(Collider2D other)
+	{
+		CPlayer player = other.GetComponent<CPlayer>();
+		
+		if(player != null)
+		{
+			transform.parent.GetComponent<CTourelleLaser>().PlayerEnter(player);
+		}
+	}
+
+	void OnTriggerExit2D(Collider2D other)
+	{
+		CPlayer player = other.GetComponent<CPlayer>();
+		
+		if(player != null)
+		{
+			transform.parent.GetComponent<CTourelleLaser>().PlayerExit(player);
 		}
 	}
 }

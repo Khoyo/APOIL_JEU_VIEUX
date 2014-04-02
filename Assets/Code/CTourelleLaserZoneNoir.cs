@@ -9,7 +9,7 @@ public class CTourelleLaserZoneNoir : MonoBehaviour {
 
 		if(player != null)
 		{
-			transform.parent.GetComponent<CTourelleLaser>().PlayerInDarkZone(player);
+			transform.parent.GetComponent<CTourelleLaser>().DetectedPlayer(player);
 		}
 	}
 
