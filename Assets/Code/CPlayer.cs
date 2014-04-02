@@ -211,7 +211,8 @@ public class CPlayer : MonoBehaviour {
 			
 			RaycastHit2D hit = Physics2D.Raycast(transform.position, mat * m_Direction, m_fDistance, CGame.ms_LayerMaskLight);
 			//Debug.DrawRay(transform.position, m_fDistance * (mat*m_Direction));
-			
+			CTools.CollideLight(hit);
+			/*
 			if(hit.collider != null)
 			{
 				//Debug.Log (hit.collider.name);
@@ -224,7 +225,7 @@ public class CPlayer : MonoBehaviour {
 				{
 					hit.collider.gameObject.GetComponent<CCreep>().CollideWithLight();
 				}
-			}
+			}*/
 		}
 	}
 
