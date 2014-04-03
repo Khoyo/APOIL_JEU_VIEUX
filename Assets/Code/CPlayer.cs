@@ -8,10 +8,10 @@ public class CPlayer : MonoBehaviour {
 
 	public enum EIdPlayer 
 	{
-		e_IdPlayer_Player1,
-		e_IdPlayer_Player2,
-		e_IdPlayer_Player3,
-		e_IdPlayer_Player4,
+		e_Player1,
+		e_Player2,
+		e_Player3,
+		e_Player4,
 	}
 
 	enum EStateMove
@@ -69,6 +69,9 @@ public class CPlayer : MonoBehaviour {
 		m_fAngleTorchLight = gameObject.transform.FindChild ("TorchLight").FindChild ("Spotlight").GetComponent<Light> ().spotAngle;
 
 		m_fDistance = gameObject.transform.FindChild ("TorchLight").FindChild ("Spotlight").GetComponent<Light> ().range * 2.0f/3.0f;
+
+		string name = m_eIdPlayer.ToString ();
+		gameObject.name = name.Remove (0,2); //remove the "e_" in expression
 	}
 	
 	//-------------------------------------------------------------------------------
@@ -208,20 +211,7 @@ public class CPlayer : MonoBehaviour {
 			
 			RaycastHit2D hit = Physics2D.Raycast(transform.position, mat * m_Direction, m_fDistance, CGame.ms_LayerMaskLight);
 			//Debug.DrawRay(transform.position, m_fDistance * (mat*m_Direction));
-			
-			if(hit.collider != null)
-			{
-				//Debug.Log (hit.collider.name);
-				if(hit.collider.CompareTag("GravityMonster"))
-				{
-					hit.collider.gameObject.GetComponent<CGravityMonster>().CollideWithLight();
-				}
-				
-				if(hit.collider.CompareTag("Creep"))
-				{
-					hit.collider.gameObject.GetComponent<CCreep>().CollideWithLight();
-				}
-			}
+			CTools.CollideLight(hit);
 		}
 	}
 
@@ -233,16 +223,16 @@ public class CPlayer : MonoBehaviour {
 		int idPlayer = 0;
 		switch(m_eIdPlayer)
 		{
-			case EIdPlayer.e_IdPlayer_Player1:
+			case EIdPlayer.e_Player1:
 				idPlayer = 0;
 				break;
-			case EIdPlayer.e_IdPlayer_Player2:
+			case EIdPlayer.e_Player2:
 				idPlayer = 1;
 				break;
-			case EIdPlayer.e_IdPlayer_Player3:
+			case EIdPlayer.e_Player3:
 				idPlayer = 2;
 				break;
-			case EIdPlayer.e_IdPlayer_Player4:
+			case EIdPlayer.e_Player4:
 				idPlayer = 3;
 				break;
 		}
@@ -271,16 +261,16 @@ public class CPlayer : MonoBehaviour {
 		switch(nId)
 		{
 			case 0:
-				m_eIdPlayer = EIdPlayer.e_IdPlayer_Player1;
+				m_eIdPlayer = EIdPlayer.e_Player1;
 				break;
 			case 1:
-				m_eIdPlayer = EIdPlayer.e_IdPlayer_Player2;
+				m_eIdPlayer = EIdPlayer.e_Player2;
 				break;
 			case 2:
-				m_eIdPlayer = EIdPlayer.e_IdPlayer_Player3;
+				m_eIdPlayer = EIdPlayer.e_Player3;
 				break;
 			case 3:
-				m_eIdPlayer = EIdPlayer.e_IdPlayer_Player4;
+				m_eIdPlayer = EIdPlayer.e_Player4;
 				break;
 		}
 

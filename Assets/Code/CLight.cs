@@ -5,6 +5,7 @@ public class CLight : MonoBehaviour {
 	
 	int m_nPrecision = 30;
 	float m_fDistance = 10.0f;
+	public bool m_bDebug = false;
 
 	// Use this for initialization
 	void Start () 
@@ -23,21 +24,9 @@ public class CLight : MonoBehaviour {
 			Matrix4x4 mat = Matrix4x4.TRS( Vector3.zero, Quaternion.Euler(0, 0, fAngle), Vector3.one);
 			
 			RaycastHit2D hit = Physics2D.Raycast(transform.position, mat*direction, m_fDistance, CGame.ms_LayerMaskLight);
-			//Debug.DrawRay(transform.position, m_fDistance * (mat*direction));
-			
-			if(hit.collider != null)
-			{
-				//Debug.Log (hit.collider.name);
-				if(hit.collider.CompareTag("GravityMonster"))
-				{
-					hit.collider.gameObject.GetComponent<CGravityMonster>().CollideWithLight();
-				}
-				
-				if(hit.collider.CompareTag("Creep"))
-				{
-					hit.collider.gameObject.GetComponent<CCreep>().CollideWithLight();
-				}
-			}
+			if(m_bDebug)
+				Debug.DrawRay(transform.position, m_fDistance*(mat*direction));
+			CTools.CollideLight(hit);
 		}
 
 	}
