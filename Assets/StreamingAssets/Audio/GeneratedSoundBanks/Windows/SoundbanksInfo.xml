@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<SoundBanksInfo Platform="Windows" SchemaVersion="9">
+	<RootPaths>
+		<ProjectRoot>C:\Users\APOIL-6\Desktop\son jeux des vieux\jeux_des_vieux\</ProjectRoot>
+		<SourceFilesRoot>C:\Users\APOIL-6\Desktop\son jeux des vieux\jeux_des_vieux\.cache\Windows\</SourceFilesRoot>
+		<SoundBanksRoot>C:\Users\APOIL-6\Desktop\son jeux des vieux\jeux_des_vieux\GeneratedSoundBanks\Windows\</SoundBanksRoot>
+		<ExternalSourcesInputFile></ExternalSourcesInputFile>
+		<ExternalSourcesOutputRoot>C:\Users\APOIL-6\Desktop\son jeux des vieux\jeux_des_vieux\GeneratedSoundBanks\Windows</ExternalSourcesOutputRoot>
+	</RootPaths>
+	<DialogueEvents />
+	<StreamedFiles />
+	<SoundBanks>
+		<SoundBank Id="1355168291" Language="SFX">
+			<ShortName>Init</ShortName>
+			<Path>Init.bnk</Path>
+			<IncludedEvents />
+			<IncludedDialogueEvents />
+			<ReferencedStreamedFiles />
+			<IncludedFullFiles />
+			<IncludedPrefetchFiles />
+			<ExternalSources />
+		</SoundBank>
+		<SoundBank Id="3157003241" Language="SFX">
+			<ShortName>test</ShortName>
+			<Path>test.bnk</Path>
+			<IncludedEvents>
+				<Event Id="2091624971" Name="TourelleTire" />
+				<Event Id="658530598" Name="TourelleZoneOff" />
+				<Event Id="1624236488" Name="TourelleZoneOn" />
+			</IncludedEvents>
+			<IncludedDialogueEvents />
+			<ReferencedStreamedFiles />
+			<IncludedFullFiles>
+				<File Id="686939219" Language="SFX">
+					<ShortName>BipAction.wav</ShortName>
+					<Path>sfx\bipaction_ddc98ef4.wem</Path>
+				</File>
+				<File Id="305011200" Language="SFX">
+					<ShortName>BipStop.wav</ShortName>
+					<Path>sfx\bipstop_ddc98ef4.wem</Path>
+				</File>
+				<File Id="520632458" Language="SFX">
+					<ShortName>Laser.wav</ShortName>
+					<Path>sfx\laser_ddc98ef4.wem</Path>
+				</File>
+				<File Id="430966313" Language="SFX">
+					<ShortName>Motor01.wav</ShortName>
+					<Path>sfx\motor01_7f73ad15.wem</Path>
+				</File>
+			</IncludedFullFiles>
+			<IncludedPrefetchFiles />
+			<ExternalSources />
+		</SoundBank>
+	</SoundBanks>
+</SoundBanksInfo>
