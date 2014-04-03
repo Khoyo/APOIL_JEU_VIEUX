@@ -20,7 +20,8 @@ public class CTools{
 
 			if(hit.collider.CompareTag("Capteur"))
 			{
-
+				hit.collider.gameObject.GetComponent<CDoorCapteur>().CollideWithLight();
+				Debug.Log ("light");
 			}
 		}
 	}
