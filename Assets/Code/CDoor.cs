@@ -76,4 +76,9 @@ public class CDoor : MonoBehaviour {
 	{
 		m_bBlockCloseDoor = bBlockClose;
 	}
+
+	public bool IsOnLight()
+	{
+		return m_bIsOnLight;
+	}
 }

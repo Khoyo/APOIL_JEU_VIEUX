@@ -7,6 +7,7 @@ public class CDoorZone : MonoBehaviour {
 	
 	CDoor m_Door;
 	float m_fTimerStopBlockClose;
+	bool m_bIsOnLight;
 
 	// Use this for initialization
 	void Start () 
@@ -18,6 +19,8 @@ public class CDoorZone : MonoBehaviour {
 	// Update is called once per frame
 	void Update () 
 	{
+		Debug.Log (m_Door.IsOnLight ());
+
 		m_fTimerStopBlockClose += Time.deltaTime;
 		if(m_fTimerStopBlockClose > 0.2f)
 		{
@@ -26,12 +29,17 @@ public class CDoorZone : MonoBehaviour {
 		}
 	}
 
+	public void SetIsOnLight(bool bIsOnLight)
+	{
+		m_bIsOnLight = bIsOnLight;
+	}
+
 	//-------------------------------------------------------------------------------
 	/// Unity
 	//-------------------------------------------------------------------------------
 	void OnTriggerStay2D(Collider2D other) 
 	{
-		if(other.CompareTag("Player"))
+		if(other.CompareTag("Player") && m_bIsOnLight)
 		{
 			m_Door.Open();
 			m_Door.SetBlockClose(true);

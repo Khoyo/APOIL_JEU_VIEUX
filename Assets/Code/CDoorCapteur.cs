@@ -6,6 +6,7 @@ public class CDoorCapteur : MonoBehaviour
 	public GameObject objetDoor;
 
 	CDoor m_Door;
+	CDoorZone m_DoorZone;
 	bool m_bIsOnLight;
 	float m_fTimerStopIsOnLight;
 
@@ -16,6 +17,7 @@ public class CDoorCapteur : MonoBehaviour
 	{
 		m_bIsOnLight = false;
 		m_Door = objetDoor.GetComponent<CDoor> ();
+		m_DoorZone = objetDoor.transform.FindChild ("ZoneOuverture").GetComponent<CDoorZone> ();
 	}
 	
 	//-------------------------------------------------------------------------------
@@ -24,6 +26,7 @@ public class CDoorCapteur : MonoBehaviour
 	void Update () 
 	{
 		m_Door.SetIsOnLight (m_bIsOnLight);
+		m_DoorZone.SetIsOnLight(m_bIsOnLight);
 		SetSprite ();
 
 		if(m_bIsOnLight)
