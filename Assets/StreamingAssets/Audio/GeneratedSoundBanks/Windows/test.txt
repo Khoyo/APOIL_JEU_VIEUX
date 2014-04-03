@@ -1,0 +1,14 @@
+Event	ID	Name			Wwise Object Path	Notes
+	658530598	TourelleZoneOff			\Default Work Unit\Monster\TourelleZoneOff	
+	1624236488	TourelleZoneOn			\Default Work Unit\Monster\TourelleZoneOn	
+	2091624971	TourelleTire			\Default Work Unit\Monster\TourelleTire	
+
+Game Parameter	ID	Name			Wwise Object Path	Notes
+	4082290735	Engine_Speed			\Default Work Unit\Engine_Speed	
+
+In Memory Audio	ID	Name	Audio source file		Wwise Object Path	Notes	Data Size
+	305011200	BipStop	C:\Users\APOIL-6\Desktop\son jeux des vieux\jeux_des_vieux\.cache\Windows\sfx\bipstop_ddc98ef4.wem		\Actor-Mixer Hierarchy\Monster\Tourelle\BipStop		15172
+	430966313	MotorTourelle	C:\Users\APOIL-6\Desktop\son jeux des vieux\jeux_des_vieux\.cache\Windows\sfx\motor01_7f73ad15.wem		\Actor-Mixer Hierarchy\Monster\Tourelle\MotorTourelle		574340
+	520632458	LaserTourelle	C:\Users\APOIL-6\Desktop\son jeux des vieux\jeux_des_vieux\.cache\Windows\sfx\laser_ddc98ef4.wem		\Actor-Mixer Hierarchy\Monster\Tourelle\LaserTourelle		22720
+	686939219	BipAction	C:\Users\APOIL-6\Desktop\son jeux des vieux\jeux_des_vieux\.cache\Windows\sfx\bipaction_ddc98ef4.wem		\Actor-Mixer Hierarchy\Monster\Tourelle\BipAction		16206
+

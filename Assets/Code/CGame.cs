@@ -38,6 +38,8 @@ public class CGame : MonoBehaviour
 	{
 		CApoilInput.Init ();
 
+		CSoundEngine.Init();
+
 		CGame.ms_LevelIn = GameObject.Find ("_LevelIn");
 
 		m_Players = new CPlayer[CGame.ms_nNbPlayer];

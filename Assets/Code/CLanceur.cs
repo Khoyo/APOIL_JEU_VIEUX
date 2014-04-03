@@ -30,5 +30,7 @@ public class CLanceur : MonoBehaviour {
 		projectile.transform.position = transform.TransformPoint(new Vector3(-0.85f, 0f, 0f));
 		projectile.transform.rotation = transform.rotation;
 		projectile.transform.rigidbody2D.AddForce(transform.TransformDirection(new Vector2(-1 * m_intensity, 0)));
+
+		CSoundEngine.postEvent("TourelleTire", gameObject);
 	}
 }

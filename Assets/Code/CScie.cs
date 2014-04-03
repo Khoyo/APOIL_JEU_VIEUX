@@ -24,10 +24,8 @@ public class CScie : MonoBehaviour {
 	}
 
 	void OnTriggerEnter2D(Collider2D other){
-		Debug.Log("Ok");
 		if(other.gameObject != null)
 		{
-			Debug.Log("Nice");
 			if(other.gameObject.CompareTag("Solid"))
 			{
 				Destroy(gameObject);
