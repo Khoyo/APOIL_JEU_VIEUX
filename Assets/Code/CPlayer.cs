@@ -239,6 +239,12 @@ public class CPlayer : MonoBehaviour {
 		m_PlayerInput = CApoilInput.InputPlayer[idPlayer];
 	}
 
+	public SPlayerInput GetPlayerInput()
+	{
+		SetPlayerInput ();
+		return m_PlayerInput;
+	}
+	
 	void SetStateMove()
 	{
 		if(Mathf.Abs(m_PlayerInput.MoveHorizontal) > 0.1 ||  Mathf.Abs(m_PlayerInput.MoveVertical) > 0.1)

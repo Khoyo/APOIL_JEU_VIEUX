@@ -11,6 +11,7 @@ public struct SPlayerInput
 
 	public bool ActivateMachine;
 	public bool ActivateMachineContinuous;
+	public bool OpenDoor;
 
 	public bool SwitchTorchlightOnOff;
 }
@@ -64,6 +65,7 @@ public class CApoilInput
 
 		InputPlayer [nId].ActivateMachine = Input.GetKeyDown(KeyCode.Joystick1Button0+20*nId); //Twenty button by joysticks, UGLY hack
 		InputPlayer [nId].ActivateMachineContinuous = Input.GetKey(KeyCode.Joystick1Button0+20*nId); //A
+		InputPlayer [nId].OpenDoor = Input.GetKey(KeyCode.Joystick1Button0+20*nId); //A
 		InputPlayer [nId].Run = Input.GetKey(KeyCode.Joystick1Button5+20*nId); 							//
 		InputPlayer [nId].SwitchTorchlightOnOff = Input.GetKeyDown(KeyCode.Joystick1Button2+20*nId); //X
 
