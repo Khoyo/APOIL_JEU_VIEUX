@@ -19,8 +19,6 @@ public class CDoorZone : MonoBehaviour {
 	// Update is called once per frame
 	void Update () 
 	{
-		Debug.Log (m_Door.IsOnLight ());
-
 		m_fTimerStopBlockClose += Time.deltaTime;
 		if(m_fTimerStopBlockClose > 0.2f)
 		{
