@@ -193,7 +193,7 @@ public class CPlayer : MonoBehaviour {
 
 			ProcessColliderLight();
 
-			//m_nEnergieTorchLight--;
+			m_nEnergieTorchLight--;
 		}
 		else
 		{
