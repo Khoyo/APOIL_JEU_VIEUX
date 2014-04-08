@@ -40,7 +40,7 @@ public class CPlayer : MonoBehaviour {
 	float m_fAngleCone;
 	float m_fAngleTorchLight;
 	float m_fDistance;
-	int m_nEnergieTorchLight;
+	public float m_nEnergieTorchLight;
 	int m_nPrecision = 10;
 	bool m_bActiveTorchLight;
 	bool m_bGravity;
@@ -193,7 +193,7 @@ public class CPlayer : MonoBehaviour {
 
 			ProcessColliderLight();
 
-			m_nEnergieTorchLight--;
+			m_nEnergieTorchLight-= Mathf.Max(Time.deltaTime * CGame.ms_fEnergieTorchLightDischargeRate, 0);
 		}
 		else
 		{
@@ -351,5 +351,10 @@ public class CPlayer : MonoBehaviour {
 	public GameObject GetGameObject()
 	{
 		return gameObject;
+	}
+
+	public void RechargeLight(float power)
+	{
+		m_nEnergieTorchLight = Mathf.Min(m_nEnergieTorchLight + power, CGame.ms_nEnergieTorchLightMax);
 	}
 }
