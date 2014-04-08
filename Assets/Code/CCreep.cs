@@ -23,7 +23,6 @@ public class CCreep : MonoBehaviour {
 	float m_fTimerStopLight;
 	bool m_bFollowPlayer;
 	bool m_bTakePlayer;
-	bool m_bIsOnPlayer;
 	bool m_bLight;
 
 
@@ -41,7 +40,6 @@ public class CCreep : MonoBehaviour {
 		m_fTimerWakeUp = 0.0f;
 		m_fTimerStopLight = 0.0f;
 		m_bLight = false;
-		m_bIsOnPlayer = false;
 		m_bFollowPlayer = false;
 		m_bTakePlayer = false;
 
