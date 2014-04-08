@@ -67,7 +67,7 @@ public class CMenu : MonoBehaviour
 				{
 					m_eState = EState.e_InGame;
 					ResumeGame();
-				m_ObjectGame.GetComponent<CGame>().GoToNextLevel();
+					m_ObjectGame.GetComponent<CGame>().GoToNextLevel();
 				}
 				break;
 			}

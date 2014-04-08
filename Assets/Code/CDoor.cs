@@ -5,7 +5,6 @@ public class CDoor : MonoBehaviour {
 
 	public GameObject m_render;
 	public GameObject m_collider;
-	GameObject m_ObjectGame;
 	Animator m_animator;
 	float m_fTimerCloseDoor;
 	float m_fTimerBlockClose;
