@@ -16,7 +16,7 @@
    version="1.1"
    inkscape:version="0.48.4 r9939"
    sodipodi:docname="Design_level.svg"
-   inkscape:export-filename="C:\Users\APOIL-5\Documents\GitHub\APOIL_JEU_VIEUX\Assets\Textures\Level_01\L01_B03.png"
+   inkscape:export-filename="C:\Users\APOIL-5\Documents\GitHub\APOIL_JEU_VIEUX\Assets\Textures\Level_02\L02_B04.png"
    inkscape:export-xdpi="150"
    inkscape:export-ydpi="150">
   <defs
@@ -45,12 +45,12 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="0.49497475"
-     inkscape:cx="254.46162"
-     inkscape:cy="489.15508"
+     inkscape:zoom="0.7"
+     inkscape:cx="822.49402"
+     inkscape:cy="529.30384"
      inkscape:document-units="px"
-     inkscape:current-layer="g2993"
-     showgrid="false"
+     inkscape:current-layer="g3038"
+     showgrid="true"
      inkscape:window-width="1920"
      inkscape:window-height="1017"
      inkscape:window-x="-8"
@@ -62,7 +62,11 @@
      fit-margin-top="0"
      fit-margin-left="0"
      fit-margin-right="0"
-     fit-margin-bottom="0" />
+     fit-margin-bottom="0">
+    <inkscape:grid
+       type="xygrid"
+       id="grid3157" />
+  </sodipodi:namedview>
   <metadata
      id="metadata7">
     <rdf:RDF>
@@ -71,7 +75,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title />
+        <dc:title></dc:title>
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -80,8 +84,7 @@
      id="layer4"
      inkscape:label="Background"
      style="display:none"
-     transform="translate(0,455.90552)"
-     sodipodi:insensitive="true">
+     transform="translate(0,455.90552)">
     <rect
        style="fill:#fcaf3e;fill-opacity:1;stroke:none"
        id="rect2990"
@@ -98,7 +101,8 @@
      inkscape:groupmode="layer"
      id="layer1"
      transform="translate(0,147.63782)"
-     style="display:inline">
+     style="display:none"
+     sodipodi:insensitive="true">
     <g
        inkscape:groupmode="layer"
        id="layer5"
@@ -199,21 +203,220 @@
      inkscape:groupmode="layer"
      id="layer2"
      inkscape:label="L02"
-     style="display:none"
-     sodipodi:insensitive="true"
+     style="display:inline"
      transform="translate(0,455.90552)">
+    <g
+       style="display:none"
+       inkscape:label="L02_Back"
+       id="g3211"
+       inkscape:groupmode="layer">
+      <rect
+         style="fill:#fcaf3e;fill-opacity:1;stroke:none;display:inline"
+         id="rect2990-5"
+         width="1600"
+         height="1200"
+         x="0"
+         y="-455.90552"
+         inkscape:export-filename="C:\Users\APOIL-5\Documents\GitHub\APOIL_JEU_VIEUX\Assets\Textures\Level_01\L01_Back.png"
+         inkscape:export-xdpi="150"
+         inkscape:export-ydpi="150" />
+    </g>
     <g
        inkscape:groupmode="layer"
        id="layer6"
-       inkscape:label="L02_B01" />
+       inkscape:label="L02_B01"
+       style="display:none">
+      <g
+         id="g3074">
+        <path
+           inkscape:connector-curvature="0"
+           id="rect3027-1"
+           d="m -0.015622,-455.90552 0,28.28125 0,1143.43755 0,28.2812 30.3125,0 c 523.229172,0 1046.458322,0 1569.687522,0 l 0.031,0 c -0.055,-406.69463 -0.032,-823.072211 -0.031,-1171.71875 l 0.031,0 2e-4,-28.28125 z m 40.015622,40 1520,0 0,1120 -1520,0 z"
+           style="fill:#babdb6;stroke:none;display:inline"
+           sodipodi:nodetypes="cccccccccccccccc" />
+        <text
+           transform="scale(1.0482364,0.95398328)"
+           sodipodi:linespacing="125%"
+           id="text2997-7"
+           y="-458.56815"
+           x="719.55481"
+           style="font-size:17.44696426px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;display:inline;font-family:Sans"
+           xml:space="preserve"><tspan
+             id="tspan3032"
+             y="-458.56815"
+             x="719.55481"
+             sodipodi:role="line">L02_B01</tspan></text>
+      </g>
+    </g>
     <g
        inkscape:label="L02_B02"
        id="g3004"
-       inkscape:groupmode="layer" />
+       inkscape:groupmode="layer"
+       style="display:none">
+      <g
+         id="g3069"
+         transform="translate(2.0203051,-14.142136)">
+        <path
+           sodipodi:nodetypes="ccccccc"
+           transform="translate(0,-455.90552)"
+           inkscape:connector-curvature="0"
+           id="path3046"
+           d="m 27.9797,214.14214 729.99999,0 60,280 -165,0 -40,-220 -584.999995,0 z"
+           style="fill:#babdb6;stroke:none" />
+        <text
+           transform="scale(1.0482364,0.95398328)"
+           sodipodi:linespacing="125%"
+           id="text2997-7-0"
+           y="-211.49573"
+           x="360.5863"
+           style="font-size:17.44696426px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;display:inline;font-family:Sans"
+           xml:space="preserve"><tspan
+             id="tspan3032-9"
+             y="-211.49573"
+             x="360.5863"
+             sodipodi:role="line">L02_B02</tspan></text>
+      </g>
+    </g>
     <g
        inkscape:groupmode="layer"
        id="g3006"
-       inkscape:label="L02_B03" />
+       inkscape:label="L02_B03"
+       style="display:none">
+      <g
+         id="g3166"
+         transform="translate(27.887096,-1.8604127)">
+        <path
+           transform="translate(0,-455.90552)"
+           sodipodi:nodetypes="ccccc"
+           inkscape:connector-curvature="0"
+           id="path3081"
+           d="m 892.1129,201.86041 60,280 300,0 0,-280 z"
+           style="fill:#babdb6;stroke:none;display:inline" />
+        <text
+           xml:space="preserve"
+           style="font-size:17.44696426px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;display:inline;font-family:Sans"
+           x="1003.6981"
+           y="-98.581505"
+           id="text2997-7-0-4"
+           sodipodi:linespacing="125%"
+           transform="scale(1.0482364,0.95398328)"><tspan
+             sodipodi:role="line"
+             x="1003.6981"
+             y="-98.581505"
+             id="tspan3032-9-8">L02_B03</tspan></text>
+      </g>
+    </g>
+    <g
+       inkscape:groupmode="layer"
+       id="g3038"
+       inkscape:label="L02_B04"
+       style="display:inline">
+      <g
+         id="g3171">
+        <path
+           transform="translate(0,-455.90552)"
+           sodipodi:nodetypes="ccccccccc"
+           inkscape:connector-curvature="0"
+           id="path3079"
+           d="m 1400,30 -10,990 -710,0 0,-280 -40.0709,0 0.0709,300 810,0 0,-1010 z"
+           style="fill:#babdb6;stroke:none;display:inline" />
+        <text
+           xml:space="preserve"
+           style="font-size:17.44696426px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;display:inline;font-family:Sans"
+           x="953.98328"
+           y="612.2691"
+           id="text2997-7-0-4-8"
+           sodipodi:linespacing="125%"
+           transform="scale(1.0482364,0.95398328)"><tspan
+             sodipodi:role="line"
+             x="953.98328"
+             y="612.2691"
+             id="tspan3032-9-8-2">L02_B04</tspan></text>
+      </g>
+    </g>
+    <g
+       inkscape:label="L02_B05"
+       id="g3036"
+       inkscape:groupmode="layer"
+       style="display:none">
+      <g
+         id="g3161">
+        <path
+           transform="translate(0,-455.90552)"
+           sodipodi:nodetypes="ccccccccccccccccccc"
+           inkscape:connector-curvature="0"
+           id="path3130"
+           d="m 800,580 480,0 0,20 -460,0 0,200 100,0 0,-100 360,0 0,220 -480,0 0,-20 460,0 -1.4515,-180 -317.84271,0 L 940,800 1159.7541,800 1160,820.91785 800,820 z"
+           style="fill:#babdb6;stroke:none;display:inline" />
+        <text
+           xml:space="preserve"
+           style="font-size:17.44696426px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;display:inline;font-family:Sans"
+           x="877.66461"
+           y="381.65707"
+           id="text2997-7-0-4-8-4"
+           sodipodi:linespacing="125%"
+           transform="scale(1.0482364,0.95398328)"><tspan
+             sodipodi:role="line"
+             x="877.66461"
+             y="381.65707"
+             id="tspan3032-9-8-2-5">L02_B05</tspan></text>
+      </g>
+    </g>
+    <g
+       inkscape:label="L02_B06"
+       id="g3040"
+       inkscape:groupmode="layer"
+       style="display:none">
+      <path
+         style="fill:#babdb6;stroke:none"
+         d="m 140,360 0,700 340,0 0,-320 -80,0 0,280 -180,0 0,-660 z"
+         id="path3176"
+         inkscape:connector-curvature="0"
+         transform="translate(0,-455.90552)"
+         sodipodi:nodetypes="ccccccccc" />
+      <text
+         xml:space="preserve"
+         style="font-size:17.44696426px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;display:inline;font-family:Sans"
+         x="133.55766"
+         y="234.90399"
+         id="text2997-7-0-4-8-4-5"
+         sodipodi:linespacing="125%"
+         transform="scale(1.0482364,0.95398328)"><tspan
+           sodipodi:role="line"
+           x="133.55766"
+           y="234.90399"
+           id="tspan3032-9-8-2-5-1">L02_B06</tspan></text>
+    </g>
+    <g
+       inkscape:label="L02_B07"
+       id="g3042"
+       inkscape:groupmode="layer"
+       style="display:none">
+      <path
+         style="fill:#babdb6;stroke:none;display:inline"
+         d="m 340,640 0,-280 160,0 48.23085,180 0,100 z"
+         id="path3178"
+         inkscape:connector-curvature="0"
+         transform="translate(0,-455.90552)"
+         sodipodi:nodetypes="cccccc" />
+      <text
+         xml:space="preserve"
+         style="font-size:17.44696426px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;display:inline;font-family:Sans"
+         x="381.59332"
+         y="67.186165"
+         id="text2997-7-0-4-8-4-7"
+         sodipodi:linespacing="125%"
+         transform="scale(1.0482364,0.95398328)"><tspan
+           sodipodi:role="line"
+           x="381.59332"
+           y="67.186165"
+           id="tspan3032-9-8-2-5-11">L02_B07</tspan></text>
+    </g>
+    <g
+       inkscape:label="L02_B08"
+       id="g3044"
+       inkscape:groupmode="layer"
+       style="display:none" />
   </g>
   <g
      inkscape:groupmode="layer"
