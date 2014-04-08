@@ -14,13 +14,7 @@ public class CMachine : MonoBehaviour
 	//-------------------------------------------------------------------------------	
 	public void Start()
 	{	
-		Component[] components = gameObject.GetComponents<Component>();
-		foreach(Component component in components){
-			IMachineAction action = component as IMachineAction;
-			if(action != null)
-				action.Init();
-		}
-		
+
 	}
 
 	

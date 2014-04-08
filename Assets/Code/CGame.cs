@@ -14,7 +14,8 @@ public class CGame : MonoBehaviour
 	public static float ms_fGravityMonsterForce;
 	public static float ms_fCoeffPararsitized;
 	public static int ms_nNbPlayer;
-	public static int ms_nEnergieTorchLightMax;
+	public static float ms_nEnergieTorchLightMax;
+	public static float ms_fEnergieTorchLightDischargeRate;
 	public static GameObject ms_LevelIn;
 	public static GameObject ms_Camera;
 	public static GameObject ms_Menu;
@@ -31,6 +32,7 @@ public class CGame : MonoBehaviour
 	public static float ms_fMonsterTimerStopEat;
 	public static float ms_fDoorTimerClose;
 	public static float ms_fMenuTimerEndLevel;
+
 
 	CPlayer[] m_Players;
 

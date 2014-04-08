@@ -15,6 +15,7 @@ public class CGameCreator : MonoBehaviour {
 	public float LD_GravityMonsterForce = 1.0f;
 	public int LD_NbPlyer = 1;
 	public int LD_EnergirMaxTorchLight = 100;
+	public float LD_EnergieTorchLightDischargeRate = 1.0f;
 	public LayerMask LD_LayerMaskLight;
 
 	//-------------------------------------------------------------------------------
@@ -34,6 +35,7 @@ public class CGameCreator : MonoBehaviour {
 			CGame.ms_fCoeffPararsitized = LD_CoeffPararsitized;
 			CGame.ms_FontDebug = m_FontDebug;
 			CGame.ms_nEnergieTorchLightMax = LD_EnergirMaxTorchLight;
+			CGame.ms_fEnergieTorchLightDischargeRate = LD_EnergieTorchLightDischargeRate;
 			CGame.ms_LayerMaskLight = LD_LayerMaskLight;
 		}
 		
