@@ -43,6 +43,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_prefabPlayer: {fileID: 100002, guid: 5e59d9a662071ac47b7f6c5c0b37fe86, type: 2}
   m_prefabCamera: {fileID: 100000, guid: 2907bfc0ecb0494468bfd17c5e6854b3, type: 2}
+  m_prefabMenu: {fileID: 100000, guid: fccd8f297c418bd4cbf78c971140ada7, type: 2}
 --- !u!114 &11400002
 MonoBehaviour:
   m_ObjectHideFlags: 1
