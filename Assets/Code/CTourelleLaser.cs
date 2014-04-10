@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class CTourelleLaser : MonoBehaviour {
 	
@@ -11,6 +12,8 @@ public class CTourelleLaser : MonoBehaviour {
 	public float m_accelerationFactor;
 
 	public float m_range;
+	public float m_enterSoundRange;
+	public float m_exitSoundRange;
 
 	public float m_threshold = 1/10;
 
@@ -102,10 +105,21 @@ public class CTourelleLaser : MonoBehaviour {
 		CSoundEngine.postEvent("TourelleZoneOff", gameObject);
 	}
 
+	public void PlayerEnterSound()
+	{
+	}
 
-	void OnDrawGizmos() {
+	public void PlayerExitSound()
+	{
+	}
+
+	void OnDrawGizmosSelected() {
 		Gizmos.color = Color.white;
 		Gizmos.DrawWireSphere(transform.position, m_range);
+		Gizmos.color = Color.red;
+		Gizmos.DrawWireSphere(transform.position, m_enterSoundRange);
+		Gizmos.color = Color.green;
+		Gizmos.DrawWireSphere(transform.position, m_exitSoundRange);
 		if(m_trackedPlayer)
 			Gizmos.DrawRay(transform.position, m_trackedPlayer.transform.position);
 	}

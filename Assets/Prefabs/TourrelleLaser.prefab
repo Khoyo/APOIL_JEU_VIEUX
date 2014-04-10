@@ -83,6 +83,8 @@ MonoBehaviour:
   m_angularSpeedMax: 5
   m_accelerationFactor: .100000001
   m_range: 4
+  m_enterSoundRange: 5
+  m_exitSoundRange: 6
   m_threshold: .100000001
   m_firingWindows: 0
 --- !u!114 &11400002
