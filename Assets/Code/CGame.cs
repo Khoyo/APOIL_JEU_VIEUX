@@ -5,6 +5,7 @@ public class CGame : MonoBehaviour
 {
 	public GameObject m_prefabPlayer;
 	public GameObject m_prefabCamera;
+	public GameObject m_prefabMenu;
 
 	public static float ms_fVelocityPlayer;
 	public static float ms_fCoeffReverseWalk;
@@ -17,6 +18,7 @@ public class CGame : MonoBehaviour
 	public static float ms_fEnergieTorchLightDischargeRate;
 	public static GameObject ms_LevelIn;
 	public static GameObject ms_Camera;
+	public static GameObject ms_Menu;
 	public static Font ms_FontDebug;
 	public static LayerMask ms_LayerMaskLight;
 
@@ -29,6 +31,7 @@ public class CGame : MonoBehaviour
 	public static float ms_fMonsterTimerEat;
 	public static float ms_fMonsterTimerStopEat;
 	public static float ms_fDoorTimerClose;
+	public static float ms_fMenuTimerEndLevel;
 
 
 	CPlayer[] m_Players;
@@ -48,6 +51,7 @@ public class CGame : MonoBehaviour
 
 		CreatePlayers();
 		CreateCamera ();
+		CreateMenu ();
 
 		CGame.ms_fCreepTimerYeute = 2.0f;
 		CGame.ms_fCreepTimerSleep = 2.0f;
@@ -58,6 +62,7 @@ public class CGame : MonoBehaviour
 		CGame.ms_fMonsterTimerEat = 3.0f;
 		CGame.ms_fMonsterTimerStopEat = 2.0f;
 		CGame.ms_fDoorTimerClose = 3.0f;
+		CGame.ms_fMenuTimerEndLevel = 3.0f;
 	}
 	
 	//-------------------------------------------------------------------------------
@@ -86,7 +91,10 @@ public class CGame : MonoBehaviour
 	//-------------------------------------------------------------------------------
 	public void GoToNextLevel()
 	{
-
+		if(Application.loadedLevel < Application.levelCount)
+		{
+			Application.LoadLevel(Application.loadedLevel+1);
+		}	
 	}
 
 	//-------------------------------------------------------------------------------
@@ -94,7 +102,9 @@ public class CGame : MonoBehaviour
 	//-------------------------------------------------------------------------------
 	public void WinLevel(CPlayer.EIdPlayer eId)
 	{
-		Debug.Log ("win dude!");
+		Debug.Log ("win dude!"+eId);
+		ms_Menu.GetComponent<CMenu>().SetTextureWinPlayer (eId);
+		ms_Menu.GetComponent<CMenu>().Win ();
 	}
 
 	//-------------------------------------------------------------------------------
@@ -116,6 +126,12 @@ public class CGame : MonoBehaviour
 		ms_Camera = ((GameObject) GameObject.Instantiate(m_prefabCamera));
 	}
 
+	void CreateMenu()
+	{
+		ms_Menu = ((GameObject) GameObject.Instantiate(m_prefabMenu));
+		ms_Menu.GetComponent<CMenu>().SetObjectGame (this.gameObject);
+	}
+	
 	//-------------------------------------------------------------------------------
 	/// 
 	//-------------------------------------------------------------------------------
