@@ -5,7 +5,13 @@ using System.Collections.Generic;
 public class CTourelleLaser : MonoBehaviour {
 	
 	CPlayer m_trackedPlayer;
-	bool m_tracking;
+
+	enum ETrackingState {
+		NotTracking,
+		PlayerInTrackingZone,
+		PlayerInFiringZone
+	};
+	ETrackingState m_trackingState;
 
 	public float m_angularSpeed;
 	public float m_angularSpeedMax = 2;
@@ -27,7 +33,7 @@ public class CTourelleLaser : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
-		if(m_tracking) {
+		if(m_trackingState != ETrackingState.NotTracking) {
 			Vector2 diff = m_trackedPlayer.transform.position - transform.position;
 
 			float destAngle = Mathf.Rad2Deg * Mathf.Atan2(diff.y, diff.x) + 180;
@@ -62,20 +68,14 @@ public class CTourelleLaser : MonoBehaviour {
 
 
 		//Update tracking info
-		if(!m_tracking){
+		if(m_trackingState == ETrackingState.NotTracking){
 			DetectPlayer();
-			if(m_tracking)
-				StartTracking();
 		}
 		else { //Check if the player is still in range
 			float dist = (m_trackedPlayer.transform.position - transform.position).magnitude;
-			if(dist > m_range)
+			if(dist > m_exitSoundRange)
 			{
-				m_trackedPlayer = null;
-				m_tracking = false;
 				DetectPlayer();
-				if(!m_tracking)
-					StopTracking();
 			}
 		}
 	}
@@ -83,37 +83,64 @@ public class CTourelleLaser : MonoBehaviour {
 	public void DetectPlayer()
 	{
 		float minDistance = Mathf.Infinity;
+		CPlayer nearestPlayer = null;
 		GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
 		for(int i = 0; i < CGame.ms_nNbPlayer; i++){
 			CPlayer player = players[i].GetComponent<CPlayer>();
 			float dist = (player.transform.position - transform.position).magnitude;
-			if(dist < minDistance && dist < m_range){
-				m_trackedPlayer = player;
+			if(dist < minDistance){
 				minDistance = dist;
-				m_tracking = true;
+				nearestPlayer = player;
 			}
 		}
+
+		ProcessMinimalDistance(minDistance, nearestPlayer);
+
+	}
+
+	void StopTracking()
+	{
+
+	}
+
+	void StartTracking(CPlayer player)
+	{
+		if(m_trackingState == ETrackingState.NotTracking)
+			CSoundEngine.postEvent("TourelleZoneOn", gameObject);
+		m_trackedPlayer = player;
 	}
 	
-	public void StartTracking()
+	//Get the nearest or tracked player distance and change tracking state if necessary
+	void ProcessMinimalDistance(float minDistance, CPlayer nearestPlayer)
 	{
-		CSoundEngine.postEvent("TourelleZoneOn", gameObject);
-	}
-	
-	public void StopTracking()
-	{
-		CSoundEngine.postEvent("TourelleZoneOff", gameObject);
+		if(minDistance > m_exitSoundRange) //Out of sight
+		{
+			if(m_trackingState != ETrackingState.NotTracking)
+			{
+				CSoundEngine.postEvent("TourelleZoneOff", gameObject);
+			}
+			m_trackedPlayer = null;
+			m_trackingState = ETrackingState.NotTracking;
+		}
+		else if(minDistance > m_enterSoundRange) //Player in outward zone
+		{
+			//We don't do anything here...
+		}
+		else if(minDistance > m_range) //Player in inward zone
+		{
+			StartTracking(nearestPlayer);
+
+			m_trackingState = ETrackingState.PlayerInTrackingZone;
+		}
+		else //Player in firing range
+		{
+			StartTracking(nearestPlayer);
+
+			m_trackingState = ETrackingState.PlayerInFiringZone;
+		}
 	}
 
-	public void PlayerEnterSound()
-	{
-	}
-
-	public void PlayerExitSound()
-	{
-	}
-
-	void OnDrawGizmosSelected() {
+	void OnDrawGizmos/*Selected*/() {
 		Gizmos.color = Color.white;
 		Gizmos.DrawWireSphere(transform.position, m_range);
 		Gizmos.color = Color.red;
