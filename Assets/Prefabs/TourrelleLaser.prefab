@@ -79,6 +79,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3a494ebc54c4d0b4ba3a875fafaa0ed5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_trackingState: 0
   m_angularSpeed: 0
   m_angularSpeedMax: 5
   m_accelerationFactor: .100000001
@@ -86,7 +87,7 @@ MonoBehaviour:
   m_enterSoundRange: 5
   m_exitSoundRange: 6
   m_threshold: .100000001
-  m_firingWindows: 0
+  m_firingWindows: 1
 --- !u!114 &11400002
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -99,7 +100,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   PrefabLance: {fileID: 100000, guid: 6b4d200b641a6894eb3ad053e4321fc6, type: 2}
-  m_delay: 1
+  m_delay: .300000012
   m_intensity: 1200
 --- !u!212 &21200000
 SpriteRenderer:

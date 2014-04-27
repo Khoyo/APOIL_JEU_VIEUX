@@ -66,6 +66,14 @@ public class CTourelleLaser : MonoBehaviour {
 			CSoundEngine.setRTPC("Engine_Speed", m_angularSpeed / m_angularSpeedMax, gameObject);
 		}
 
+		if(m_trackingState == ETrackingState.PlayerInFiringZone && m_angularSpeed < m_firingWindows)
+		{
+			this.GetComponent<CLanceur>().enabled = true;
+		}
+		else
+		{
+			this.GetComponent<CLanceur>().enabled = false;
+		}
 
 		//Update tracking info
 		if(m_trackingState == ETrackingState.NotTracking){
@@ -77,7 +85,16 @@ public class CTourelleLaser : MonoBehaviour {
 			{
 				DetectPlayer();
 			}
+			else if(dist > m_range)
+			{
+				m_trackingState = ETrackingState.PlayerInTrackingZone;
+			}
+			else
+			{
+				m_trackingState = ETrackingState.PlayerInFiringZone;
+			}
 		}
+
 	}
 	
 	public void DetectPlayer()
@@ -140,7 +157,7 @@ public class CTourelleLaser : MonoBehaviour {
 		}
 	}
 
-	void OnDrawGizmos/*Selected*/() {
+	void OnDrawGizmosSelected() {
 		Gizmos.color = Color.white;
 		Gizmos.DrawWireSphere(transform.position, m_range);
 		Gizmos.color = Color.red;
